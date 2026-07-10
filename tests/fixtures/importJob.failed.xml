@@ -1,0 +1,35 @@
+<importexportxml start="2026-07-01T09:15:00" stop="2026-07-01T09:21:42" progress="87.5">
+  <solutionManifests>
+    <solutionManifest id="ContosoSales" LocalizedName="Contoso Sales" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="09:15:04" />
+    </solutionManifest>
+  </solutionManifests>
+  <entities>
+    <entity id="{11111111-0000-0000-0000-000000000001}" name="contoso_order" localizedname="Order" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="09:15:31" />
+    </entity>
+    <entity id="{11111111-0000-0000-0000-000000000002}" name="contoso_widget" localizedname="Widget" processed="true">
+      <result result="failure" errorcode="0x80048264" errortext="The dependent component Entity &quot;contoso_gadget&quot; does not exist. Missing component: contoso_gadget. The missing component is provided by solution &quot;Contoso Base&quot; &amp; must be installed first." datetime="09:16:02" />
+    </entity>
+  </entities>
+  <attributes>
+    <attribute id="{22222222-0000-0000-0000-000000000001}" name="contoso_gadgetid" localizedname="Gadget" processed="true">
+      <result result="failure" errorcode="0x80048264" errortext="Missing component: contoso_gadget. The missing component is provided by solution &quot;Contoso Base&quot;." datetime="09:16:05" />
+    </attribute>
+  </attributes>
+  <webresources>
+    <webresource id="{33333333-0000-0000-0000-000000000001}" name="contoso_/scripts/main.js" processed="true">
+      <result result="failure" errorcode="0x8004F036" errortext="An unmanaged layer exists for web resource &quot;contoso_/scripts/main.js&quot; &amp; blocks the managed import." datetime="09:17:44" />
+    </webresource>
+  </webresources>
+  <workflows>
+    <workflow id="{44444444-0000-0000-0000-000000000001}" name="Contoso Approval" processed="true">
+      <result result="warning" errorcode="0x80045001" errortext="Workflow was imported but could not be activated." datetime="09:18:10" />
+    </workflow>
+  </workflows>
+  <sdkmessageprocessingsteps>
+    <sdkmessageprocessingstep id="{55555555-0000-0000-0000-000000000001}" name="Contoso.Plugins.Step" processed="true">
+      <result result="failure" errorcode="0xDEADBEEF" errortext="Unexpected serialization fault in component processing. Unexpected serialization fault in component processing. Unexpected serialization fault in component processing. Unexpected serialization fault in component processing. Unexpected serialization fault in component processing. Unexpected serialization fault in component processing. Unexpected serialization fault in component processing." datetime="09:19:33" />
+    </sdkmessageprocessingstep>
+  </sdkmessageprocessingsteps>
+</importexportxml>

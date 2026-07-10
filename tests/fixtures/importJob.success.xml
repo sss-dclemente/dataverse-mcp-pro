@@ -1,0 +1,20 @@
+<importexportxml start="2026-07-02T08:00:00" stop="2026-07-02T08:04:12" progress="100">
+  <solutionManifests>
+    <solutionManifest id="ContosoSales" LocalizedName="Contoso Sales" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="08:00:03" />
+    </solutionManifest>
+  </solutionManifests>
+  <entities>
+    <entity id="{11111111-0000-0000-0000-000000000001}" name="contoso_order" localizedname="Order" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="08:01:15" />
+    </entity>
+    <entity id="{11111111-0000-0000-0000-000000000002}" name="contoso_widget" localizedname="Widget" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="08:01:44" />
+    </entity>
+  </entities>
+  <webresources>
+    <webresource id="{33333333-0000-0000-0000-000000000001}" name="contoso_/scripts/main.js" processed="true">
+      <result result="success" errorcode="0" errortext="" datetime="08:02:30" />
+    </webresource>
+  </webresources>
+</importexportxml>
