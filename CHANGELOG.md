@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-07-10
+
+### Changed
+
+- Licensing stub replaced by real remote validation: `LICENSE_KEY` is now checked once at startup against the license service, with a 7-day offline grace window backed by an on-disk cache (`~/.dvops/license-cache.json`, storing only a SHA-256 hash of the key). Validation failures never crash the server and never block free tools.
+
+### Added
+
+- Checkout/pricing URL included in Pro upgrade messages (`checkoutUrl` field).
+- `DVOPS_LICENSE_URL` env var to override the license validation endpoint.
+- `DVOPS_CACHE_DIR` env var to relocate the license cache directory.
+
 ## [0.1.0] - 2026-07-10
 
 ### Added

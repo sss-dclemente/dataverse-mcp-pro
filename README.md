@@ -76,7 +76,9 @@ Or declare it in a `.mcp.json` at your project root:
 | `CLIENT_ID` | No | App registration client ID. Set together with `CLIENT_SECRET` and `TENANT_ID` for client-credentials auth. |
 | `CLIENT_SECRET` | No | App registration client secret (part of the client-credentials trio). |
 | `TENANT_ID` | No | Entra ID tenant ID (part of the client-credentials trio). |
-| `LICENSE_KEY` | No | Unlocks the Pro tools. Without it, Pro tools return an upgrade message. |
+| `LICENSE_KEY` | No | Unlocks the Pro tools. Validated once at startup against the license service; without it, Pro tools return an upgrade message. |
+| `DVOPS_LICENSE_URL` | No | Overrides the license validation endpoint (mainly for testing/self-hosting). |
+| `DVOPS_CACHE_DIR` | No | Directory for the license cache file (`license-cache.json`). Defaults to `~/.dvops`. |
 
 When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server falls back to [`DefaultAzureCredential`](https://learn.microsoft.com/azure/developer/javascript/sdk/credential-chains) — so a plain `az login` (or managed identity, VS Code sign-in, etc.) works too.
 
@@ -99,6 +101,14 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 - **Minimal outbound surface.** The only outbound calls are to your Dataverse org (Web API) and Microsoft Entra ID (token acquisition).
 - **No telemetry by default.** The single optional outbound call beyond that is license validation when `LICENSE_KEY` is set — and it never carries org data.
 - Tokens and secrets are held in memory only and are never logged.
+
+## Pro
+
+Pro tools are unlocked with a license key — purchase one on the [pricing page](https://dvops.simplesmoothsafe.com/#pricing) and set it via the `LICENSE_KEY` environment variable.
+
+**How validation works.** The key is checked **once at server startup** against the license service. The result is cached in memory for the lifetime of the process, and a positive validation is also cached on disk in `~/.dvops/license-cache.json` (configurable via `DVOPS_CACHE_DIR`). If the license service is unreachable at startup, that on-disk cache grants a **7-day offline grace** window, so a flaky network or a short service outage never locks you out of tools you paid for. An explicitly rejected key never falls back to the cache. Licensing failures never crash the server and never affect the free tools.
+
+**Privacy.** The only data sent to the license service is the license key, the product id, and a SHA-256 hash of your org URL — never the URL itself, and never any org data. The on-disk cache stores a SHA-256 hash of the key, not the key itself.
 
 ## License
 

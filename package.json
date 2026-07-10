@@ -1,6 +1,6 @@
 {
   "name": "@simplesmoothsafe/dataverse-ops-mcp",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MCP server for Microsoft Dataverse diagnostics: plugin traces, async job failures, step configuration analysis and more, over stdio.",
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
