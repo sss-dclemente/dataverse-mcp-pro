@@ -173,6 +173,22 @@ async function toHttpError(res: Response): Promise<DataverseHttpError> {
   return new DataverseHttpError(res.status, message);
 }
 
+/** OData string literals escape embedded single quotes by doubling them. */
+export function escapeODataString(value: string): string {
+  return value.replace(/'/g, "''");
+}
+
+export type DataverseClient = ReturnType<typeof createDataverseClient>;
+
+let defaultClient: DataverseClient | undefined;
+
+/** Process-wide client built from env vars, created on first use so tools can
+ * be imported (and unit-tested with a fake client) without any env present. */
+export function getDefaultClient(): DataverseClient {
+  defaultClient ??= createDataverseClient(configFromEnv());
+  return defaultClient;
+}
+
 export function createDataverseClient(
   config: DataverseConfig,
   fetchImpl: typeof fetch = fetch,
