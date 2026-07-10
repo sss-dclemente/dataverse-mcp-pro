@@ -104,7 +104,7 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 
 ## Pro
 
-Pro tools are unlocked with a license key — purchase one on the [pricing page](https://dvops.simplesmoothsafe.com/#pricing) and set it via the `LICENSE_KEY` environment variable.
+Pro tools are unlocked with a license key — purchase one on the [pricing page](https://dvops-docs.pages.dev/#pricing) and set it via the `LICENSE_KEY` environment variable.
 
 **How validation works.** The key is checked **once at server startup** against the license service. The result is cached in memory for the lifetime of the process, and a positive validation is also cached on disk in `~/.dvops/license-cache.json` (configurable via `DVOPS_CACHE_DIR`). If the license service is unreachable at startup, that on-disk cache grants a **7-day offline grace** window, so a flaky network or a short service outage never locks you out of tools you paid for. An explicitly rejected key never falls back to the cache. Licensing failures never crash the server and never affect the free tools.
 
