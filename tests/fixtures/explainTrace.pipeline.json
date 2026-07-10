@@ -1,0 +1,49 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#plugintracelogs(plugintracelogid,typename,messagename,primaryentity,depth,mode,performanceexecutionduration,createdon,exceptiondetails)",
+  "value": [
+    {
+      "plugintracelogid": "aaaaaaaa-0000-4000-8000-000000000001",
+      "typename": "MyCompany.Plugins.AccountPreValidationPlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 18,
+      "createdon": "2026-07-09T14:31:40Z",
+      "exceptiondetails": null
+    },
+    {
+      "plugintracelogid": "aaaaaaaa-0000-4000-8000-000000000002",
+      "typename": "MyCompany.Plugins.RollupRecalcPlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 2,
+      "mode": 0,
+      "performanceexecutionduration": 240,
+      "createdon": "2026-07-09T14:31:40Z",
+      "exceptiondetails": null
+    },
+    {
+      "plugintracelogid": "aaaaaaaa-0000-4000-8000-000000000003",
+      "typename": "MyCompany.Plugins.AuditTrailPlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 2,
+      "mode": 0,
+      "performanceexecutionduration": 55,
+      "createdon": "2026-07-09T14:31:41Z",
+      "exceptiondetails": ""
+    },
+    {
+      "plugintracelogid": "aaaaaaaa-0000-4000-8000-00000000000f",
+      "typename": "MyCompany.Plugins.AccountPostUpdatePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 3,
+      "mode": 0,
+      "performanceexecutionduration": 30125,
+      "createdon": "2026-07-09T14:32:11Z",
+      "exceptiondetails": "Unhandled Exception: System.Data.SqlClient.SqlException: Execution Timeout Expired."
+    }
+  ]
+}

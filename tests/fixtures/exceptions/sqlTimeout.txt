@@ -1,0 +1,9 @@
+Unhandled exception: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: The plug-in execution failed because the Sandbox Client encountered an error during initialization. ---> Microsoft.Xrm.Sdk.InvalidPluginExecutionException: An error occurred in the AccountPostUpdate plug-in. ---> System.Data.SqlClient.SqlException: Execution Timeout Expired.  The timeout period elapsed prior to completion of the operation or the server is not responding.
+   at System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   at System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   at Microsoft.Xrm.Sdk.ServiceModel.OrganizationServiceProxy.Execute(OrganizationRequest request)
+   at MyCompany.Plugins.AccountPostUpdate.RecalculateRollups(IOrganizationService service, Guid accountId)
+   at MyCompany.Plugins.AccountPostUpdate.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Crm.Sandbox.SandboxCodeUnit.Execute(IExecutionContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.Crm.Sandbox.SandboxAppDomainHelper.Execute(IOrganizationServiceFactory organizationServiceFactory, Dictionary`2 sandboxServices, String pluginTypeName, String pluginConfiguration, String pluginSecureConfig, IPluginExecutionContext requestContext)

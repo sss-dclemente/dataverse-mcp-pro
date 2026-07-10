@@ -1,0 +1,7 @@
+Unhandled exception: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: The CaseEscalation plug-in aborted the operation.
+ ---> Microsoft.Xrm.Sdk.InvalidPluginExecutionException: This workflow job was canceled because the workflow that started it included an infinite loop. Correct the workflow logic and try again. For more information on workflow logic, see Help.
+   at MyCompany.Plugins.CaseEscalationPlugin.EscalateCase(IOrganizationService service, Entity incident)
+   at MyCompany.Plugins.CaseEscalationPlugin.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Crm.Extensibility.V5PluginProxyStep.ExecuteInternal(PipelineExecutionContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.Crm.Extensibility.VersionedPluginProxyStepBase.Execute(PipelineExecutionContext context)

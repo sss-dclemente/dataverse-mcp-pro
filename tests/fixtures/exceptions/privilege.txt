@@ -1,0 +1,7 @@
+Unhandled exception: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: SecLib::AccessCheckEx failed. Returned hr = -2147187962, ObjectID: 2b5c3f60-91a4-4f0e-9c1d-7d2f6a8e4b11, OwnerId: 8f34c9b1-0d2e-4a7b-b6c5-1e9f3a7d5c22, OwnerIdType: 8 and CallingUser: 8f34c9b1-0d2e-4a7b-b6c5-1e9f3a7d5c22. ObjectTypeCode: 1, objectBusinessUnitId: 41d0a2c7-5e8b-4f3a-9d6e-2c7b1a4f8e33, AccessRights: ReadAccess
+Principal user (Id=8f34c9b1-0d2e-4a7b-b6c5-1e9f3a7d5c22, type=8) is missing prvReadAccount privilege (Id=886b280c-6396-4d56-a0a3-2c1b0a50ceb0)
+   at Microsoft.Crm.BusinessEntities.SecurityLibrary.AccessCheckEx2(SecurityPrincipal principal, Guid objectId, Int32 objectTypeCode, Guid objectBusinessUnitId, AccessRights rights, ExecutionContext context)
+   at Microsoft.Crm.BusinessEntities.BusinessProcessObject.DoRetrieve(BusinessEntityMoniker moniker, EntityExpression entityExpression, ExecutionContext context)
+   at MyCompany.Plugins.AccountPostUpdate.LoadParentAccount(IOrganizationService service, EntityReference parentRef)
+   at MyCompany.Plugins.AccountPostUpdate.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Xrm.Sdk.PluginTelemetry.PluginExecutionMiddleware.Execute(IServiceProvider serviceProvider)

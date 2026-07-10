@@ -1,0 +1,34 @@
+{
+  "value": [
+    {
+      "typename": "Contoso.Plugins.AuditLogger",
+      "messagename": "Delete",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 10,
+      "correlationid": "dddddddd-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T11:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.AuditLogger",
+      "messagename": "Delete",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 20,
+      "correlationid": "dddddddd-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T10:59:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.AuditLogger",
+      "messagename": "Delete",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 30,
+      "correlationid": "dddddddd-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T10:58:00Z"
+    }
+  ]
+}

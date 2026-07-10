@@ -1,0 +1,10 @@
+Unhandled exception: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: Contoso.Plugins.OpportunityPostUpdate plug-in failed.
+ ---> Microsoft.Xrm.Sdk.InvalidPluginExecutionException: An error occurred while updating the opportunity totals.
+ ---> System.Data.SqlClient.SqlException: Transaction (Process ID 74) was deadlocked on lock resources with another process and has been chosen as the deadlock victim. Rerun the transaction.
+   at System.Data.SqlClient.SqlCommand.ExecuteReader(CommandBehavior behavior, String method)
+   at Microsoft.Xrm.Sdk.Client.OrganizationServiceProxy.ExecuteCore(OrganizationRequest request)
+   at Contoso.Plugins.OpportunityPostUpdate.UpdateTotals(IOrganizationService service, EntityReference opportunityRef)
+   at Contoso.Plugins.OpportunityPostUpdate.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Crm.Extensibility.VersionedPluginProxyStepBase.Execute(PipelineExecutionContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.Crm.Extensibility.PluginStep.Execute(PipelineExecutionContext context)

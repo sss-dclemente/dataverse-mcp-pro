@@ -1,0 +1,174 @@
+{
+  "value": [
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 400,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T11:55:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 500,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000002",
+      "createdon": "2026-07-10T11:50:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 800,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000003",
+      "createdon": "2026-07-10T11:45:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 1200,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000004",
+      "createdon": "2026-07-10T11:40:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 1500,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000005",
+      "createdon": "2026-07-10T11:35:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 1800,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000006",
+      "createdon": "2026-07-10T11:30:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 2200,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000007",
+      "createdon": "2026-07-10T11:25:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.OrderTotalsPlugin",
+      "messagename": "Update",
+      "primaryentity": "salesorder",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 2600,
+      "correlationid": "aaaaaaa1-0000-4000-8000-000000000008",
+      "createdon": "2026-07-10T11:20:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.CascadePlugin",
+      "messagename": "Update",
+      "primaryentity": "contact",
+      "depth": 2,
+      "mode": 0,
+      "performanceexecutionduration": 100,
+      "correlationid": "bbbbbbb1-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T10:55:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.CascadePlugin",
+      "messagename": "Update",
+      "primaryentity": "contact",
+      "depth": 3,
+      "mode": 1,
+      "performanceexecutionduration": null,
+      "correlationid": "bbbbbbb1-0000-4000-8000-000000000002",
+      "createdon": "2026-07-10T10:50:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.CascadePlugin",
+      "messagename": "Update",
+      "primaryentity": "contact",
+      "depth": 5,
+      "mode": 0,
+      "performanceexecutionduration": 300,
+      "correlationid": "bbbbbbb1-0000-4000-8000-000000000003",
+      "createdon": "2026-07-10T10:45:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.CascadePlugin",
+      "messagename": "Update",
+      "primaryentity": "contact",
+      "depth": 4,
+      "mode": 1,
+      "performanceexecutionduration": 200,
+      "correlationid": "bbbbbbb1-0000-4000-8000-000000000004",
+      "createdon": "2026-07-10T10:40:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.ContactEnrichmentPlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 50,
+      "correlationid": "cccccccc-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T09:55:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.ContactEnrichmentPlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 60,
+      "correlationid": "cccccccc-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T09:54:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.ContactEnrichmentPlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 70,
+      "correlationid": "cccccccc-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T09:53:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.ContactEnrichmentPlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 80,
+      "correlationid": "cccccccc-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T09:52:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.ContactEnrichmentPlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 1,
+      "performanceexecutionduration": 90,
+      "correlationid": "cccccccc-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T09:51:00Z"
+    }
+  ]
+}

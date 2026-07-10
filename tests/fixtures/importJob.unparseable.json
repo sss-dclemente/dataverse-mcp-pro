@@ -1,0 +1,9 @@
+{
+  "importjobid": "dddddddd-1111-2222-3333-444444444444",
+  "solutionname": "ContosoSales",
+  "progress": 10,
+  "startedon": "2026-07-04T11:00:00Z",
+  "completedon": null,
+  "createdon": "2026-07-04T11:00:00Z",
+  "data": "<importexportxml start=\"2026-07-04T11:00:00\"><entities /></importexportxml>"
+}
