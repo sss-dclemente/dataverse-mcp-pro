@@ -1,0 +1,44 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#plugintracelogs(plugintracelogid,createdon,typename,messagename,primaryentity,depth,mode,performanceexecutionduration,exceptiondetails,correlationid)",
+  "value": [
+    {
+      "@odata.etag": "W/\"6893212\"",
+      "plugintracelogid": "a1b2c3d4-0001-4a2b-9c3d-1234567890ab",
+      "createdon": "2026-07-10T09:41:07Z",
+      "typename": "Contoso.Plugins.AccountNumberValidator",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 312,
+      "exceptiondetails": "\r\nUnhandled Exception: Microsoft.Xrm.Sdk.InvalidPluginExecutionException: Account number is required and must match the pattern ACC-#####. Fix the value on the form or in the integration payload before saving.\r\n   at Contoso.Plugins.AccountNumberValidator.Execute(IServiceProvider serviceProvider) in AccountNumberValidator.cs:line 42\r\n   at Microsoft.Crm.Extensibility.V5PluginProxyStep.ExecuteInternal(PipelineExecutionContext context)\r\n   at Microsoft.Crm.Extensibility.VersionedPluginProxyStepBase.Execute(PipelineExecutionContext context)\r\n   at Microsoft.Crm.Extensibility.Pipeline.CustomProcessors(PipelineExecutionContext context, Boolean preStage)\r\n   at Microsoft.Crm.Extensibility.Pipeline.Execute(PipelineExecutionContext context)\r\n   at Microsoft.Crm.Extensibility.PipelineInstrumentationHelper.Execute(Boolean instrumentationEnabled, String stopwatchName, ExecuteWithInstrumentation action, PipelineExecutionContext context)",
+      "correlationid": "0f0e0d0c-0b0a-4998-8877-665544332211"
+    },
+    {
+      "@odata.etag": "W/\"6893190\"",
+      "plugintracelogid": "a1b2c3d4-0002-4a2b-9c3d-1234567890ab",
+      "createdon": "2026-07-10T08:15:33Z",
+      "typename": "Contoso.Plugins.OrderTotalsRecalculator",
+      "messagename": "Create",
+      "primaryentity": "salesorder",
+      "depth": 2,
+      "mode": 1,
+      "performanceexecutionduration": 1874,
+      "exceptiondetails": null,
+      "correlationid": "11111111-2222-4333-8444-555555555555"
+    },
+    {
+      "@odata.etag": "W/\"6893101\"",
+      "plugintracelogid": "a1b2c3d4-0003-4a2b-9c3d-1234567890ab",
+      "createdon": "2026-07-10T07:02:11Z",
+      "typename": "Contoso.Plugins.ContactDeduplicator",
+      "messagename": "Update",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 45,
+      "exceptiondetails": "",
+      "correlationid": "99999999-8888-4777-a666-555544443333"
+    }
+  ]
+}
