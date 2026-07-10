@@ -13,9 +13,9 @@ import { dirname, join } from "node:path";
 const PRODUCT_ID = "dvops";
 // Placeholder domain — the owner points this at the deployed license worker.
 const DEFAULT_VALIDATE_URL =
-  "https://licensing.simplesmoothsafe.com/v1/validate";
+  "https://licensing-worker.duarte-clemente.workers.dev/v1/validate";
 // Docs-site pricing anchor — the owner fills in the final domain.
-const CHECKOUT_URL = "https://dvops.simplesmoothsafe.com/#pricing";
+const CHECKOUT_URL = "https://dvops-docs.pages.dev/#pricing";
 const PRO_DOCS_URL = "https://github.com/sss-dclemente/dataverse-mcp-pro#pro";
 
 const CACHE_FILE_NAME = "license-cache.json";

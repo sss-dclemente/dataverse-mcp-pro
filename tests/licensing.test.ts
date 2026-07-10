@@ -108,7 +108,7 @@ describe("initLicensing", () => {
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     const [url, init] = (fetchImpl as ReturnType<typeof vi.fn>).mock
       .calls[0] as [string, RequestInit];
-    expect(url).toBe("https://licensing.simplesmoothsafe.com/v1/validate");
+    expect(url).toBe("https://licensing-worker.duarte-clemente.workers.dev/v1/validate");
     expect(init.method).toBe("POST");
     const rawBody = init.body as string;
     const body = JSON.parse(rawBody) as Record<string, unknown>;
@@ -236,7 +236,7 @@ describe("proUpgradeMessage", () => {
     const msg = proUpgradeMessage("check_step_config");
     expect(msg.upgradeRequired).toBe(true);
     expect(msg.tool).toBe("check_step_config");
-    expect(msg.checkoutUrl).toBe("https://dvops.simplesmoothsafe.com/#pricing");
+    expect(msg.checkoutUrl).toBe("https://dvops-docs.pages.dev/#pricing");
     expect(msg.docsUrl).toBe(
       "https://github.com/sss-dclemente/dataverse-mcp-pro#pro",
     );
