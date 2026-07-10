@@ -1,0 +1,111 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessageprocessingsteps(*)",
+  "value": [
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000001",
+      "name": "Contoso.Plugins.AccountPlugin: Update of account (no filters)",
+      "stage": 40,
+      "mode": 0,
+      "rank": 1,
+      "filteringattributes": null,
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "account" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 0,
+          "name": "PreImage",
+          "entityalias": "PreImage",
+          "attributes": "name,ownerid"
+        }
+      ]
+    },
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000002",
+      "name": "Contoso.Plugins.AccountPlugin: Create of annotation (sync)",
+      "stage": 20,
+      "mode": 0,
+      "rank": 1,
+      "filteringattributes": null,
+      "statecode": 0,
+      "sdkmessageid": { "name": "Create" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "annotation" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": []
+    },
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000003",
+      "name": "Contoso.Plugins.AccountPlugin: Delete (no pre-image)",
+      "stage": 10,
+      "mode": 0,
+      "rank": 1,
+      "filteringattributes": null,
+      "statecode": 0,
+      "sdkmessageid": { "name": "Delete" },
+      "sdkmessagefilterid": null,
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": []
+    },
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000004",
+      "name": "Contoso.Plugins.AccountPlugin: Update of account (rank 10, A)",
+      "stage": 40,
+      "mode": 1,
+      "rank": 10,
+      "filteringattributes": "name,telephone1",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "account" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 2,
+          "name": "Image",
+          "entityalias": "Image",
+          "attributes": "name,telephone1"
+        }
+      ]
+    },
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000005",
+      "name": "Contoso.Plugins.AccountPlugin: Update of account (rank 10, B)",
+      "stage": 40,
+      "mode": 1,
+      "rank": 10,
+      "filteringattributes": "address1_city",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "account" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 0,
+          "name": "PreImage",
+          "entityalias": "PreImage",
+          "attributes": "address1_city"
+        }
+      ]
+    },
+    {
+      "sdkmessageprocessingstepid": "aaaaaaaa-0000-0000-0000-000000000006",
+      "name": "Contoso.Plugins.AccountPlugin: Update of contact (well configured)",
+      "stage": 20,
+      "mode": 1,
+      "rank": 5,
+      "filteringattributes": "emailaddress1",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "contact" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 0,
+          "name": "PreImage",
+          "entityalias": "PreImage",
+          "attributes": "emailaddress1"
+        }
+      ]
+    }
+  ]
+}

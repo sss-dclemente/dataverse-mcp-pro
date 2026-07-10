@@ -1,0 +1,9 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#plugintypes(plugintypeid,typename)",
+  "value": [
+    {
+      "plugintypeid": "11111111-1111-1111-1111-111111111111",
+      "typename": "Contoso.Plugins.AccountPlugin"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessageprocessingsteps(*)",
+  "value": [
+    {
+      "sdkmessageprocessingstepid": "cccccccc-0000-0000-0000-000000000001",
+      "name": "ContosoCore: Update of contact",
+      "stage": 20,
+      "mode": 1,
+      "rank": 1,
+      "filteringattributes": "emailaddress1",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "contact" },
+      "plugintypeid": { "typename": "ContosoCore.Plugins.ContactPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 0,
+          "name": "PreImage",
+          "entityalias": "PreImage",
+          "attributes": "emailaddress1"
+        }
+      ]
+    },
+    {
+      "sdkmessageprocessingstepid": "cccccccc-0000-0000-0000-000000000002",
+      "name": "ContosoCore: Create of account (async)",
+      "stage": 40,
+      "mode": 1,
+      "rank": 2,
+      "filteringattributes": null,
+      "statecode": 0,
+      "sdkmessageid": { "name": "Create" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "account" },
+      "plugintypeid": { "typename": "ContosoCore.Plugins.AccountPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": []
+    }
+  ]
+}

@@ -1,0 +1,70 @@
+{
+  "value": [
+    {
+      "asyncoperationid": "11111111-0000-0000-0000-000000000001",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 31,
+      "errorcode": -2147220970,
+      "message": "Unhandled exception in workflow: System.TimeoutException: The sync to the downstream contact service timed out after 120 seconds. xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "friendlymessage": null,
+      "createdon": "2026-07-10T11:30:00Z",
+      "completedon": "2026-07-10T11:31:00Z"
+    },
+    {
+      "asyncoperationid": "11111111-0000-0000-0000-000000000002",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 31,
+      "errorcode": -2147220970,
+      "message": "Older failure message that must not be used as the latest excerpt.",
+      "friendlymessage": null,
+      "createdon": "2026-07-10T10:00:00Z",
+      "completedon": "2026-07-10T10:01:00Z"
+    },
+    {
+      "asyncoperationid": "11111111-0000-0000-0000-000000000003",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 31,
+      "errorcode": -2147220970,
+      "message": null,
+      "friendlymessage": "Friendly-only variant of the same failure.",
+      "createdon": "2026-07-10T09:00:00Z",
+      "completedon": "2026-07-10T09:02:00Z"
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000004",
+      "name": "Nightly Bulk Delete",
+      "operationtype": 13,
+      "statuscode": 32,
+      "errorcode": null,
+      "message": null,
+      "friendlymessage": "Job was canceled by an administrator.",
+      "createdon": "2026-07-10T08:00:00Z",
+      "completedon": null
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000005",
+      "name": "Nightly Bulk Delete",
+      "operationtype": 13,
+      "statuscode": 32,
+      "errorcode": null,
+      "message": null,
+      "friendlymessage": null,
+      "createdon": "2026-07-10T07:00:00Z",
+      "completedon": null
+    },
+    {
+      "asyncoperationid": "33333333-0000-0000-0000-000000000006",
+      "name": "Contact Import",
+      "operationtype": 99,
+      "statuscode": 31,
+      "errorcode": -2147204784,
+      "message": "Import failed: source file has 12 unparseable rows.",
+      "friendlymessage": null,
+      "createdon": "2026-07-10T06:00:00Z",
+      "completedon": "2026-07-10T06:05:00Z"
+    }
+  ]
+}

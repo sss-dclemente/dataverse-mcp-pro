@@ -1,0 +1,4 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#plugintracelogs(plugintracelogid,createdon,typename,messagename,primaryentity,depth,mode,performanceexecutionduration,exceptiondetails,correlationid)",
+  "value": []
+}

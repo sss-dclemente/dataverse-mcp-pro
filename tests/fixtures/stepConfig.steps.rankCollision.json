@@ -1,0 +1,45 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessageprocessingsteps(*)",
+  "value": [
+    {
+      "sdkmessageprocessingstepid": "bbbbbbbb-0000-0000-0000-000000000001",
+      "name": "Contoso.Plugins.ContactPlugin: Update of contact (first)",
+      "stage": 20,
+      "mode": 1,
+      "rank": 7,
+      "filteringattributes": "firstname",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "contact" },
+      "plugintypeid": { "typename": "Contoso.Plugins.ContactPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 0,
+          "name": "PreImage",
+          "entityalias": "PreImage",
+          "attributes": "firstname"
+        }
+      ]
+    },
+    {
+      "sdkmessageprocessingstepid": "bbbbbbbb-0000-0000-0000-000000000002",
+      "name": "Contoso.Plugins.ContactPlugin: Update of contact (second)",
+      "stage": 20,
+      "mode": 1,
+      "rank": 7,
+      "filteringattributes": "lastname",
+      "statecode": 0,
+      "sdkmessageid": { "name": "Update" },
+      "sdkmessagefilterid": { "primaryobjecttypecode": "contact" },
+      "plugintypeid": { "typename": "Contoso.Plugins.ContactPlugin" },
+      "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+        {
+          "imagetype": 2,
+          "name": "Image",
+          "entityalias": "Image",
+          "attributes": "lastname"
+        }
+      ]
+    }
+  ]
+}
