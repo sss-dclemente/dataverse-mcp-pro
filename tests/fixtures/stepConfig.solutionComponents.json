@@ -1,0 +1,86 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#solutioncomponents(objectid)",
+  "value": [
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000001"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000002"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000003"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000004"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000005"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000006"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000007"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000008"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000009"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000010"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000011"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000012"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000013"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000014"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000015"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000016"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000017"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000018"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000019"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000020"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000021"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000022"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000023"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000024"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000025"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000026"
+    },
+    {
+      "objectid": "cccccccc-0000-0000-0000-000000000027"
+    }
+  ]
+}

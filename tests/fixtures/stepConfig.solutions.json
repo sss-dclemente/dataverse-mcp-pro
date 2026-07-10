@@ -1,0 +1,8 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#solutions(solutionid)",
+  "value": [
+    {
+      "solutionid": "55555555-5555-5555-5555-555555555555"
+    }
+  ]
+}
