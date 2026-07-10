@@ -1,0 +1,4 @@
+{
+  "status": 403,
+  "message": "Principal user (Id=8d5e1c22-71aa-4d0f-9f1e-6b3ce02f7a10, type=8) is missing prvReadPluginTraceLog privilege (Id=1c8a4f2e-3b6d-4c8e-9f0a-2d7b5e9c1a44) on OTC=4619"
+}

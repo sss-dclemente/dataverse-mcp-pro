@@ -1,0 +1,23 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessageprocessingsteps(name,stage,mode,rank,filteringattributes)/$entity",
+  "sdkmessageprocessingstepid": "dddddddd-1111-4222-8333-444444444444",
+  "name": "MyCompany.Plugins.AccountPostUpdatePlugin: Update of account",
+  "stage": 40,
+  "mode": 0,
+  "rank": 1,
+  "filteringattributes": "revenue,name",
+  "sdkmessageid": {
+    "name": "Update"
+  },
+  "sdkmessagefilterid": {
+    "primaryobjecttypecode": "account"
+  },
+  "sdkmessageprocessingstepid_sdkmessageprocessingstepimage": [
+    {
+      "name": "PreImage",
+      "entityalias": "PreImage",
+      "imagetype": 0,
+      "attributes": "revenue,name,statecode"
+    }
+  ]
+}

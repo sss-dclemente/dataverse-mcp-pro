@@ -1,0 +1,8 @@
+Unhandled exception: System.ServiceModel.FaultException`1[Microsoft.Xrm.Sdk.OrganizationServiceFault]: Credit limit validation failed.
+ ---> Microsoft.Xrm.Sdk.InvalidPluginExecutionException: Credit limit cannot be lowered below the outstanding balance for this account.
+   at MyCompany.Plugins.AccountPreUpdate.ValidateCreditLimit(Entity target, Entity preImage)
+   at MyCompany.Plugins.AccountPreUpdate.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Xrm.Sdk.PluginTelemetry.PluginExecutionMiddleware.Execute(IServiceProvider serviceProvider)
+   at Microsoft.Crm.Sandbox.SandboxCodeUnit.Execute(IExecutionContext context)
+   --- End of inner exception stack trace ---
+   at Microsoft.Crm.Sandbox.SandboxAppDomainHelper.Execute(IOrganizationServiceFactory organizationServiceFactory, Dictionary`2 sandboxServices, String pluginTypeName)
