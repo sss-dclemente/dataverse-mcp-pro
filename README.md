@@ -4,7 +4,7 @@
 
 Diagnosing production problems in Dataverse / Dynamics 365 usually means firing up XrmToolBox, exporting plugin trace logs, and spelunking through raw exception blocks and `importexportxml` documents by hand: plugin failures buried in thousands of trace rows, async job graveyards in the admin center, cryptic solution import errors, and performance mysteries with no obvious culprit. This MCP server puts those diagnostics directly inside your AI assistant. Instead of raw Dataverse payloads, every tool returns structured, LLM-optimized JSON — trimmed, grouped, and annotated — so the assistant can reason about *why* something failed, not just show you that it did.
 
-It runs locally over stdio inside Claude Desktop, Claude Code, or any MCP host, and talks only to your own Dataverse org via the Web API (v9.2) — no middleman service, no data leaving your machine or tenant. The free tier covers everyday triage (health check, recent plugin failures, failed async jobs); the Pro tier adds root-cause analysis: step configuration linting, single-trace root-cause correlation, solution import failure explanations, and plugin performance profiling.
+It runs locally over stdio inside Claude Desktop, Claude Code, or any MCP host, and talks only to your own Dataverse org via the Web API (v9.2) — no middleman service, no data leaving your machine or tenant. The **Free** tier covers everyday triage (health check, recent plugin failures, failed and stuck async jobs, flow runs, org settings); the **Pro** tier adds diagnosis and documentation for the plugin, flow, table or solution you're working on (root-cause correlation, performance profiling, import-failure explanations, flow and table documentation); and the **Enterprise** tier adds org-wide governance that scans your whole environment — fleet flow inventory, connection-reference audits, automation-loop detection and legacy-tech modernization reporting. An Enterprise license unlocks every Pro tool too.
 
 ## 5-minute quickstart
 
@@ -76,7 +76,7 @@ Or declare it in a `.mcp.json` at your project root:
 | `CLIENT_ID` | No | App registration client ID. Set together with `CLIENT_SECRET` and `TENANT_ID` for client-credentials auth. |
 | `CLIENT_SECRET` | No | App registration client secret (part of the client-credentials trio). |
 | `TENANT_ID` | No | Entra ID tenant ID (part of the client-credentials trio). |
-| `LICENSE_KEY` | No | Unlocks the Pro tools. Validated once at startup against the license service; without it, Pro tools return an upgrade message. |
+| `LICENSE_KEY` | No | Unlocks the paid tools by tier (a Pro key unlocks Pro tools; an Enterprise key unlocks Pro **and** Enterprise tools). Validated once at startup against the license service; without a sufficient tier, gated tools return an upgrade message naming the required tier. |
 | `DVOPS_LICENSE_URL` | No | Overrides the license validation endpoint (mainly for testing/self-hosting). |
 | `DVOPS_CACHE_DIR` | No | Directory for the license cache file (`license-cache.json`). Defaults to `~/.dvops`. |
 
@@ -99,13 +99,13 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 | [`get_org_automation_settings`](docs/tools/get_org_automation_settings.md) | Free | Org-level switches the other tools depend on: plug-in trace logging level and auditing configuration, with actionable hints. |
 | [`find_stuck_jobs`](docs/tools/find_stuck_jobs.md) | Free | Async jobs stuck in waiting/in-progress beyond a threshold — the backlog complement to `get_failed_async_jobs` (postponed jobs excluded). |
 | [`explain_flow_failure`](docs/tools/explain_flow_failure.md) | Pro | Root-cause analysis of a failed flow run: failed-action guess, definition context, and known-pattern detection (expired connections, throttling, timeouts). |
-| [`check_flow_connections`](docs/tools/check_flow_connections.md) | Pro | Connection-reference health audit: unbound references, disabled owners, owner mismatches, unused references — with affected flows. |
-| [`flow_governance_report`](docs/tools/flow_governance_report.md) | Pro | Flow inventory by state and owner: flows owned by disabled users, suspended flows, stale drafts, owner concentration. |
+| [`check_flow_connections`](docs/tools/check_flow_connections.md) | Enterprise | Connection-reference health audit: unbound references, disabled owners, owner mismatches, unused references — with affected flows. |
+| [`flow_governance_report`](docs/tools/flow_governance_report.md) | Enterprise | Flow inventory by state and owner: flows owned by disabled users, suspended flows, stale drafts, owner concentration. |
 | [`what_runs_on_table`](docs/tools/what_runs_on_table.md) | Pro | Everything registered on one table: plug-in steps, cloud flows (trigger vs action), classic workflows and business rules — in one view. |
-| [`detect_automation_loops`](docs/tools/detect_automation_loops.md) | Pro | Suspected trigger→write cycles between cloud flows (self-loops and 2–3 flow cycles), with filtering-attribute evidence. |
+| [`detect_automation_loops`](docs/tools/detect_automation_loops.md) | Enterprise | Suspected trigger→write cycles between cloud flows (self-loops and 2–3 flow cycles), with filtering-attribute evidence. |
 | [`document_table`](docs/tools/document_table.md) | Pro | Table documentation from metadata: columns, relationships, keys and attached automation, plus ready-to-share markdown. |
 | [`get_solution_layers`](docs/tools/get_solution_layers.md) | Pro | Solution layering for one component — who overwrote it, whether an unmanaged Active layer is blocking managed updates. |
-| [`modernization_report`](docs/tools/modernization_report.md) | Pro | Legacy automation inventory: active dialogs, classic workflows (sync/async), business rules footprint — with migration priorities. |
+| [`modernization_report`](docs/tools/modernization_report.md) | Enterprise | Legacy automation inventory: active dialogs, classic workflows (sync/async), business rules footprint — with migration priorities. |
 
 The flow tools complement Microsoft's [power-platform-skills](https://github.com/microsoft/power-platform-skills) FlowAgent plugin: FlowAgent builds and debugs flows interactively, while these tools add read-only diagnostics, reporting and documentation alongside the plug-in and Dataverse tools above.
 

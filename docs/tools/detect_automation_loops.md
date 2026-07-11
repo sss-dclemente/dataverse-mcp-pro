@@ -24,7 +24,7 @@ flags in `analyze_plugin_performance`, and `what_runs_on_table` shows all
 automation registered on a table. Use the three together to cover plugin↔flow
 ping-pong.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
+**Tier: Enterprise** — requires an Enterprise `LICENSE_KEY` environment variable. Without a
 license the tool returns a friendly upgrade message instead of results.
 
 ## Inputs
@@ -89,7 +89,7 @@ recommending `analyze_plugin_performance` depth flags for plugin-side loops.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "detect_automation_loops", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
+| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "detect_automation_loops", "message": "...Enterprise tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message, a hint that scanning flow definitions requires read privilege on the Process (workflow) table including `clientdata` (e.g. System Customizer), and `docsUrl` pointing to the [Dataverse trigger docs](https://learn.microsoft.com/power-automate/dataverse/create-update-delete-trigger). |
 | Flow with broken/empty `clientdata` | Counted in `parseFailures` and skipped; the rest of the scan proceeds. |
 | Other failures | Generic `{ "error": "..." }` envelope; raw exceptions never escape to the host. |

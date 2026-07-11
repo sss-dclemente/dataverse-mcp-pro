@@ -29,7 +29,7 @@ capped at `top` per category. Findings, sorted `high` → `low`:
 - **low** — `business-rules-inventory`: more than 25 active business rules
   (informational; consider consolidating).
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
+**Tier: Enterprise** — requires an Enterprise `LICENSE_KEY` environment variable. Without a
 license the tool returns a friendly upgrade message instead of results.
 
 ## Inputs
@@ -113,7 +113,7 @@ Each category is scanned up to 500 rows; a category at the cap adds a
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "modernization_report", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
+| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "modernization_report", "message": "...Enterprise tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | HTTP 403 on the first (classic workflows) query | Error envelope with the Dataverse message, a hint that reading processes requires read privilege on the Process (`workflow`) table, and `docsUrl` pointing to [Replace classic workflows with flows](https://learn.microsoft.com/power-automate/replace-workflows-with-flows). |
 | Any other failure on the first query | Generic error envelope `{ "error": "..." }`. |
 | A later category query fails | The report is still returned; the failed category is zeroed and a `sectionNotes` entry records the failure (e.g. `"dialogs: query failed — ..."`). |

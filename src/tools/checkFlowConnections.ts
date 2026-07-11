@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
+import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -382,7 +382,7 @@ export const checkFlowConnectionsTool = defineTool({
     "reference and the flows using it, and unused bound references. Pro tier.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("check_flow_connections");
+    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("check_flow_connections");
     try {
       return await checkFlowConnections(getDefaultClient(), input);
     } catch (err) {

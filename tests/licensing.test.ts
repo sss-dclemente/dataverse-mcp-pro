@@ -11,7 +11,10 @@ import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   _resetLicensingForTests,
+  enterpriseUpgradeMessage,
+  hasTier,
   initLicensing,
+  isEnterpriseLicensed,
   isProLicensed,
   proUpgradeMessage,
 } from "../src/licensing.js";
@@ -269,5 +272,84 @@ describe("isProLicensed legacy stub path", () => {
       fetchImpl: fetchRejecting(),
     });
     expect(isProLicensed()).toBe(false);
+  });
+});
+
+describe("tiers: isEnterpriseLicensed / hasTier", () => {
+  it("a remote enterprise license unlocks both Pro and Enterprise", async () => {
+    const fetchImpl = fetchReturning(200, {
+      valid: true,
+      tier: "enterprise",
+      expiresAt: null,
+    });
+    const state = await initLicensing({ env: env(), fetchImpl });
+    expect(state.tier).toBe("enterprise");
+    expect(isProLicensed()).toBe(true);
+    expect(isEnterpriseLicensed()).toBe(true);
+    expect(hasTier("pro")).toBe(true);
+    expect(hasTier("enterprise")).toBe(true);
+  });
+
+  it("a remote pro license unlocks Pro but not Enterprise", async () => {
+    const fetchImpl = fetchReturning(200, {
+      valid: true,
+      tier: "pro",
+      expiresAt: null,
+    });
+    await initLicensing({ env: env(), fetchImpl });
+    expect(isProLicensed()).toBe(true);
+    expect(isEnterpriseLicensed()).toBe(false);
+    expect(hasTier("enterprise")).toBe(false);
+  });
+
+  it("a validated license with no tier string defaults to Pro, not Enterprise", async () => {
+    const fetchImpl = fetchReturning(200, { valid: true, expiresAt: null });
+    const state = await initLicensing({ env: env(), fetchImpl });
+    expect(state.tier).toBeNull();
+    expect(isProLicensed()).toBe(true);
+    expect(isEnterpriseLicensed()).toBe(false);
+  });
+
+  it("cached enterprise tier is honored under offline grace", async () => {
+    seedCache({ tier: "enterprise" });
+    const state = await initLicensing({ env: env(), fetchImpl: fetchRejecting() });
+    expect(state).toMatchObject({
+      licensed: true,
+      tier: "enterprise",
+      source: "cache",
+    });
+    expect(isEnterpriseLicensed()).toBe(true);
+  });
+
+  it("no license: neither Pro nor Enterprise", async () => {
+    await initLicensing({ env: env({ LICENSE_KEY: "" }) });
+    expect(isProLicensed()).toBe(false);
+    expect(isEnterpriseLicensed()).toBe(false);
+  });
+
+  it("legacy stub: LICENSE_TIER=enterprise unlocks Enterprise before init", () => {
+    _resetLicensingForTests();
+    vi.stubEnv("LICENSE_KEY", "some-key");
+    vi.stubEnv("LICENSE_TIER", "enterprise");
+    expect(isProLicensed()).toBe(true);
+    expect(isEnterpriseLicensed()).toBe(true);
+  });
+
+  it("legacy stub: a key without LICENSE_TIER is Pro, not Enterprise", () => {
+    _resetLicensingForTests();
+    vi.stubEnv("LICENSE_KEY", "some-key");
+    expect(isProLicensed()).toBe(true);
+    expect(isEnterpriseLicensed()).toBe(false);
+  });
+});
+
+describe("enterpriseUpgradeMessage", () => {
+  it("names the Enterprise tier and carries requiredTier", () => {
+    const msg = enterpriseUpgradeMessage("flow_governance_report");
+    expect(msg.upgradeRequired).toBe(true);
+    expect(msg.tool).toBe("flow_governance_report");
+    expect(msg.requiredTier).toBe("enterprise");
+    expect(msg.message).toContain("Enterprise");
+    expect(msg.checkoutUrl).toBe("https://dvops-docs.pages.dev/#pricing");
   });
 });

@@ -56,7 +56,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("detect_automation_loops pro gate", () => {
+describe("detect_automation_loops enterprise gate", () => {
   it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
     vi.stubEnv("LICENSE_KEY", "");
     const fetchSpy = vi.fn();
@@ -70,12 +70,29 @@ describe("detect_automation_loops pro gate", () => {
 
     expect(result.upgradeRequired).toBe(true);
     expect(result.tool).toBe("detect_automation_loops");
-    expect(result.message).toContain("Pro");
+    expect(result.message).toContain("Enterprise");
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("does not unlock for a Pro-tier license (Enterprise required)", async () => {
+    vi.stubEnv("LICENSE_KEY", "valid-key");
+    vi.stubEnv("LICENSE_TIER", "pro");
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const result = (await detectAutomationLoopsTool.handler(defaultInput())) as {
+      upgradeRequired?: boolean;
+      requiredTier?: string;
+    };
+
+    expect(result.upgradeRequired).toBe(true);
+    expect(result.requiredTier).toBe("enterprise");
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("proceeds past the gate when LICENSE_KEY is set", async () => {
     vi.stubEnv("LICENSE_KEY", "valid-key");
+    vi.stubEnv("LICENSE_TIER", "enterprise");
     vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
     vi.stubEnv("CLIENT_ID", "client-id");
     vi.stubEnv("CLIENT_SECRET", "client-secret");

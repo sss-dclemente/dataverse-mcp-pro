@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
+import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -337,7 +337,7 @@ export const flowGovernanceReportTool = defineTool({
     "drafts, and owner concentration (bus-factor) risks. Pro tier.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("flow_governance_report");
+    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("flow_governance_report");
     try {
       return await flowGovernanceReport(getDefaultClient(), input);
     } catch (err) {

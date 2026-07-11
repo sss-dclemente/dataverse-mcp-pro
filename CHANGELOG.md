@@ -9,19 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Enterprise tier.** Licensing is now tier-aware (`free` < `pro` < `enterprise`): an Enterprise license unlocks every Pro tool plus the org-wide governance tools. The four environment-wide scanners — `flow_governance_report`, `check_flow_connections`, `detect_automation_loops` and `modernization_report` — now require an Enterprise license; their upgrade messages carry a `requiredTier` field. New `isEnterpriseLicensed()` / `hasTier()` / `enterpriseUpgradeMessage()` helpers.
+
 - `get_flow_runs` tool (free): filtered Power Automate cloud-flow run history (flow, status, time window) via the Dataverse `flowrun` virtual table.
 - `document_flow` tool (pro): structured documentation for a cloud flow parsed from its definition — triggers, action tree with dependencies, connectors, and a ready-to-share markdown document.
 - `analyze_flow_runs` tool (pro): per-flow reliability report with success rates, duration percentiles, error clusters, and flags for high failure rates, failure streaks and slow p95 durations.
 - `get_org_automation_settings` tool (free): org-level plug-in trace logging and auditing switches with actionable hints.
 - `find_stuck_jobs` tool (free): async jobs stuck in waiting/in-progress beyond a threshold, with postponed (scheduled) jobs excluded.
 - `explain_flow_failure` tool (pro): root-cause analysis for a failed cloud-flow run with failed-action guess and known-pattern detection.
-- `check_flow_connections` tool (pro): connection-reference health audit (unbound references, disabled owners, owner mismatches, unused references).
-- `flow_governance_report` tool (pro): flow ownership/state inventory flagging disabled owners, suspended flows, stale drafts and owner concentration.
+- `check_flow_connections` tool (enterprise): connection-reference health audit (unbound references, disabled owners, owner mismatches, unused references).
+- `flow_governance_report` tool (enterprise): flow ownership/state inventory flagging disabled owners, suspended flows, stale drafts and owner concentration.
 - `what_runs_on_table` tool (pro): unified map of plug-in steps, cloud flows, classic workflows and business rules registered on one table.
-- `detect_automation_loops` tool (pro): suspected trigger→write cycles between cloud flows (self-loops and 2–3 flow cycles).
+- `detect_automation_loops` tool (enterprise): suspected trigger→write cycles between cloud flows (self-loops and 2–3 flow cycles).
 - `document_table` tool (pro): table documentation from EntityDefinitions metadata with attached automation and markdown output.
 - `get_solution_layers` tool (pro): solution layering of one component, flagging unmanaged Active layers that block managed updates.
-- `modernization_report` tool (pro): inventory of legacy automation (dialogs, classic workflows, business rules) with migration priorities.
+- `modernization_report` tool (enterprise): inventory of legacy automation (dialogs, classic workflows, business rules) with migration priorities.
 
 ## [0.2.0] - 2026-07-10
 
