@@ -26,10 +26,10 @@ Tokens are cached in memory until near expiry. Requests retry on 429 honoring
 
 ## Privacy
 
-Data NEVER leaves the user's machine/tenant. No telemetry unless the user
-explicitly opts in via env var (none exists yet — do not invent one silently).
-The only outbound call besides Dataverse/Entra is license validation (opt-in via
-`LICENSE_KEY`), which must never carry org data.
+Data NEVER leaves the user's machine/tenant. No telemetry, ever — do not add
+analytics or any outbound call besides Dataverse and Entra ID. The project is
+MIT-licensed and every tool is free; there is no licensing gate — do not
+reintroduce one.
 
 ## Architecture
 
@@ -39,10 +39,6 @@ The only outbound call besides Dataverse/Entra is license validation (opt-in via
 - `src/dataverse/client.ts` — thin Web API client (auth, retry, `$select`/`$filter`/`$top`, batch GET).
 - `src/errors.ts` — error envelope `{ error, hint, docsUrl }`. Handlers return this
   shape on failure; never let raw exceptions escape to the host.
-- `src/licensing.ts` — single gate for free vs pro tools. `isProLicensed()` is a
-  stub (reads `LICENSE_KEY`, false if absent); real remote check lands later.
-  Pro tools respond with a friendly upgrade message — they never throw on
-  missing license, and licensing must never block free tools.
 
 ## Tool conventions
 
@@ -84,4 +80,3 @@ Keep `tsconfig.json` aligned with:
 3. Doc page stub at `docs/tools/<tool_name>.md` (inputs table, example call,
    example output, common errors).
 4. Registered in `src/tools/index.ts`; `npm run build` and `npm test` green.
-5. Pro tools gated through `src/licensing.ts`, with the upgrade-message path tested.

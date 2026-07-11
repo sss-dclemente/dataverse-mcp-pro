@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -334,10 +333,9 @@ export const flowGovernanceReportTool = defineTool({
     "Ownership and state inventory of solution-aware Power Automate cloud flows in " +
     "Dataverse: activated/draft/suspended counts, an owner table, and governance " +
     "findings — activated flows owned by disabled users, suspended flows, stale " +
-    "drafts, and owner concentration (bus-factor) risks. Pro tier.",
+    "drafts, and owner concentration (bus-factor) risks.",
   inputSchema,
   handler: async (input) => {
-    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("flow_governance_report");
     try {
       return await flowGovernanceReport(getDefaultClient(), input);
     } catch (err) {

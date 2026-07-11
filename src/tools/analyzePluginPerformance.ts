@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -325,10 +324,9 @@ export const analyzePluginPerformanceTool = defineTool({
     "Aggregates Dataverse plug-in trace logs (plugintracelogs) over a time window " +
     "into a per-plugin/message performance table (p50/p95/avg/max duration, depth, " +
     "sync vs async split) and flags anti-patterns: slow synchronous steps, deep " +
-    "cascades, and N+1 firing within one correlation. Pro tier.",
+    "cascades, and N+1 firing within one correlation.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("analyze_plugin_performance");
     try {
       return await analyzePluginPerformance(getDefaultClient(), input);
     } catch (err) {

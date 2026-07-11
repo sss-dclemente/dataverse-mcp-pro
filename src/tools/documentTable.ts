@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -582,10 +581,9 @@ export const documentTableTool = defineTool({
     "EntityDefinitions metadata: columns (type, required level, custom flag), " +
     "relationships (1:N, N:1, N:N), alternate keys, an optional summary of the " +
     "plug-in steps and cloud flows that automate the table, and a " +
-    "ready-to-share markdown document. Pass the table's logical name. Pro tier.",
+    "ready-to-share markdown document. Pass the table's logical name.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("document_table");
     try {
       return await documentTable(getDefaultClient(), input);
     } catch (err) {

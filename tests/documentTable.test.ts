@@ -83,42 +83,6 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("document_table pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await documentTableTool.handler({
-      table: "account",
-      includeAutomation: true,
-    })) as { upgradeRequired?: boolean; tool?: string; message?: string };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("document_table");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    // No DATAVERSE_URL: client construction fails after the gate, proving the
-    // gate opened without needing a live connection.
-    vi.stubEnv("DATAVERSE_URL", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await documentTableTool.handler({
-      table: "account",
-      includeAutomation: true,
-    })) as Envelope & { upgradeRequired?: boolean };
-
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toContain("DATAVERSE_URL");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-});
-
 describe("document_table input schema", () => {
   it("requires table and defaults includeAutomation to true", () => {
     expect(documentTableTool.inputSchema.safeParse({}).success).toBe(false);

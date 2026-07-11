@@ -1,8 +1,8 @@
 {
   "name": "@simplesmoothsafe/dataverse-ops-mcp",
-  "version": "0.2.0",
-  "description": "MCP server for Microsoft Dataverse diagnostics: plugin traces, async job failures, step configuration analysis and more, over stdio.",
-  "license": "SEE LICENSE IN LICENSE",
+  "version": "0.3.0",
+  "description": "Open-source MCP server for Microsoft Dataverse & Power Automate diagnostics: plugin traces, async jobs, flow runs, governance and documentation, over stdio.",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/sss-dclemente/dataverse-mcp-pro.git"

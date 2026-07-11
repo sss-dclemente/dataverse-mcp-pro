@@ -127,52 +127,6 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("explain_flow_failure pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await explainFlowFailureTool.handler(parseInput())) as {
-      upgradeRequired?: boolean;
-      tool?: string;
-      message?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("explain_flow_failure");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
-    vi.stubEnv("CLIENT_ID", "client");
-    vi.stubEnv("CLIENT_SECRET", "secret");
-    vi.stubEnv("TENANT_ID", "tenant");
-    const fetchSpy = vi.fn(async () => {
-      throw new Error("boom");
-    });
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await explainFlowFailureTool.handler(
-      parseInput({ runName: RUN_NAME }),
-    )) as ResultShape & { upgradeRequired?: boolean };
-
-    // Past the gate: the client was built and attempted a token request,
-    // whose failure came back as an error envelope, not an exception.
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toBe("boom");
-    expect(fetchSpy).toHaveBeenCalled();
-  });
-
-  it("is exposed as the tool explain_flow_failure", () => {
-    expect(explainFlowFailureTool.name).toBe("explain_flow_failure");
-    expect(explainFlowFailureTool.description).toContain("Pro tier");
-  });
-});
-
 describe("input schema and guard", () => {
   it("accepts each identifier alone and rejects malformed values", () => {
     const schema = explainFlowFailureTool.inputSchema;

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope, type ErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -515,10 +514,9 @@ export const explainFlowFailureTool = defineTool({
     "error message, and detects known failure patterns (expired connections, " +
     "throttling, timeouts, permissions, expression errors, pagination limits, " +
     "Dataverse plug-in errors) with likely fixes. Pass runName (the run id from " +
-    "get_flow_runs), or flowId/flowName to analyze the flow's latest failed run. Pro tier.",
+    "get_flow_runs), or flowId/flowName to analyze the flow's latest failed run.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("explain_flow_failure");
     try {
       return await explainFlowFailure(getDefaultClient(), input);
     } catch (err) {

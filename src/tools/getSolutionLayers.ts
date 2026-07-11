@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -206,10 +205,9 @@ export const getSolutionLayersTool = defineTool({
     "form: lists every solution layer on the component from the winning (top) " +
     "layer down, flags an unmanaged 'Active' layer that blocks managed updates " +
     "and deep layer stacks. Requires the component type name (e.g. 'Entity', " +
-    "'SystemForm', 'WebResource') and the component's GUID. Pro tier.",
+    "'SystemForm', 'WebResource') and the component's GUID.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("get_solution_layers");
     try {
       return await getSolutionLayers(getDefaultClient(), input);
     } catch (err) {

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -382,10 +381,9 @@ export const detectAutomationLoopsTool = defineTool({
     "Dataverse tables: flows that write the table they trigger on (self-loops) and " +
     "chains of 2–3 flows whose writes trigger each other (cycles). Heuristic, " +
     "definition-based analysis of activated cloud flows (workflow.clientdata); " +
-    "flags missing trigger filtering attributes. Pro tier.",
+    "flags missing trigger filtering attributes.",
   inputSchema,
   handler: async (input) => {
-    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("detect_automation_loops");
     try {
       return await detectAutomationLoops(getDefaultClient(), input);
     } catch (err) {

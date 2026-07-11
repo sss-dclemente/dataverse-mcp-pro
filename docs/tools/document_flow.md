@@ -22,8 +22,7 @@ container gets a `note`), the action list stops at 200 entries
 (`actionsTruncated: true`), expressions are trimmed to 200 chars, and the
 markdown is hard-capped at 8000 chars with a trailing `…(truncated)` marker.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -110,7 +109,6 @@ Trimmed for brevity:
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "document_flow", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | Neither input provided | `{ "error": "Provide flowId or flowName", "hint": "..." }` |
 | `flowId` does not exist (HTTP 404) | `{ "error": "Flow not found", "hint": "Verify the workflowid (GUID)..." }` |
 | No cloud flow matches `flowName` | `{ "error": "Flow not found: \"...\"", "hint": "No cloud flow (category 5) matched that display name..." }` |

@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -467,10 +466,9 @@ export const explainImportFailureTool = defineTool({
     "result XML, lists each failed component with a plain-language cause " +
     "(missing dependencies, version conflicts, unmanaged layers, duplicates, " +
     "SQL errors) and builds a dependencies-first resolution order. Scope by " +
-    "import job id or solution unique name (latest import). Pro tier.",
+    "import job id or solution unique name (latest import).",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("explain_import_failure");
     try {
       return await explainImportFailure(getDefaultClient(), input);
     } catch (err) {

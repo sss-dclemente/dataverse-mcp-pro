@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -360,10 +359,9 @@ export const checkStepConfig = defineTool({
     "Analyze Dataverse plug-in step registrations (SdkMessageProcessingStep) for " +
     "common misconfigurations: Update steps without filtering attributes, " +
     "synchronous steps on high-volume entities, missing pre-images, and rank " +
-    "collisions. Scope by plug-in type name or solution unique name. Pro tier.",
+    "collisions. Scope by plug-in type name or solution unique name.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("check_step_config");
     try {
       return await analyzeStepConfig(getDefaultClient(), input);
     } catch (err) {

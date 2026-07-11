@@ -15,8 +15,7 @@ and non-deterministic behavior:
 
 Only **active** steps (`statecode eq 0`) are analyzed.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -89,7 +88,6 @@ plug-in type or the solution contains no steps, the tool returns
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "check_step_config", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | Neither input provided | `{ "error": "Provide pluginTypeName or solutionName", "hint": "..." }` |
 | Solution unique name not found | `{ "error": "Solution not found: \"...\"", "hint": "Pass the solution's unique name (uniquename), not its display name..." }` |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message, a hint that reading step registrations requires customizer-level read privileges on `SdkMessageProcessingStep`, and `docsUrl` pointing to the [business logic best practices](https://learn.microsoft.com/power-apps/developer/data-platform/best-practices/business-logic/). |

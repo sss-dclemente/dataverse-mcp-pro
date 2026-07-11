@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope, type ErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -516,10 +515,9 @@ export const documentFlowTool = defineTool({
     "Dataverse definition (workflow.clientdata): triggers (including recurrence " +
     "schedules), a flat pre-order outline of actions with nesting depth and " +
     "runAfter dependencies, the connectors it uses, and a ready-to-share markdown " +
-    "document. Pass flowId (workflowid GUID) or flowName (display name). Pro tier.",
+    "document. Pass flowId (workflowid GUID) or flowName (display name).",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("document_flow");
     try {
       return await documentFlow(getDefaultClient(), input);
     } catch (err) {

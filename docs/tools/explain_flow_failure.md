@@ -18,8 +18,7 @@ of `explain_trace`. Given a run (or just a flow), the tool:
 The output is structured JSON optimized for an LLM host to reason over, not a
 raw run dump.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -122,7 +121,6 @@ Dataverse plug-in: run `explain_trace` on the correlated plug-in trace.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "explain_flow_failure", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | No input provided | `{ "error": "Provide runName, flowId or flowName", "hint": "..." }` |
 | `runName` not found | `{ "error": "Flow run not found: \"...\"", "hint": "Run names come from get_flow_runs; Dataverse run history only covers solution-aware cloud flows and is retained for a limited window." }` |
 | Flow has no Failed runs | `{ "error": "No failed runs found for this flow", "hint": "Use get_flow_runs to inspect recent runs in any state..." }` |

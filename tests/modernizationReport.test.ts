@@ -99,62 +99,6 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("modernization_report enterprise gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await modernizationReportTool.handler({ top: 25 })) as {
-      upgradeRequired?: boolean;
-      tool?: string;
-      message?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("modernization_report");
-    expect(result.message).toContain("Enterprise");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("does not unlock for a Pro-tier license (Enterprise required)", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("LICENSE_TIER", "pro");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await modernizationReportTool.handler({ top: 25 })) as {
-      upgradeRequired?: boolean;
-      requiredTier?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.requiredTier).toBe("enterprise");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate to Dataverse when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("LICENSE_TIER", "enterprise");
-    vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
-    vi.stubEnv("CLIENT_ID", "client-id");
-    vi.stubEnv("CLIENT_SECRET", "client-secret");
-    vi.stubEnv("TENANT_ID", "tenant-id");
-    const fetchSpy = vi.fn().mockRejectedValue(new Error("network down"));
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await modernizationReportTool.handler({ top: 25 })) as Envelope & {
-      upgradeRequired?: boolean;
-    };
-
-    // The gate was passed: the tool attempted a token request and degraded
-    // the network failure into an error envelope instead of throwing.
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toBe("network down");
-    expect(fetchSpy).toHaveBeenCalled();
-  });
-});
-
 describe("modernization_report input schema", () => {
   it("applies the default and enforces bounds and integrality", () => {
     const schema = modernizationReportTool.inputSchema;

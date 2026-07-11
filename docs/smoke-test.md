@@ -22,7 +22,6 @@ export DATAVERSE_URL=https://yourorg.crm.dynamics.com
 export CLIENT_ID=...        # optional trio; omit all three to use
 export CLIENT_SECRET=...    # DefaultAzureCredential (e.g. az login)
 export TENANT_ID=...
-# export LICENSE_KEY=...    # optional, to also smoke-test a Pro tool
 
 npx --yes ./simplesmoothsafe-dataverse-ops-mcp-0.1.0.tgz
 ```

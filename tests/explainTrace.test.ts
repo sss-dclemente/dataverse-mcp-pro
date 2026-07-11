@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { explainTrace, explainTraceTool } from "../src/tools/explainTrace.js";
+import { explainTrace } from "../src/tools/explainTrace.js";
 import { DataverseHttpError, type DataverseClient } from "../src/dataverse/client.js";
 
 const DOCS_URL =
@@ -111,41 +111,6 @@ const TRACE_SELECT = [
 afterEach(() => {
   vi.unstubAllEnvs();
   vi.unstubAllGlobals();
-});
-
-describe("explain_trace pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await explainTraceTool.handler({})) as {
-      upgradeRequired?: boolean;
-      tool?: string;
-      message?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("explain_trace");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    // No ids: reaches the core function's input guard, not the gate.
-    const result = (await explainTraceTool.handler({})) as Envelope & {
-      upgradeRequired?: boolean;
-    };
-
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toBe("Provide traceId or correlationId");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
 });
 
 describe("explainTrace input guard", () => {
