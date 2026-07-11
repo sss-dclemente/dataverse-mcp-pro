@@ -1,0 +1,34 @@
+{
+  "value": [
+    {
+      "name": "08585287340000000101",
+      "status": "Succeeded",
+      "starttime": "2026-07-10T10:00:00Z",
+      "endtime": "2026-07-10T10:00:02Z",
+      "duration": 2000,
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "eeeeeeee-0000-4000-8000-00000000000e"
+    },
+    {
+      "name": "08585287340000000102",
+      "status": "Succeeded",
+      "starttime": "2026-07-10T09:00:00Z",
+      "endtime": "2026-07-10T09:00:03Z",
+      "duration": 3000,
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "eeeeeeee-0000-4000-8000-00000000000e"
+    },
+    {
+      "name": "08585287340000000103",
+      "status": "Succeeded",
+      "starttime": "2026-07-10T08:00:00Z",
+      "endtime": "2026-07-10T08:00:02Z",
+      "duration": 2500,
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "eeeeeeee-0000-4000-8000-00000000000e"
+    }
+  ]
+}

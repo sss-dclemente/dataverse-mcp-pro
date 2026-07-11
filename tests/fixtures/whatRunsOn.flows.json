@@ -1,0 +1,24 @@
+{
+  "value": [
+    {
+      "workflowid": "55555555-0000-0000-0000-000000000001",
+      "name": "Notify team on new account",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"When_an_account_is_added\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"parameters\":{\"subscriptionRequest/message\":1,\"subscriptionRequest/entityname\":\"account\",\"subscriptionRequest/scope\":4}}}},\"actions\":{\"Send_an_email\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"parameters\":{\"emailMessage/To\":\"team@contoso.com\"}}}}}}}"
+    },
+    {
+      "workflowid": "55555555-0000-0000-0000-000000000002",
+      "name": "Nightly account cleanup",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"Recurrence\":{\"type\":\"Recurrence\",\"recurrence\":{\"frequency\":\"Day\",\"interval\":1}}},\"actions\":{\"Scope\":{\"type\":\"Scope\",\"actions\":{\"Update_row\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"parameters\":{\"entityName\":\"accounts\",\"recordId\":\"@variables('rowId')\"}}}}}}}}}"
+    },
+    {
+      "workflowid": "55555555-0000-0000-0000-000000000003",
+      "name": "Contact janitor",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"When_a_contact_changes\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"parameters\":{\"subscriptionRequest/entityname\":\"contact\",\"subscriptionRequest/scope\":4}}}},\"actions\":{}}}}"
+    },
+    {
+      "workflowid": "55555555-0000-0000-0000-000000000004",
+      "name": "Legacy account flow (corrupt definition)",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"t1\":{\"inputs\":{\"parameters\":{\"subscriptionRequest/entityname\":\"account\""
+    }
+  ]
+}

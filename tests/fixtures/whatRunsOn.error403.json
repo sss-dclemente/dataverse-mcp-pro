@@ -1,0 +1,4 @@
+{
+  "status": 403,
+  "message": "Principal user (Id=8e5f4a12-0000-0000-0000-000000000000, type=8) is missing prvReadSdkMessageProcessingStep privilege."
+}

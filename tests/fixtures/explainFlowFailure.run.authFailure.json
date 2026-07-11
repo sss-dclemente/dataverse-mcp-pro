@@ -1,0 +1,15 @@
+{
+  "value": [
+    {
+      "name": "08585287500499200907519834647CU12",
+      "status": "Failed",
+      "starttime": "2026-07-10T11:30:00Z",
+      "endtime": "2026-07-10T11:30:04Z",
+      "duration": 4000,
+      "triggertype": "OpenApiConnectionWebhook",
+      "errorcode": "ConnectionAuthorizationFailed",
+      "errormessage": "Action 'Send_approval_email' failed: The connection 'shared_office365' is not authorized. Received a 401 Unauthorized response from the Office 365 Outlook connector. AADSTS700082: The refresh token has expired due to inactivity. Please sign in again to reauthorize the connection reference so the flow can resume sending approval mail on behalf of the run-only user. Additional diagnostic details: the identity provider rejected the cached credential during the connector handshake and no interactive session was available to renew it, so the platform marked the connection as broken and stopped the run.",
+      "_workflow_value": "11111111-0000-4000-8000-000000000011"
+    }
+  ]
+}

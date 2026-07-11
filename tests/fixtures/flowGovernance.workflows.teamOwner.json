@@ -1,0 +1,14 @@
+{
+  "value": [
+    {
+      "workflowid": "cccccccc-0000-0000-0000-000000000001",
+      "name": "Team-owned dispatcher",
+      "statecode": 1,
+      "statuscode": 2,
+      "createdon": "2026-01-01T00:00:00Z",
+      "modifiedon": "2026-06-01T00:00:00Z",
+      "_ownerid_value": "eeeeeeee-0000-0000-0000-000000000099",
+      "ismanaged": false
+    }
+  ]
+}

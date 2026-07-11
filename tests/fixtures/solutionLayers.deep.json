@@ -1,0 +1,44 @@
+{
+  "value": [
+    {
+      "msdyn_componentlayerid": "bbbbbbbb-0000-0000-0000-000000000005",
+      "msdyn_name": "Contact",
+      "msdyn_solutionname": "ContosoServiceHotfix",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 5,
+      "msdyn_overwritetime": "2026-06-20T08:15:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "bbbbbbbb-0000-0000-0000-000000000004",
+      "msdyn_name": "Contact",
+      "msdyn_solutionname": "ContosoService",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 4,
+      "msdyn_overwritetime": "2026-04-10T10:00:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "bbbbbbbb-0000-0000-0000-000000000003",
+      "msdyn_name": "Contact",
+      "msdyn_solutionname": "ContosoSales",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 3,
+      "msdyn_overwritetime": "2026-03-05T14:45:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "bbbbbbbb-0000-0000-0000-000000000002",
+      "msdyn_name": "Contact",
+      "msdyn_solutionname": "ContosoBase",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 2,
+      "msdyn_overwritetime": "2026-01-15T09:00:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "bbbbbbbb-0000-0000-0000-000000000001",
+      "msdyn_name": "Contact",
+      "msdyn_solutionname": "msdynce_base",
+      "msdyn_publishername": "Microsoft Dynamics 365",
+      "msdyn_order": 1,
+      "msdyn_overwritetime": null
+    }
+  ]
+}

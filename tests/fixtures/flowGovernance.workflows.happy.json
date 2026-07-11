@@ -1,0 +1,34 @@
+{
+  "value": [
+    {
+      "workflowid": "aaaaaaaa-0000-0000-0000-000000000001",
+      "name": "Send welcome email",
+      "statecode": 1,
+      "statuscode": 2,
+      "createdon": "2025-01-10T09:00:00Z",
+      "modifiedon": "2026-05-01T09:00:00Z",
+      "_ownerid_value": "dddddddd-0000-0000-0000-000000000001",
+      "ismanaged": false
+    },
+    {
+      "workflowid": "aaaaaaaa-0000-0000-0000-000000000002",
+      "name": "Sync invoices to ERP",
+      "statecode": 2,
+      "statuscode": 2,
+      "createdon": "2025-02-01T09:00:00Z",
+      "modifiedon": "2026-06-15T09:00:00Z",
+      "_ownerid_value": "dddddddd-0000-0000-0000-000000000002",
+      "ismanaged": true
+    },
+    {
+      "workflowid": "aaaaaaaa-0000-0000-0000-000000000003",
+      "name": "Old approval prototype",
+      "statecode": 0,
+      "statuscode": 1,
+      "createdon": "2026-03-01T09:00:00Z",
+      "modifiedon": "2026-03-23T00:00:00Z",
+      "_ownerid_value": "dddddddd-0000-0000-0000-000000000002",
+      "ismanaged": false
+    }
+  ]
+}

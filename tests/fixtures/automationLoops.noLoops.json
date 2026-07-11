@@ -1,0 +1,14 @@
+{
+  "value": [
+    {
+      "workflowid": "ffffffff-0000-0000-0000-000000000001",
+      "name": "Lead logger",
+      "clientdata": "{\"schemaVersion\":\"1.0.0.0\",\"properties\":{\"connectionReferences\":{\"shared_commondataserviceforapps\":{\"api\":{\"name\":\"shared_commondataserviceforapps\"}}},\"definition\":{\"$schema\":\"https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#\",\"triggers\":{\"When_a_lead_changes\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"SubscribeWebhookTrigger\",\"apiId\":\"/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps\"},\"parameters\":{\"subscriptionRequest/message\":3,\"subscriptionRequest/entityname\":\"lead\",\"subscriptionRequest/scope\":4}}}},\"actions\":{\"Create_note\":{\"type\":\"OpenApiConnection\",\"runAfter\":{},\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"CreateRecord\",\"apiId\":\"/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps\"},\"parameters\":{\"entityName\":\"annotations\",\"recordId\":\"@triggerOutputs()?['body/recordid']\",\"item/description\":\"touched by flow\"}}}}}}}"
+    },
+    {
+      "workflowid": "ffffffff-0000-0000-0000-000000000002",
+      "name": "Letter filing",
+      "clientdata": "{\"schemaVersion\":\"1.0.0.0\",\"properties\":{\"connectionReferences\":{\"shared_commondataserviceforapps\":{\"api\":{\"name\":\"shared_commondataserviceforapps\"}}},\"definition\":{\"$schema\":\"https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#\",\"triggers\":{\"When_a_letter_changes\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"SubscribeWebhookTrigger\",\"apiId\":\"/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps\"},\"parameters\":{\"subscriptionRequest/message\":3,\"subscriptionRequest/entityname\":\"letter\",\"subscriptionRequest/scope\":4}}}},\"actions\":{\"Create_fax\":{\"type\":\"OpenApiConnection\",\"runAfter\":{},\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"CreateRecord\",\"apiId\":\"/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps\"},\"parameters\":{\"entityName\":\"faxes\",\"recordId\":\"@triggerOutputs()?['body/recordid']\",\"item/description\":\"touched by flow\"}}}}}}}"
+    }
+  ]
+}

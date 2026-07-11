@@ -1,0 +1,16 @@
+{
+  "value": [
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000001",
+      "name": "Notify sales team",
+      "clientdata": "{\"properties\":{\"connectionReferences\":{\"shared_commondataserviceforapps\":{\"api\":{\"name\":\"shared_commondataserviceforapps\"},\"connection\":{\"connectionReferenceLogicalName\":\"contoso_sharedcommondataservice_1a2b3\"}}},\"definition\":{\"triggers\":{},\"actions\":{}}}}",
+      "_ownerid_value": "11111111-0000-0000-0000-000000000001"
+    },
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000002",
+      "name": "Escalate overdue cases",
+      "clientdata": "{\"properties\":{\"connectionReferences\":{\"shared_commondataserviceforapps\":{\"api\":{\"name\":\"shared_commondataserviceforapps\"},\"connection\":{\"connectionReferenceLogicalName\":\"contoso_sharedcommondataservice_1a2b3\"}}},\"definition\":{\"triggers\":{},\"actions\":{}}}}",
+      "_ownerid_value": "11111111-0000-0000-0000-000000000003"
+    }
+  ]
+}

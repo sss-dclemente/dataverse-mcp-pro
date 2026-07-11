@@ -1,0 +1,6 @@
+{
+  "workflowid": "11111111-0000-4000-8000-000000000011",
+  "name": "Invoice Approval",
+  "statecode": 1,
+  "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"When_an_invoice_is_added\":{\"type\":\"OpenApiConnectionWebhook\"}},\"actions\":{\"Get_invoice_row\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"host\":{\"operationId\":\"GetItem\"}}},\"Condition\":{\"type\":\"If\",\"actions\":{\"Send_approval_email\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"host\":{\"operationId\":\"SendEmailV2\"}}}},\"else\":{\"actions\":{\"Update_status\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"host\":{\"operationId\":\"UpdateRecord\"}}}}}}}}}}"
+}

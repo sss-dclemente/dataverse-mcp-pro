@@ -1,0 +1,16 @@
+{
+  "value": [
+    {
+      "workflowid": "bbbbbbbb-1111-2222-3333-444444444444",
+      "name": "When Contact Created Notify",
+      "description": null,
+      "statecode": 0,
+      "category": 5,
+      "type": 1,
+      "clientdata": "{\"schemaVersion\":\"1.0.0.0\",\"properties\":{\"connectionReferences\":{\"shared_commondataserviceforapps\":{\"api\":{\"name\":\"shared_commondataserviceforapps\"},\"connectionName\":\"cds-conn-1\"},\"shared_teams\":{\"id\":\"/providers/Microsoft.PowerApps/apis/shared_teams\"}},\"definition\":{\"triggers\":{\"When_a_row_is_added\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"SubscribeWebhookTrigger\"},\"parameters\":{\"subscriptionRequest_entityname\":\"contact\"}}},\"Manual_button\":{\"type\":\"Request\",\"kind\":\"Button\"}},\"actions\":{\"Get_full_row\":{\"type\":\"OpenApiConnection\",\"runAfter\":{},\"inputs\":{\"host\":{\"connectionName\":\"shared_commondataserviceforapps\",\"operationId\":\"GetItem\"}}},\"Notify_channel\":{\"type\":\"OpenApiConnection\",\"runAfter\":{\"Get_full_row\":[\"Succeeded\"]},\"inputs\":{\"host\":{\"connection\":{\"referenceName\":\"shared_teams\"},\"operationId\":\"PostMessageToConversation\"}}}}}}}",
+      "createdon": "2026-06-10T10:00:00Z",
+      "modifiedon": "2026-06-20T11:00:00Z",
+      "_ownerid_value": "99999999-9999-9999-9999-999999999999"
+    }
+  ]
+}

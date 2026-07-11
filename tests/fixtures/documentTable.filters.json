@@ -1,0 +1,7 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessagefilters(sdkmessagefilterid)",
+  "value": [
+    { "sdkmessagefilterid": "dddddddd-0000-0000-0000-000000000001" },
+    { "sdkmessagefilterid": "dddddddd-0000-0000-0000-000000000002" }
+  ]
+}
