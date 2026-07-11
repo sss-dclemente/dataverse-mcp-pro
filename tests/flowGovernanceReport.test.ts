@@ -96,7 +96,7 @@ afterEach(() => {
   vi.useRealTimers();
 });
 
-describe("flow_governance_report pro gate", () => {
+describe("flow_governance_report enterprise gate", () => {
   it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
     vi.stubEnv("LICENSE_KEY", "");
     const fetchSpy = vi.fn();
@@ -110,12 +110,29 @@ describe("flow_governance_report pro gate", () => {
 
     expect(result.upgradeRequired).toBe(true);
     expect(result.tool).toBe("flow_governance_report");
-    expect(result.message).toContain("Pro");
+    expect(result.message).toContain("Enterprise");
+    expect(fetchSpy).not.toHaveBeenCalled();
+  });
+
+  it("does not unlock for a Pro-tier license (Enterprise required)", async () => {
+    vi.stubEnv("LICENSE_KEY", "valid-key");
+    vi.stubEnv("LICENSE_TIER", "pro");
+    const fetchSpy = vi.fn();
+    vi.stubGlobal("fetch", fetchSpy);
+
+    const result = (await flowGovernanceReportTool.handler(DEFAULT_INPUT)) as {
+      upgradeRequired?: boolean;
+      requiredTier?: string;
+    };
+
+    expect(result.upgradeRequired).toBe(true);
+    expect(result.requiredTier).toBe("enterprise");
     expect(fetchSpy).not.toHaveBeenCalled();
   });
 
   it("proceeds past the gate when LICENSE_KEY is set", async () => {
     vi.stubEnv("LICENSE_KEY", "valid-key");
+    vi.stubEnv("LICENSE_TIER", "enterprise");
     vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
     vi.stubEnv("CLIENT_ID", "client-id");
     vi.stubEnv("CLIENT_SECRET", "client-secret");

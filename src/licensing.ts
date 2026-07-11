@@ -199,36 +199,82 @@ export async function initLicensing(opts?: {
   }
 }
 
-export function isProLicensed(): boolean {
+// Paid tiers are ordered: an Enterprise license also unlocks every Pro tool.
+export type Tier = "free" | "pro" | "enterprise";
+const TIER_RANK: Record<Tier, number> = { free: 0, pro: 1, enterprise: 2 };
+
+/** The tier currently in effect. A validated license with no/unknown tier
+ * string counts as Pro (the license service's default); only an explicit
+ * "enterprise" tier grants Enterprise. */
+function effectiveTier(): Tier {
   // Legacy escape hatch: preserves the pre-0.2.0 stub behavior for tool unit
-  // tests that stub LICENSE_KEY in the env without booting the server. The
-  // server always calls initLicensing, so this branch never runs in
-  // production.
+  // tests that stub the env without booting the server. LICENSE_TIER lets a
+  // test express the tier (defaulting to Pro). The server always calls
+  // initLicensing, so this branch never runs in production.
   if (!initHasRun && state.source === "none") {
-    const key = process.env["LICENSE_KEY"];
-    return typeof key === "string" && key.trim().length > 0;
+    const key = (process.env["LICENSE_KEY"] ?? "").trim();
+    if (key === "") return "free";
+    return (process.env["LICENSE_TIER"] ?? "").trim().toLowerCase() ===
+      "enterprise"
+      ? "enterprise"
+      : "pro";
   }
-  return state.licensed;
+  if (!state.licensed) return "free";
+  return (state.tier ?? "").toLowerCase() === "enterprise"
+    ? "enterprise"
+    : "pro";
 }
 
-export function proUpgradeMessage(toolName: string): {
+/** True when the effective tier is at least `required`. */
+export function hasTier(required: Tier): boolean {
+  return TIER_RANK[effectiveTier()] >= TIER_RANK[required];
+}
+
+export function isProLicensed(): boolean {
+  return hasTier("pro");
+}
+
+export function isEnterpriseLicensed(): boolean {
+  return hasTier("enterprise");
+}
+
+const TIER_LABEL: Record<Exclude<Tier, "free">, string> = {
+  pro: "Pro",
+  enterprise: "Enterprise",
+};
+
+export function upgradeMessage(
+  toolName: string,
+  requiredTier: Exclude<Tier, "free"> = "pro",
+): {
   upgradeRequired: true;
   tool: string;
+  requiredTier: Exclude<Tier, "free">;
   message: string;
   docsUrl: string;
   checkoutUrl: string;
 } {
+  const label = TIER_LABEL[requiredTier];
   return {
     upgradeRequired: true,
     tool: toolName,
+    requiredTier,
     message:
-      `The tool "${toolName}" is part of the Pro tier. ` +
+      `The tool "${toolName}" is part of the ${label} tier. ` +
       `Purchase a license on the pricing page (${CHECKOUT_URL}) and set the ` +
       "LICENSE_KEY environment variable to unlock it. " +
       `See ${PRO_DOCS_URL} for details.`,
     docsUrl: PRO_DOCS_URL,
     checkoutUrl: CHECKOUT_URL,
   };
+}
+
+export function proUpgradeMessage(toolName: string) {
+  return upgradeMessage(toolName, "pro");
+}
+
+export function enterpriseUpgradeMessage(toolName: string) {
+  return upgradeMessage(toolName, "enterprise");
 }
 
 // Test-only: resets module state so test suites can exercise initLicensing

@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
+import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -385,7 +385,7 @@ export const detectAutomationLoopsTool = defineTool({
     "flags missing trigger filtering attributes. Pro tier.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("detect_automation_loops");
+    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("detect_automation_loops");
     try {
       return await detectAutomationLoops(getDefaultClient(), input);
     } catch (err) {
