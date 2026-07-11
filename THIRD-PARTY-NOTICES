@@ -5,10 +5,10 @@ dataverse-ops-mcp is proprietary software (see LICENSE). It uses the following
 third-party open-source components, each licensed under its own terms. Those
 licenses govern the respective components and are reproduced/summarized below.
 
-The versions listed reflect the direct runtime dependencies declared in
-package.json at the time of writing; transitive dependencies pulled in by npm
-are licensed under their own (predominantly MIT / ISC / Apache-2.0) terms as
-recorded in package-lock.json.
+The versions listed are the resolved versions recorded in package-lock.json for
+the direct runtime dependencies declared (by semver range) in package.json.
+Transitive dependencies pulled in by npm are licensed under their own
+(predominantly MIT / ISC / Apache-2.0) terms as recorded in package-lock.json.
 
 -------------------------------------------------------------------------------
 Direct runtime dependencies
