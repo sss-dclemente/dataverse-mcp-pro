@@ -1,0 +1,12 @@
+{
+  "value": [
+    {
+      "msdyn_componentlayerid": "cccccccc-0000-0000-0000-000000000001",
+      "msdyn_name": "contoso_logo.png",
+      "msdyn_solutionname": "ContosoBase",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 1,
+      "msdyn_overwritetime": "1900-01-01T00:00:00Z"
+    }
+  ]
+}

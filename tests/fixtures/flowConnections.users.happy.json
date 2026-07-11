@@ -1,0 +1,19 @@
+{
+  "value": [
+    {
+      "systemuserid": "11111111-0000-0000-0000-000000000001",
+      "fullname": "Ana Silva",
+      "isdisabled": false
+    },
+    {
+      "systemuserid": "11111111-0000-0000-0000-000000000002",
+      "fullname": "Bruno Costa",
+      "isdisabled": true
+    },
+    {
+      "systemuserid": "11111111-0000-0000-0000-000000000003",
+      "fullname": "Carla Nunes",
+      "isdisabled": false
+    }
+  ]
+}

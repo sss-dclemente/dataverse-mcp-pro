@@ -1,0 +1,19 @@
+{
+  "value": [
+    {
+      "systemuserid": "dddddddd-0000-0000-0000-000000000001",
+      "fullname": "Dana Departed",
+      "isdisabled": true
+    },
+    {
+      "systemuserid": "dddddddd-0000-0000-0000-000000000002",
+      "fullname": "Ana Active",
+      "isdisabled": false
+    },
+    {
+      "systemuserid": "dddddddd-0000-0000-0000-000000000003",
+      "fullname": "Bob Busy",
+      "isdisabled": false
+    }
+  ]
+}

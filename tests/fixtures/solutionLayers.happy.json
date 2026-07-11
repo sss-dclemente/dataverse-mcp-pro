@@ -1,0 +1,28 @@
+{
+  "value": [
+    {
+      "msdyn_componentlayerid": "aaaaaaaa-0000-0000-0000-000000000003",
+      "msdyn_name": "Account Main Form",
+      "msdyn_solutionname": "Active",
+      "msdyn_publishername": "Default Publisher",
+      "msdyn_order": 3,
+      "msdyn_overwritetime": "2026-05-14T09:30:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "aaaaaaaa-0000-0000-0000-000000000002",
+      "msdyn_name": "Account Main Form",
+      "msdyn_solutionname": "ContosoSales",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 2,
+      "msdyn_overwritetime": "2026-02-01T12:00:00Z"
+    },
+    {
+      "msdyn_componentlayerid": "aaaaaaaa-0000-0000-0000-000000000001",
+      "msdyn_name": "Account Main Form",
+      "msdyn_solutionname": "ContosoBase",
+      "msdyn_publishername": "Contoso Ltd",
+      "msdyn_order": 1,
+      "msdyn_overwritetime": "1900-01-01T00:00:00Z"
+    }
+  ]
+}

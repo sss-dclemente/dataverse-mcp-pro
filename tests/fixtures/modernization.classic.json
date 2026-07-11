@@ -1,0 +1,28 @@
+{
+  "value": [
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000001",
+      "name": "Escalate overdue cases",
+      "statecode": 1,
+      "mode": 0,
+      "primaryentity": "incident",
+      "modifiedon": "2026-05-10T08:00:00Z"
+    },
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000002",
+      "name": "Sync account owner (real-time)",
+      "statecode": 1,
+      "mode": 1,
+      "primaryentity": "account",
+      "modifiedon": "2026-06-01T12:00:00Z"
+    },
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000003",
+      "name": "Send welcome email",
+      "statecode": 1,
+      "mode": 0,
+      "primaryentity": "contact",
+      "modifiedon": "2026-04-20T09:30:00Z"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "value": [
+    {
+      "connectionreferenceid": "aaaaaaaa-0000-0000-0000-000000000001",
+      "connectionreferencedisplayname": "Dataverse (Contoso)",
+      "connectionreferencelogicalname": "contoso_sharedcommondataservice_1a2b3",
+      "connectorid": "/providers/Microsoft.PowerApps/apis/shared_commondataserviceforapps",
+      "connectionid": null,
+      "statecode": 0,
+      "_ownerid_value": "11111111-0000-0000-0000-000000000001",
+      "modifiedon": "2026-06-01T08:00:00Z"
+    },
+    {
+      "connectionreferenceid": "aaaaaaaa-0000-0000-0000-000000000002",
+      "connectionreferencedisplayname": "Office 365 Outlook (Contoso)",
+      "connectionreferencelogicalname": "contoso_sharedoffice365_9z8y7",
+      "connectorid": "/providers/Microsoft.PowerApps/apis/shared_office365",
+      "connectionid": "3f2504e0-4f89-11d3-9a0c-0305e82c3301",
+      "statecode": 0,
+      "_ownerid_value": "11111111-0000-0000-0000-000000000002",
+      "modifiedon": "2026-05-20T10:30:00Z"
+    }
+  ]
+}

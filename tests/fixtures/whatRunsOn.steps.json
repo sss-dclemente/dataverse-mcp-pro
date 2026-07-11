@@ -1,0 +1,34 @@
+{
+  "value": [
+    {
+      "sdkmessageprocessingstepid": "22222222-0000-0000-0000-000000000001",
+      "name": "Contoso.Plugins.AccountPlugin: Update of account (post)",
+      "stage": 40,
+      "mode": 1,
+      "rank": 1,
+      "filteringattributes": null,
+      "sdkmessageid": { "name": "Update" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" }
+    },
+    {
+      "sdkmessageprocessingstepid": "22222222-0000-0000-0000-000000000002",
+      "name": "Contoso.Plugins.AccountPlugin: Update of account (pre, late)",
+      "stage": 20,
+      "mode": 0,
+      "rank": 10,
+      "filteringattributes": "name,telephone1",
+      "sdkmessageid": { "name": "Update" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" }
+    },
+    {
+      "sdkmessageprocessingstepid": "22222222-0000-0000-0000-000000000003",
+      "name": "Contoso.Plugins.AccountPlugin: Create of account",
+      "stage": 20,
+      "mode": 0,
+      "rank": 1,
+      "filteringattributes": "",
+      "sdkmessageid": { "name": "Create" },
+      "plugintypeid": { "typename": "Contoso.Plugins.AccountPlugin" }
+    }
+  ]
+}

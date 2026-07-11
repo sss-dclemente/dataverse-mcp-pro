@@ -1,0 +1,17 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#sdkmessageprocessingsteps(name,stage,mode,sdkmessageid(name))",
+  "value": [
+    {
+      "name": "Contoso.Plugins.AccountPlugin: Update of account",
+      "stage": 20,
+      "mode": 0,
+      "sdkmessageid": { "name": "Update" }
+    },
+    {
+      "name": "Contoso.Plugins.AccountPlugin: Create of account (async)",
+      "stage": 40,
+      "mode": 1,
+      "sdkmessageid": { "name": "Create" }
+    }
+  ]
+}

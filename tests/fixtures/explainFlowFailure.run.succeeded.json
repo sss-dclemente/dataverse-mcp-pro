@@ -1,0 +1,15 @@
+{
+  "value": [
+    {
+      "name": "08585287500499200907519834647CU12",
+      "status": "Succeeded",
+      "starttime": "2026-07-10T09:00:00Z",
+      "endtime": "2026-07-10T09:00:02Z",
+      "duration": 2000,
+      "triggertype": "OpenApiConnectionWebhook",
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "11111111-0000-4000-8000-000000000011"
+    }
+  ]
+}

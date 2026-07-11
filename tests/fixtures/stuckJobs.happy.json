@@ -1,0 +1,92 @@
+{
+  "value": [
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000001",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 10,
+      "statecode": 0,
+      "createdon": "2026-07-10T06:00:00Z",
+      "startedon": null,
+      "postponeuntil": null,
+      "message": "The workflow instance has been waiting on an asynchronous child operation for an extended period. Parent workflow Sync Contacts Workflow is blocked at step 4 of 12, pending completion of a downstream sync request that is queued behind other long-running operations in the same organization."
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000004",
+      "name": "Nightly Maintenance",
+      "operationtype": 13,
+      "statuscode": 0,
+      "statecode": 0,
+      "createdon": "2026-07-10T09:00:00Z",
+      "startedon": null,
+      "postponeuntil": null,
+      "message": null
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000007",
+      "name": "Delayed Escalation",
+      "operationtype": 10,
+      "statuscode": 10,
+      "statecode": 0,
+      "createdon": "2026-07-10T10:00:00Z",
+      "startedon": null,
+      "postponeuntil": "2026-07-12T10:00:00Z",
+      "message": "Waiting on timeout condition."
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000006",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 10,
+      "statecode": 0,
+      "createdon": "2026-07-10T12:00:00Z",
+      "startedon": null,
+      "postponeuntil": "2026-07-11T08:00:00Z",
+      "message": "Postpone window elapsed but the job has not been picked up again."
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000002",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 20,
+      "statecode": 0,
+      "createdon": "2026-07-10T18:00:00Z",
+      "startedon": "2026-07-10T18:05:00Z",
+      "postponeuntil": null,
+      "message": "In progress for an unusually long time."
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000005",
+      "name": "Nightly Maintenance",
+      "operationtype": 13,
+      "statuscode": 10,
+      "statecode": 0,
+      "createdon": "2026-07-10T21:00:00Z",
+      "startedon": null,
+      "postponeuntil": null,
+      "message": "Queued behind other maintenance operations."
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000003",
+      "name": "Sync Contacts Workflow",
+      "operationtype": 10,
+      "statuscode": 0,
+      "statecode": 0,
+      "createdon": "2026-07-11T00:00:00Z",
+      "startedon": null,
+      "postponeuntil": null,
+      "message": null
+    },
+    {
+      "asyncoperationid": "22222222-0000-0000-0000-000000000008",
+      "name": "Custom Job",
+      "operationtype": 99,
+      "statuscode": 20,
+      "statecode": 0,
+      "createdon": "2026-07-11T03:00:00Z",
+      "startedon": null,
+      "postponeuntil": null,
+      "message": "Custom long-running operation."
+    }
+  ]
+}

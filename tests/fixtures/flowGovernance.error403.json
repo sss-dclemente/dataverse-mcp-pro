@@ -1,0 +1,4 @@
+{
+  "status": 403,
+  "message": "Principal user (Id=12345678-0000-0000-0000-000000000000) is missing prvReadWorkflow privilege."
+}

@@ -1,0 +1,20 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#workflows(workflowid,name,clientdata)",
+  "value": [
+    {
+      "workflowid": "eeeeeeee-0000-0000-0000-000000000001",
+      "name": "When an account is created, notify sales",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"When_a_row_is_added\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"parameters\":{\"subscriptionRequest/message\":1,\"subscriptionRequest/entityname\":\"account\",\"subscriptionRequest/scope\":4}}}}}}}"
+    },
+    {
+      "workflowid": "eeeeeeee-0000-0000-0000-000000000002",
+      "name": "Daily account revenue rollup",
+      "clientdata": "{\"properties\":{\"definition\":{\"actions\":{\"List_rows\":{\"type\":\"OpenApiConnection\",\"inputs\":{\"parameters\":{\"entityname\":\"accounts\",\"$select\":\"name,revenue\"}}}}}}}"
+    },
+    {
+      "workflowid": "eeeeeeee-0000-0000-0000-000000000003",
+      "name": "Contact onboarding",
+      "clientdata": "{\"properties\":{\"definition\":{\"triggers\":{\"When_a_row_is_added\":{\"type\":\"OpenApiConnectionWebhook\",\"inputs\":{\"parameters\":{\"subscriptionRequest/entityname\":\"contact\"}}}}}}}"
+    }
+  ]
+}

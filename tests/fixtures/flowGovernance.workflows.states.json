@@ -1,0 +1,54 @@
+{
+  "value": [
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000001",
+      "name": "Fresh draft",
+      "statecode": 0,
+      "statuscode": 1,
+      "createdon": "2026-06-29T00:00:00Z",
+      "modifiedon": "2026-06-30T00:00:00Z",
+      "_ownerid_value": null,
+      "ismanaged": false
+    },
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000002",
+      "name": "Running flow",
+      "statecode": 1,
+      "statuscode": 2,
+      "createdon": "2026-01-01T00:00:00Z",
+      "modifiedon": "2026-06-01T00:00:00Z",
+      "_ownerid_value": null,
+      "ismanaged": false
+    },
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000003",
+      "name": "Suspended by statecode",
+      "statecode": 2,
+      "statuscode": 2,
+      "createdon": "2026-01-01T00:00:00Z",
+      "modifiedon": "2026-06-01T00:00:00Z",
+      "_ownerid_value": null,
+      "ismanaged": false
+    },
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000004",
+      "name": "Suspended by statuscode fallback",
+      "statecode": 7,
+      "statuscode": 2,
+      "createdon": "2026-01-01T00:00:00Z",
+      "modifiedon": "2026-06-01T00:00:00Z",
+      "_ownerid_value": null,
+      "ismanaged": false
+    },
+    {
+      "workflowid": "bbbbbbbb-0000-0000-0000-000000000005",
+      "name": "Unknown state",
+      "statecode": 9,
+      "statuscode": 9,
+      "createdon": "2026-01-01T00:00:00Z",
+      "modifiedon": "2026-06-01T00:00:00Z",
+      "_ownerid_value": null,
+      "ismanaged": true
+    }
+  ]
+}

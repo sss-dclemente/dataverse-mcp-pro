@@ -1,0 +1,172 @@
+{
+  "@odata.context": "https://org.crm.dynamics.com/api/data/v9.2/$metadata#EntityDefinitions(DisplayName,LogicalName,SchemaName,Description,PrimaryIdAttribute,PrimaryNameAttribute,IsCustomEntity,OwnershipType)/$entity",
+  "LogicalName": "account",
+  "SchemaName": "Account",
+  "DisplayName": {
+    "UserLocalizedLabel": { "Label": "Account", "LanguageCode": 1033 },
+    "LocalizedLabels": [{ "Label": "Account", "LanguageCode": 1033 }]
+  },
+  "Description": {
+    "UserLocalizedLabel": {
+      "Label": "Business that represents a customer or potential customer.",
+      "LanguageCode": 1033
+    },
+    "LocalizedLabels": [
+      {
+        "Label": "Business that represents a customer or potential customer.",
+        "LanguageCode": 1033
+      }
+    ]
+  },
+  "PrimaryIdAttribute": "accountid",
+  "PrimaryNameAttribute": "name",
+  "IsCustomEntity": false,
+  "OwnershipType": "UserOwned",
+  "Attributes": [
+    {
+      "LogicalName": "accountid",
+      "SchemaName": "AccountId",
+      "AttributeType": "Uniqueidentifier",
+      "DisplayName": {
+        "UserLocalizedLabel": { "Label": "Account", "LanguageCode": 1033 },
+        "LocalizedLabels": [{ "Label": "Account", "LanguageCode": 1033 }]
+      },
+      "Description": {
+        "UserLocalizedLabel": {
+          "Label": "Unique identifier of the account.",
+          "LanguageCode": 1033
+        },
+        "LocalizedLabels": []
+      },
+      "RequiredLevel": { "Value": "SystemRequired" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "name",
+      "SchemaName": "Name",
+      "AttributeType": "String",
+      "DisplayName": {
+        "UserLocalizedLabel": { "Label": "Account Name", "LanguageCode": 1033 },
+        "LocalizedLabels": [{ "Label": "Account Name", "LanguageCode": 1033 }]
+      },
+      "Description": {
+        "UserLocalizedLabel": {
+          "Label": "Name of the company or business.",
+          "LanguageCode": 1033
+        },
+        "LocalizedLabels": []
+      },
+      "RequiredLevel": { "Value": "ApplicationRequired" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "ownerid",
+      "SchemaName": "OwnerId",
+      "AttributeType": "Owner",
+      "DisplayName": {
+        "UserLocalizedLabel": null,
+        "LocalizedLabels": [{ "Label": "Owner", "LanguageCode": 1033 }]
+      },
+      "Description": null,
+      "RequiredLevel": { "Value": "SystemRequired" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "revenue",
+      "SchemaName": "Revenue",
+      "AttributeType": "Money",
+      "DisplayName": {
+        "UserLocalizedLabel": { "Label": "Annual Revenue", "LanguageCode": 1033 },
+        "LocalizedLabels": [{ "Label": "Annual Revenue", "LanguageCode": 1033 }]
+      },
+      "Description": {
+        "UserLocalizedLabel": {
+          "Label": "Annual revenue of the account, used to size the customer and drive segmentation rules across marketing, sales territory assignment and service entitlement calculations. This value is entered in the account currency and recalculated into the base currency by the platform on every update.",
+          "LanguageCode": 1033
+        },
+        "LocalizedLabels": []
+      },
+      "RequiredLevel": { "Value": "None" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "revenue_base",
+      "SchemaName": "Revenue_Base",
+      "AttributeType": "Money",
+      "DisplayName": {
+        "UserLocalizedLabel": {
+          "Label": "Annual Revenue (Base)",
+          "LanguageCode": 1033
+        },
+        "LocalizedLabels": []
+      },
+      "Description": null,
+      "RequiredLevel": { "Value": "None" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "entityimage_url",
+      "SchemaName": "EntityImage_URL",
+      "AttributeType": "Virtual",
+      "DisplayName": null,
+      "Description": null,
+      "RequiredLevel": { "Value": "None" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "statecode",
+      "SchemaName": "StateCode",
+      "AttributeType": "State",
+      "DisplayName": null,
+      "Description": null,
+      "RequiredLevel": { "Value": "SystemRequired" },
+      "IsCustomAttribute": false
+    },
+    {
+      "LogicalName": "new_riskscore",
+      "SchemaName": "new_RiskScore",
+      "AttributeType": "Integer",
+      "DisplayName": {
+        "UserLocalizedLabel": { "Label": "Risk Score", "LanguageCode": 1033 },
+        "LocalizedLabels": [{ "Label": "Risk Score", "LanguageCode": 1033 }]
+      },
+      "Description": null,
+      "RequiredLevel": { "Value": "Recommended" },
+      "IsCustomAttribute": true
+    }
+  ],
+  "OneToManyRelationships": [
+    {
+      "SchemaName": "contact_customer_accounts",
+      "ReferencedEntity": "account",
+      "ReferencingEntity": "contact",
+      "ReferencingAttribute": "parentcustomerid"
+    },
+    {
+      "SchemaName": "Account_Tasks",
+      "ReferencedEntity": "account",
+      "ReferencingEntity": "task",
+      "ReferencingAttribute": "regardingobjectid"
+    }
+  ],
+  "ManyToOneRelationships": [
+    {
+      "SchemaName": "account_primary_contact",
+      "ReferencedEntity": "contact",
+      "ReferencingAttribute": "primarycontactid"
+    }
+  ],
+  "ManyToManyRelationships": [
+    {
+      "SchemaName": "accountleads_association",
+      "Entity1LogicalName": "account",
+      "Entity2LogicalName": "lead"
+    }
+  ],
+  "Keys": [
+    {
+      "LogicalName": "account_number_key",
+      "KeyAttributes": ["accountnumber"]
+    }
+  ]
+}

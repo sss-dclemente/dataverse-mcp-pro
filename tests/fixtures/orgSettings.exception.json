@@ -1,0 +1,13 @@
+{
+  "value": [
+    {
+      "organizationid": "6f4c9d2e-0003-4b3a-8c5d-aa11bb22cc33",
+      "name": "Contoso UAT",
+      "plugintracelogsetting": 1,
+      "isauditenabled": true,
+      "auditretentionperiodv2": null,
+      "isreadauditenabled": false,
+      "isuseraccessauditenabled": false
+    }
+  ]
+}

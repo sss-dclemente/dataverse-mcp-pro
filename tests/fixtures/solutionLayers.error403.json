@@ -1,0 +1,4 @@
+{
+  "status": 403,
+  "message": "Principal user (Id=8d113fa8-0000-0000-0000-000000000000, type=8) is missing prvReadmsdyn_componentlayer privilege (Id=00000000-0000-0000-0000-000000000000)"
+}

@@ -96,6 +96,16 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 | [`get_flow_runs`](docs/tools/get_flow_runs.md) | Free | Filtered Power Automate cloud-flow run history (by flow, status, time window) from the Dataverse `flowrun` table. |
 | [`document_flow`](docs/tools/document_flow.md) | Pro | Structured documentation for a cloud flow from its definition: triggers, action tree, connectors, plus ready-to-share markdown. |
 | [`analyze_flow_runs`](docs/tools/analyze_flow_runs.md) | Pro | Per-flow reliability report: success rates, duration percentiles, error clusters, and flags for failure streaks and slow flows. |
+| [`get_org_automation_settings`](docs/tools/get_org_automation_settings.md) | Free | Org-level switches the other tools depend on: plug-in trace logging level and auditing configuration, with actionable hints. |
+| [`find_stuck_jobs`](docs/tools/find_stuck_jobs.md) | Free | Async jobs stuck in waiting/in-progress beyond a threshold — the backlog complement to `get_failed_async_jobs` (postponed jobs excluded). |
+| [`explain_flow_failure`](docs/tools/explain_flow_failure.md) | Pro | Root-cause analysis of a failed flow run: failed-action guess, definition context, and known-pattern detection (expired connections, throttling, timeouts). |
+| [`check_flow_connections`](docs/tools/check_flow_connections.md) | Pro | Connection-reference health audit: unbound references, disabled owners, owner mismatches, unused references — with affected flows. |
+| [`flow_governance_report`](docs/tools/flow_governance_report.md) | Pro | Flow inventory by state and owner: flows owned by disabled users, suspended flows, stale drafts, owner concentration. |
+| [`what_runs_on_table`](docs/tools/what_runs_on_table.md) | Pro | Everything registered on one table: plug-in steps, cloud flows (trigger vs action), classic workflows and business rules — in one view. |
+| [`detect_automation_loops`](docs/tools/detect_automation_loops.md) | Pro | Suspected trigger→write cycles between cloud flows (self-loops and 2–3 flow cycles), with filtering-attribute evidence. |
+| [`document_table`](docs/tools/document_table.md) | Pro | Table documentation from metadata: columns, relationships, keys and attached automation, plus ready-to-share markdown. |
+| [`get_solution_layers`](docs/tools/get_solution_layers.md) | Pro | Solution layering for one component — who overwrote it, whether an unmanaged Active layer is blocking managed updates. |
+| [`modernization_report`](docs/tools/modernization_report.md) | Pro | Legacy automation inventory: active dialogs, classic workflows (sync/async), business rules footprint — with migration priorities. |
 
 The flow tools complement Microsoft's [power-platform-skills](https://github.com/microsoft/power-platform-skills) FlowAgent plugin: FlowAgent builds and debugs flows interactively, while these tools add read-only diagnostics, reporting and documentation alongside the plug-in and Dataverse tools above.
 
