@@ -1,0 +1,12 @@
+{
+  "workflowid": "dddddddd-1111-2222-3333-444444444444",
+  "name": "Legacy Background Workflow",
+  "description": null,
+  "statecode": 1,
+  "category": 0,
+  "type": 1,
+  "clientdata": null,
+  "createdon": "2020-01-01T00:00:00Z",
+  "modifiedon": "2020-01-02T00:00:00Z",
+  "_ownerid_value": "99999999-9999-9999-9999-999999999999"
+}

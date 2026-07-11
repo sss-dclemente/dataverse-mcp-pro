@@ -93,6 +93,11 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 | [`explain_trace`](docs/tools/explain_trace.md) | Pro | Root-cause analysis of one failing plug-in execution: correlates the step registration, sibling traces and parsed exception. |
 | [`explain_import_failure`](docs/tools/explain_import_failure.md) | Pro | Explains a failed solution import: each failed component with a plain-language cause and missing-dependency resolution. |
 | [`analyze_plugin_performance`](docs/tools/analyze_plugin_performance.md) | Pro | Per-plugin performance table (p50/p95, sync vs async, depth) plus anti-pattern flags: slow sync steps, deep cascades, N+1 firing. |
+| [`get_flow_runs`](docs/tools/get_flow_runs.md) | Free | Filtered Power Automate cloud-flow run history (by flow, status, time window) from the Dataverse `flowrun` table. |
+| [`document_flow`](docs/tools/document_flow.md) | Pro | Structured documentation for a cloud flow from its definition: triggers, action tree, connectors, plus ready-to-share markdown. |
+| [`analyze_flow_runs`](docs/tools/analyze_flow_runs.md) | Pro | Per-flow reliability report: success rates, duration percentiles, error clusters, and flags for failure streaks and slow flows. |
+
+The flow tools complement Microsoft's [power-platform-skills](https://github.com/microsoft/power-platform-skills) FlowAgent plugin: FlowAgent builds and debugs flows interactively, while these tools add read-only diagnostics, reporting and documentation alongside the plug-in and Dataverse tools above.
 
 ## Security & privacy
 

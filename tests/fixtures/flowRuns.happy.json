@@ -1,0 +1,37 @@
+{
+  "value": [
+    {
+      "name": "08585287700727607973207791544CU21",
+      "status": "Failed",
+      "starttime": "2026-07-10T11:30:02Z",
+      "endtime": "2026-07-10T11:30:14Z",
+      "duration": 12345,
+      "triggertype": "Automated",
+      "errorcode": "WorkflowActionFailed",
+      "errormessage": "Action 'Update_account_record' failed: The 'Update a row' action could not complete because the Dataverse request returned status 403 (Forbidden). The connection's user is missing the prvWriteAccount privilege on the account table. Grant the privilege via a security role or switch the connection to a service principal that has it, then resubmit the run from the Power Automate portal. Additional diagnostic context: correlation id 3d1f0b9a-77aa-4d2e-9f1c-aa00bb11cc22, activity id 9e8d7c6b-5a49-4832-8271-605f4e3d2c1b.",
+      "_workflow_value": "aaaaaaaa-1111-4111-8111-111111111111"
+    },
+    {
+      "name": "08585287700891234567890123456CU00",
+      "status": "Succeeded",
+      "starttime": "2026-07-10T10:05:00Z",
+      "endtime": "2026-07-10T10:05:04Z",
+      "duration": 4200,
+      "triggertype": "Scheduled",
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "bbbbbbbb-2222-4222-8222-222222222222"
+    },
+    {
+      "name": "08585287700999999999999999999CU42",
+      "status": "Running",
+      "starttime": "2026-07-10T11:58:41Z",
+      "endtime": null,
+      "duration": null,
+      "triggertype": "Manual",
+      "errorcode": null,
+      "errormessage": null,
+      "_workflow_value": "aaaaaaaa-1111-4111-8111-111111111111"
+    }
+  ]
+}

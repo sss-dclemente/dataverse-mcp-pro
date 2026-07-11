@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `get_flow_runs` tool (free): filtered Power Automate cloud-flow run history (flow, status, time window) via the Dataverse `flowrun` virtual table.
+- `document_flow` tool (pro): structured documentation for a cloud flow parsed from its definition — triggers, action tree with dependencies, connectors, and a ready-to-share markdown document.
+- `analyze_flow_runs` tool (pro): per-flow reliability report with success rates, duration percentiles, error clusters, and flags for high failure rates, failure streaks and slow p95 durations.
+
 ## [0.2.0] - 2026-07-10
 
 ### Changed

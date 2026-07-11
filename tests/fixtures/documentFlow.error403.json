@@ -1,0 +1,4 @@
+{
+  "status": 403,
+  "message": "Principal user is missing prvReadWorkflow privilege. Not granted read access to the Process entity."
+}

@@ -1,0 +1,12 @@
+{
+  "workflowid": "cccccccc-1111-2222-3333-444444444444",
+  "name": "Deeply Nested Flow",
+  "description": null,
+  "statecode": 1,
+  "category": 5,
+  "type": 1,
+  "clientdata": "{\"schemaVersion\":\"1.0.0.0\",\"properties\":{\"connectionReferences\":{},\"definition\":{\"triggers\":{\"Recurrence_weekly\":{\"type\":\"Recurrence\",\"recurrence\":{\"frequency\":\"Week\",\"interval\":1}}},\"actions\":{\"Scope_0\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_1\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_2\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_3\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_4\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_5\":{\"type\":\"Scope\",\"runAfter\":{},\"actions\":{\"Scope_6\":{\"type\":\"Compose\",\"runAfter\":{},\"inputs\":\"deepest\"}}}}}}}}}}}}}}}}}",
+  "createdon": "2026-04-01T00:00:00Z",
+  "modifiedon": "2026-04-02T00:00:00Z",
+  "_ownerid_value": "99999999-9999-9999-9999-999999999999"
+}

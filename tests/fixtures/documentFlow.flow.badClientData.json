@@ -1,0 +1,12 @@
+{
+  "workflowid": "ffffffff-1111-2222-3333-444444444444",
+  "name": "Corrupted Flow",
+  "description": null,
+  "statecode": 1,
+  "category": 5,
+  "type": 1,
+  "clientdata": "{\"properties\": <<<not-json>>>",
+  "createdon": "2026-01-01T00:00:00Z",
+  "modifiedon": "2026-01-02T00:00:00Z",
+  "_ownerid_value": "99999999-9999-9999-9999-999999999999"
+}
