@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope, type ErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   escapeODataString,
@@ -431,11 +430,9 @@ export const whatRunsOnTableTool = defineTool({
     "a single view: plug-in steps (with message, stage, mode and rank), " +
     "solution-aware cloud flows that trigger on or act against the table, " +
     "classic workflows and business rules. Use it for impact analysis before " +
-    "schema or logic changes. Pass the table's logical name, e.g. 'account'. " +
-    "Pro tier.",
+    "schema or logic changes. Pass the table's logical name, e.g. 'account'.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("what_runs_on_table");
     try {
       return await whatRunsOnTable(getDefaultClient(), input);
     } catch (err) {

@@ -1,89 +1,21 @@
-SimpleSmoothSafe Software License Agreement
-dataverse-ops-mcp
+MIT License
 
-Copyright (c) 2026 SimpleSmoothSafe. All rights reserved.
+Copyright (c) 2026 SimpleSmoothSafe
 
-This Software License Agreement (the "Agreement") governs the use of the
-dataverse-ops-mcp software, including its source code, compiled code,
-documentation, and any updates provided by SimpleSmoothSafe (the "Software").
-By installing or using the Software, you (the "Licensee") agree to the terms
-of this Agreement.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-1. GRANT OF LICENSE
-
-Subject to the terms of this Agreement, SimpleSmoothSafe grants the Licensee
-a non-exclusive, non-transferable, revocable license to install and use the
-Software.
-
-2. FREE TIER
-
-The Software's free-tier tools may be used at no charge for any internal
-business purpose, on any number of machines within the Licensee's
-organization.
-
-3. PRO TIER
-
-The Software's Pro-tier features are enabled by a license key and require a
-valid, active subscription or license purchased from SimpleSmoothSafe. Use of
-Pro-tier features without a valid subscription or license, or circumvention
-of the license check, is prohibited.
-
-4. RESTRICTIONS
-
-Except as expressly permitted by this Agreement or by applicable law, the
-Licensee shall not:
-
-  a. redistribute, sublicense, rent, lease, sell, or otherwise make the
-     Software available to any third party;
-  b. offer the Software, or any service substantially derived from it, to
-     third parties on a commercial basis;
-  c. reverse engineer, decompile, or disassemble the Software, except to the
-     extent such activity is expressly permitted by applicable law
-     notwithstanding this limitation;
-  d. remove or alter any copyright, trademark, or other proprietary notices
-     contained in the Software.
-
-5. SOURCE AVAILABILITY
-
-The Software is distributed in a form that makes its source code readable.
-This is provided for transparency and auditability only. The availability of
-source code does not make the Software open source and does not grant the
-Licensee any copyleft, open-source, or other rights beyond those expressly
-stated in this Agreement.
-
-6. INTELLECTUAL PROPERTY
-
-The Software is licensed, not sold. SimpleSmoothSafe retains all right,
-title, and interest in and to the Software, including all intellectual
-property rights. No rights are granted to the Licensee other than those
-expressly set out in this Agreement.
-
-7. TERMINATION
-
-This Agreement is effective until terminated. It terminates automatically,
-without notice, if the Licensee breaches any of its terms. Upon termination,
-the Licensee must cease all use of the Software and destroy all copies in its
-possession. Sections 5 through 10 survive termination.
-
-8. NO WARRANTY
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. SIMPLESMOOTHSAFE DOES
-NOT WARRANT THAT THE SOFTWARE WILL BE ERROR-FREE OR UNINTERRUPTED.
-
-9. LIMITATION OF LIABILITY
-
-TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
-SIMPLESMOOTHSAFE BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
-CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, REVENUE, DATA, OR
-DATA USE, ARISING OUT OF OR RELATED TO THE USE OF OR INABILITY TO USE THE
-SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-SIMPLESMOOTHSAFE'S TOTAL AGGREGATE LIABILITY UNDER THIS AGREEMENT SHALL NOT
-EXCEED THE AMOUNTS PAID BY THE LICENSEE FOR THE SOFTWARE IN THE TWELVE MONTHS
-PRECEDING THE CLAIM.
-
-10. GOVERNING LAW
-
-This Agreement is governed by the laws of [Portugal], without regard to its
-conflict-of-law principles.
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

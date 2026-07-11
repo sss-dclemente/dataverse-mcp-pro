@@ -19,8 +19,7 @@ plug-in trace, the tool:
 The output is structured JSON optimized for an LLM host to reason over, not a
 raw trace dump.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -183,7 +182,6 @@ from actually change — and optimize the offending query either way.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "explain_trace", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | Neither input provided | `{ "error": "Provide traceId or correlationId", "hint": "..." }` |
 | `traceId` not found | `{ "error": "Trace not found: \"...\"", "hint": "Plug-in trace logs are purged quickly by the platform. Run get_plugin_traces to find fresh trace ids, then retry." }` |
 | No failing trace in the correlation | `{ "error": "No failing trace found for that correlationId", "hint": "All traces in this correlation completed without an exception. Pass an explicit traceId to explain a non-failing trace, or re-check the correlation id." }` |

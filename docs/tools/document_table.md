@@ -24,8 +24,7 @@ Generates structured documentation for a Dataverse table from its
 
 Pairs with `document_flow` for a "document my customization" suite.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -126,7 +125,6 @@ failed while the rest of the document succeeded.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "document_table", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | Table not found (HTTP 404) | `{ "error": "Table not found: \"...\"", "hint": "Pass the table's logical name — singular and lowercase..." }` |
 | Metadata query rejected (HTTP 400) | Error envelope with the Dataverse message and a hint that `EntityDefinitions` supports only a limited set of `$expand`/`$select` options, plus a `docsUrl` to the [metadata Web API docs](https://learn.microsoft.com/power-apps/developer/data-platform/webapi/query-metadata-web-api). |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message and a hint that documenting a table requires metadata read access (and, with `includeAutomation`, read on `SdkMessageProcessingStep`/Process), e.g. the System Customizer role. |

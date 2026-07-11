@@ -18,8 +18,7 @@ Only **active** registrations are included (`statecode eq 0` for steps,
 `statecode eq 1` for flows/workflows/rules). Use it for impact analysis before
 schema changes: "what breaks if I rename or restructure this column/table?"
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -112,7 +111,6 @@ Notes on the shape:
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "what_runs_on_table", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message, a hint that the tool needs read privileges on `SdkMessageProcessingStep`, `SdkMessageFilter` and Process (workflow) — e.g. the System Customizer role — and `docsUrl` pointing to the [business logic best practices](https://learn.microsoft.com/power-apps/developer/data-platform/best-practices/business-logic/). |
 | HTTP 400 mentioning `primaryobjecttypecode` / invalid property | Error envelope with a hint to check the table logical name (singular, lowercase, e.g. `account`). |
 | One section's query fails mid-run | Not an error envelope — the section comes back empty and `sectionNotes` explains what could not be scanned. |

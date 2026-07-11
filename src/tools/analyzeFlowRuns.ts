@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -375,10 +374,9 @@ export const analyzeFlowRunsTool = defineTool({
     "a time window into a per-flow reliability/performance table (success rate, " +
     "p50/p95/avg/max duration, last run, top error groups) and flags problems: " +
     "high failure rates, consecutive-failure streaks, and slow p95 runtimes. " +
-    "Optionally scoped to one flow. Pro tier.",
+    "Optionally scoped to one flow.",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("analyze_flow_runs");
     try {
       return await analyzeFlowRuns(getDefaultClient(), input);
     } catch (err) {

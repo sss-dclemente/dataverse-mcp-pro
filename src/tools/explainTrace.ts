@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope, type ErrorEnvelope } from "../errors.js";
-import { isProLicensed, proUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -448,10 +447,9 @@ export const explainTraceTool = defineTool({
     "step registration (stage, mode, filtering attributes, images), reconstructs the " +
     "pipeline of sibling traces sharing the correlation id, parses the exception into " +
     "type/message/frames, and detects known failure patterns. Pass traceId " +
-    "(plugintracelogid) or correlationId (the deepest failing trace is analyzed). Pro tier.",
+    "(plugintracelogid) or correlationId (the deepest failing trace is analyzed).",
   inputSchema,
   handler: async (input) => {
-    if (!isProLicensed()) return proUpgradeMessage("explain_trace");
     try {
       return await explainTrace(getDefaultClient(), input);
     } catch (err) {

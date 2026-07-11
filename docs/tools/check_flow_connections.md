@@ -21,8 +21,7 @@ Usage is detected by matching each reference's logical name against the flow
 definition (`clientdata`) of up to `top` active, solution-aware cloud flows.
 Up to 500 connection references are audited.
 
-**Tier: Enterprise** — requires an Enterprise `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -98,7 +97,6 @@ exist the tool returns
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "check_flow_connections", "message": "...Enterprise tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | `connectionreferences` table not found (404/400) | Error envelope with a hint that connection references exist only in environments supporting solution-aware cloud flows, and `docsUrl` pointing to the [connection reference docs](https://learn.microsoft.com/power-apps/maker/data-platform/create-connection-reference). |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message and a hint that auditing requires read privilege on the Connection Reference (`connectionreference`), Process (`workflow`) and User (`systemuser`) tables. |
 | Anything else | Generic `{ "error": "..." }` envelope — raw exceptions never escape to the host. |

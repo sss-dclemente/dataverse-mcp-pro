@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -310,10 +309,9 @@ export const modernizationReportTool = defineTool({
     "Inventories deprecated/legacy automation still active in the org: classic " +
     "workflows (background and real-time), dialogs (removed technology), business " +
     "rules and business process flows. Returns per-category counts, the most " +
-    "recently modified active items, and prioritized migration findings. Pro tier.",
+    "recently modified active items, and prioritized migration findings.",
   inputSchema,
   handler: async (input) => {
-    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("modernization_report");
     try {
       return await modernizationReport(getDefaultClient(), input);
     } catch (err) {

@@ -21,8 +21,7 @@ Dataverse versions, so `statuscode` is used as a fallback signal with the same
 mapping, and suspended findings expose both raw codes. Owners that are not
 system users (teams, deleted users) are reported as `"team or unknown"`.
 
-**Tier: Enterprise** — requires an Enterprise `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -99,7 +98,6 @@ first 1000 are analyzed and the report carries `"truncated": true`.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "flow_governance_report", "message": "...Enterprise tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | No solution cloud flows in the org | Zeroed counts with `"hint": "No solution cloud flows found (category 5). ..."` — non-solution flows are not stored in the Dataverse `workflows` table. |
 | HTTP 403 from Dataverse | Error envelope with the Dataverse message, a hint that the report requires read privilege on the Process (`workflow`) table plus `SystemUser` for owner lookups, and `docsUrl` pointing to the [solution flows overview](https://learn.microsoft.com/power-automate/overview-solution-flows). |
 | Other Dataverse/network failure | Generic error envelope `{ "error": "..." }` — raw exceptions never escape to the host. |

@@ -8,8 +8,7 @@ chains), and N+1 firing of the same plug-in within a single correlation. Reads a
 single page of up to 5000 traces (newest first); when the cap is hit the result
 is marked `truncated`.
 
-**Tier:** Pro — requires `LICENSE_KEY`; without it the tool returns an upgrade
-message instead of running.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -119,20 +118,6 @@ Flags are ordered `slow-sync`, then `deep-cascade`, then `n-plus-one`:
   single `correlationid` (per-record logic in a bulk operation).
 
 ## Common errors
-
-**Unlicensed — Pro tier gate**
-
-Without a `LICENSE_KEY` the tool returns an upgrade payload and performs no
-Dataverse calls:
-
-```json
-{
-  "upgradeRequired": true,
-  "tool": "analyze_plugin_performance",
-  "message": "The tool \"analyze_plugin_performance\" is part of the Pro tier. Set the LICENSE_KEY environment variable to unlock it. See https://github.com/sss-dclemente/dataverse-mcp-pro#pro for details.",
-  "docsUrl": "https://github.com/sss-dclemente/dataverse-mcp-pro#pro"
-}
-```
 
 **Empty window — trace logging may be disabled**
 

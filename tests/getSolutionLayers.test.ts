@@ -66,42 +66,6 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("get_solution_layers pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await getSolutionLayersTool.handler({
-      componentType: "SystemForm",
-      componentId: FORM_ID,
-    })) as { upgradeRequired?: boolean; tool?: string; message?: string };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("get_solution_layers");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    // No DATAVERSE_URL: client construction fails after the gate, proving the
-    // gate was passed without any network traffic.
-    vi.stubEnv("DATAVERSE_URL", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await getSolutionLayersTool.handler({
-      componentType: "SystemForm",
-      componentId: FORM_ID,
-    })) as Envelope & { upgradeRequired?: boolean };
-
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toContain("DATAVERSE_URL");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-});
-
 describe("get_solution_layers input schema", () => {
   it("requires both componentType and componentId", () => {
     const schema = getSolutionLayersTool.inputSchema;

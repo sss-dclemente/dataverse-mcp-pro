@@ -3,7 +3,6 @@ import { readFileSync } from "node:fs";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { toErrorEnvelope } from "./errors.js";
-import { initLicensing } from "./licensing.js";
 import { tools } from "./tools/index.js";
 
 const pkg = JSON.parse(
@@ -38,8 +37,6 @@ export function buildServer(): McpServer {
 
 async function main(): Promise<void> {
   const server = buildServer();
-  // Resolve the license once at startup; never throws and never blocks free tools.
-  await initLicensing();
   await server.connect(new StdioServerTransport());
   // stdout is the MCP channel; human-facing output goes to stderr.
   console.error(`dataverse-ops-mcp v${pkg.version} ready on stdio`);

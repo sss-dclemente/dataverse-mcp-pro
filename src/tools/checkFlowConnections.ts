@@ -1,7 +1,6 @@
 import { z } from "zod";
 import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
-import { isEnterpriseLicensed, enterpriseUpgradeMessage } from "../licensing.js";
 import {
   DataverseHttpError,
   getDefaultClient,
@@ -379,10 +378,9 @@ export const checkFlowConnectionsTool = defineTool({
     "Audits Power Automate connection-reference health in Dataverse: unbound " +
     "connection references used by active cloud flows (run-time failures), " +
     "references or flows owned by disabled users, owner mismatches between a " +
-    "reference and the flows using it, and unused bound references. Pro tier.",
+    "reference and the flows using it, and unused bound references.",
   inputSchema,
   handler: async (input) => {
-    if (!isEnterpriseLicensed()) return enterpriseUpgradeMessage("check_flow_connections");
     try {
       return await checkFlowConnections(getDefaultClient(), input);
     } catch (err) {

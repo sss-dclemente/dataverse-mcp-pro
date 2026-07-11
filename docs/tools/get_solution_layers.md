@@ -12,8 +12,7 @@ can see which solution's version of the component actually applies:
 
 The huge `msdyn_componentjson` column is never selected or returned.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -89,7 +88,6 @@ solution's.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "get_solution_layers", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | No layers found | `{ "layerCount": 0, "layers": [], "findings": [], "hint": "No layers found — check the componentType spelling (e.g. Entity, SystemForm) and that the id is the component's id, not the solution's" }` |
 | HTTP 404 from Dataverse | Error envelope with a hint that the `msdyn_componentlayer` virtual table is not available in this environment. |
 | HTTP 400 from Dataverse | Error envelope with a hint that the virtual table requires **both** `msdyn_solutioncomponentname` and `msdyn_componentid` equality filters and an exact component type name (e.g. `Entity`, `SystemForm`). |

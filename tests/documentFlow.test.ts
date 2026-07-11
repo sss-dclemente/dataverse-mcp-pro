@@ -1,6 +1,6 @@
 import { readFileSync } from "node:fs";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { documentFlow, documentFlowTool } from "../src/tools/documentFlow.js";
+import { documentFlow } from "../src/tools/documentFlow.js";
 import { DataverseHttpError, type DataverseClient } from "../src/dataverse/client.js";
 
 const DOCS_URL =
@@ -93,41 +93,6 @@ function callArgs(
 afterEach(() => {
   vi.unstubAllEnvs();
   vi.unstubAllGlobals();
-});
-
-describe("document_flow pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await documentFlowTool.handler({})) as {
-      upgradeRequired?: boolean;
-      tool?: string;
-      message?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("document_flow");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    // No flow input: reaches the core function's input guard, not the gate.
-    const result = (await documentFlowTool.handler({})) as Envelope & {
-      upgradeRequired?: boolean;
-    };
-
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toBe("Provide flowId or flowName");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
 });
 
 describe("documentFlow input guard", () => {

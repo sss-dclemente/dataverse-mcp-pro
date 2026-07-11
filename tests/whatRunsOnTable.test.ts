@@ -87,45 +87,6 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-describe("what_runs_on_table pro gate", () => {
-  it("returns the upgrade message and never touches Dataverse when unlicensed", async () => {
-    vi.stubEnv("LICENSE_KEY", "");
-    const fetchSpy = vi.fn();
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await whatRunsOnTableTool.handler({ table: "account" })) as {
-      upgradeRequired?: boolean;
-      tool?: string;
-      message?: string;
-    };
-
-    expect(result.upgradeRequired).toBe(true);
-    expect(result.tool).toBe("what_runs_on_table");
-    expect(result.message).toContain("Pro");
-    expect(fetchSpy).not.toHaveBeenCalled();
-  });
-
-  it("proceeds past the gate when LICENSE_KEY is set", async () => {
-    vi.stubEnv("LICENSE_KEY", "valid-key");
-    vi.stubEnv("DATAVERSE_URL", "https://org.crm.dynamics.com");
-    vi.stubEnv("CLIENT_ID", "client-id");
-    vi.stubEnv("CLIENT_SECRET", "client-secret");
-    vi.stubEnv("TENANT_ID", "tenant-id");
-    // Every network attempt fails, proving we got past the gate and into the
-    // Dataverse call path, which degrades to an error envelope.
-    const fetchSpy = vi.fn().mockRejectedValue(new Error("network disabled in tests"));
-    vi.stubGlobal("fetch", fetchSpy);
-
-    const result = (await whatRunsOnTableTool.handler({
-      table: "account",
-    })) as Envelope & { upgradeRequired?: boolean };
-
-    expect(result.upgradeRequired).toBeUndefined();
-    expect(result.error).toBe("network disabled in tests");
-    expect(fetchSpy).toHaveBeenCalled();
-  });
-});
-
 describe("what_runs_on_table input schema", () => {
   it("requires a non-empty table logical name", () => {
     expect(whatRunsOnTableTool.inputSchema.safeParse({}).success).toBe(false);

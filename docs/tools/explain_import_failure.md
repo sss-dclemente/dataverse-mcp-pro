@@ -18,8 +18,7 @@ Unknown error codes fall back to the first 300 characters of the raw error text
 as the cause. Warnings are counted (`warningCount`) but do not appear as failed
 components.
 
-**Tier: Pro** — requires the `LICENSE_KEY` environment variable. Without a
-license the tool returns a friendly upgrade message instead of results.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -89,7 +88,6 @@ below 100.
 
 | Situation | Response |
 | --------- | -------- |
-| No `LICENSE_KEY` set | `{ "upgradeRequired": true, "tool": "explain_import_failure", "message": "...Pro tier...", "docsUrl": "..." }` — the tool never throws on a missing license. |
 | Neither input provided | `{ "error": "Provide importJobId or solutionName", "hint": "..." }` |
 | Import job GUID not found (HTTP 404) | `{ "error": "Import job not found: ...", "hint": "Check the importjobid GUID. Import job records are purged over time..." }` |
 | No import job for the solution | `{ "error": "No import job found for solution \"...\"", "hint": "Pass the solution's unique name (uniquename), not its display name. Import job records are also purged over time..." }` |

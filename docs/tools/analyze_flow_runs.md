@@ -9,8 +9,7 @@ streak), and flows with a slow p95 runtime. Flow display names are resolved
 from the `workflows` table. Reads a single page of up to 5000 runs (newest
 first); when the cap is hit the result is marked `truncated`.
 
-**Tier:** Pro — requires `LICENSE_KEY`; without it the tool returns an upgrade
-message instead of running.
+Part of the free, open-source tool set — no license key required.
 
 ## Inputs
 
@@ -153,20 +152,6 @@ Flags are ordered `high-failure-rate`, then `failure-streak`, then `slow-p95`
 - **slow-p95** — p95 duration above 300000 ms (5 minutes).
 
 ## Common errors
-
-**Unlicensed — Pro tier gate**
-
-Without a `LICENSE_KEY` the tool returns an upgrade payload and performs no
-Dataverse calls:
-
-```json
-{
-  "upgradeRequired": true,
-  "tool": "analyze_flow_runs",
-  "message": "The tool \"analyze_flow_runs\" is part of the Pro tier. Set the LICENSE_KEY environment variable to unlock it. See https://github.com/sss-dclemente/dataverse-mcp-pro#pro for details.",
-  "docsUrl": "https://github.com/sss-dclemente/dataverse-mcp-pro#pro"
-}
-```
 
 **Empty window — run history only covers solution-aware flows**
 
