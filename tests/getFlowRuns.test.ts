@@ -269,19 +269,19 @@ describe("flow not found", () => {
 });
 
 describe("failure modes", () => {
-  it("maps a 404 to the virtual-table-not-available hint with docsUrl", async () => {
+  it("maps a 404 to the run-history-table-not-available hint with docsUrl", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(404, "Resource not found for the segment 'flowruns'."),
     );
     const result = (await queryFlowRuns(client, parseInput())) as ResultShape;
 
     expect(result.error).toContain("flowruns");
-    expect(result.hint).toContain("flowrun virtual table");
+    expect(result.hint).toContain("flowrun elastic table");
     expect(result.hint).toContain("solution-aware");
     expect(result.docsUrl).toBe(DOCS_URL);
   });
 
-  it("maps a 400 that reports the entity as not found to the same virtual-table hint", async () => {
+  it("maps a 400 that reports the entity as not found to the same run-history hint", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(
         400,
@@ -290,7 +290,7 @@ describe("failure modes", () => {
     );
     const result = (await queryFlowRuns(client, parseInput())) as ResultShape;
 
-    expect(result.hint).toContain("flowrun virtual table");
+    expect(result.hint).toContain("flowrun elastic table");
     expect(result.docsUrl).toBe(DOCS_URL);
   });
 

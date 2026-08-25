@@ -396,7 +396,7 @@ describe("definition tolerance", () => {
 });
 
 describe("failure modes", () => {
-  it("maps a 404 to an envelope hinting the flowrun virtual table may be unavailable", async () => {
+  it("maps a 404 to an envelope hinting the flowrun elastic table may be unavailable", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(404, "Resource not found for the segment 'flowruns'."),
     );

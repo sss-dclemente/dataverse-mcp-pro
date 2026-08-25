@@ -1,13 +1,15 @@
 # analyze_flow_runs
 
 Aggregates Power Automate cloud-flow run history (the Dataverse `flowruns`
-virtual table) over a time window into a per-flow reliability/performance
+elastic table) over a time window into a per-flow reliability/performance
 table — run counts by status, success rate, p50/p95 (nearest-rank), average and
 max duration, last run, and the top error groups — and flags problems: flows
 with a high failure rate, flows whose most recent runs all failed (a failure
 streak), and flows with a slow p95 runtime. Flow display names are resolved
-from the `workflows` table. Reads a single page of up to 5000 runs (newest
-first); when the cap is hit the result is marked `truncated`.
+from the `workflows` table. Reads a single page of up to 500 runs (newest
+first); when the cap is hit the result is marked `truncated`. The 500-row limit
+is the Dataverse per-page cap for elastic tables such as `flowrun` — standard
+tables allow 5000.
 
 Part of the free, open-source tool set — no license key required.
 
@@ -138,7 +140,7 @@ from the duration distribution, and a flow with no recorded durations reports
 rounded to one decimal. `errorGroups` lists the flow's top 3 clusters of failed
 runs grouped by error code plus the first 150 characters of the error message,
 sorted by count. A run whose flow cannot be resolved in `workflows` gets
-`flowName: "unknown"`. When exactly 5000 rows come back the payload includes
+`flowName: "unknown"`. When exactly 500 rows come back the payload includes
 `"truncated": true` — narrow `hoursBack` (or scope with `flowId`) for a
 complete picture.
 
@@ -175,7 +177,7 @@ records run metadata for solution-aware cloud flows:
 ```json
 {
   "error": "Resource not found for the segment 'flowruns'.",
-  "hint": "The flowrun table was not found. Cloud-flow run history in Dataverse is a virtual table that only covers solution-aware flows and may not be enabled in this environment.",
+  "hint": "The flowrun table was not found. Cloud-flow run history in Dataverse is an elastic table that only covers solution-aware flows and may not be enabled in this environment.",
   "docsUrl": "https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata"
 }
 ```

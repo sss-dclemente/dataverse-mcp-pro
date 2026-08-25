@@ -14,8 +14,8 @@ const DOCS_URL =
 const EMPTY_RESULT_HINT =
   "No runs in the window. Note that Dataverse run history covers solution-aware cloud flows.";
 
-const VIRTUAL_TABLE_HINT =
-  "Cloud-flow run history in Dataverse (the flowrun virtual table) requires " +
+const RUN_HISTORY_TABLE_HINT =
+  "Cloud-flow run history in Dataverse (the flowrun elastic table) requires " +
   "solution-aware flows and may not be enabled in every environment/region";
 
 const ERROR_MESSAGE_MAX_CHARS = 300;
@@ -58,7 +58,7 @@ const inputSchema = z.object({
 
 export type FlowRunsInput = z.infer<typeof inputSchema>;
 
-// flowrun status values are capitalized string literals in the virtual table.
+// flowrun status values are capitalized string literals in the elastic table.
 const STATUS_LITERALS: Record<FlowRunsInput["status"] & string, string> = {
   succeeded: "Succeeded",
   failed: "Failed",
@@ -207,12 +207,15 @@ export async function queryFlowRuns(
     if (err instanceof DataverseHttpError) {
       const message = err.dataverseMessage ?? err.message;
       if (isEntityNotFound(err)) {
-        return errorEnvelope(message, { hint: VIRTUAL_TABLE_HINT, docsUrl: DOCS_URL });
+        return errorEnvelope(message, {
+          hint: RUN_HISTORY_TABLE_HINT,
+          docsUrl: DOCS_URL,
+        });
       }
       if (err.status === 400) {
         return errorEnvelope(message, {
           hint:
-            "The flowrun virtual table supports limited OData filtering. Try narrowing " +
+            "The flowrun elastic table supports limited OData filtering. Try narrowing " +
             "the query by flowId and keep filters to starttime, status and the flow lookup.",
           docsUrl: DOCS_URL,
         });
@@ -234,7 +237,7 @@ export async function queryFlowRuns(
 export const getFlowRuns = defineTool({
   name: "get_flow_runs",
   description:
-    "Lists Power Automate cloud-flow runs from the Dataverse flowrun virtual table, filtered " +
+    "Lists Power Automate cloud-flow runs from the Dataverse flowrun elastic table, filtered " +
     "by flow (id or display name), run status and time window. Returns run id, status, timing " +
     "and truncated error details for failed runs. Covers solution-aware cloud flows.",
   inputSchema,
