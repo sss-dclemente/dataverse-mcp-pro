@@ -21,6 +21,10 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
+      # Verifies the artifact npm would publish: file list, bin entry, and that
+      # the packed server boots over stdio and exposes every registered tool.
+      # CI's fixture suite runs against source and cannot catch a broken pack.
+      - run: node scripts/verify-package.mjs
       - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
