@@ -23,3 +23,20 @@ does **not** resolve until the first `v*` git tag exists — do not use `npx`.
 5. Optional: `analyze_flow_runs` — if the window has 500 runs, expect `truncated: true`. `detect_automation_loops` is definition-based **cloud-flow only**; plugin↔flow ping-pong is out of scope.
 
 Do not tag and do not `npm publish` from the honesty PR. Live smoke is a human step after merge.
+
+## Before tagging: verify the packed artifact
+
+This checklist covers behaviour against a real org. It does not check what
+`npm pack` actually produces, and the release workflow publishes on any `v*`
+tag, so run this too:
+
+```bash
+npm run verify:package
+```
+
+It packs the tarball, checks the file list and `bin` entry, unpacks it, boots
+the packed server over stdio and compares the tools it exposes against
+`src/tools/index.ts`. No Dataverse org or credentials needed — the client is
+built lazily, so `tools/list` answers without any environment set. It exits
+non-zero and names the failing check, and `release.yml` runs it before
+`npm publish`, so a broken artifact cannot reach the registry.

@@ -27,6 +27,7 @@
   "scripts": {
     "build": "tsc",
     "test": "vitest run",
+    "verify:package": "npm run build && node scripts/verify-package.mjs",
     "dev": "tsx src/server.ts",
     "prepublishOnly": "npm run build && npm test"
   },
