@@ -7,7 +7,8 @@
 // pass `npm test` and only surface after publishing.
 //
 // Steps: pack, check the file list, unpack, boot the packed server over stdio,
-// and compare the tools it reports against the built registry.
+// and compare the tools it reports against src/tools/index.ts (names, not just
+// a count) as well as the built registry.
 //
 // The tarball is unpacked inside the repo so Node resolves the runtime deps from
 // the repo's node_modules — the packed artifact ships no node_modules of its own.
@@ -74,23 +75,56 @@ async function registeredToolNames() {
 }
 
 /**
- * Number of entries in the `tools` array in src/tools/index.ts.
+ * MCP tool names declared in source, in `export const tools = [ ... ]` order.
  *
- * Anchored to source on purpose: comparing the packed server only against the
- * built registry compares the build to itself, so a tool dropped during build
- * or pack would agree on both sides and pass. The source count is the one input
+ * Extracts identifier names from the source array (not a comma-split count),
+ * then resolves each identifier's `name` from its tool module. Anchored to
+ * source on purpose: comparing the packed server only against the built
+ * registry compares the build to itself, so a tool dropped during build or
+ * pack would agree on both sides and pass. The source list is the one input
  * the build cannot influence.
  */
-function sourceToolCount() {
-  const src = readFileSync(join(repoRoot, "src", "tools", "index.ts"), "utf8");
+function sourceToolNames() {
+  const indexPath = join(repoRoot, "src", "tools", "index.ts");
+  const src = readFileSync(indexPath, "utf8");
   const match = src.match(/export const tools[^=]*=\s*\[([\s\S]*?)\n\];/);
   if (!match) {
     throw new Error("could not find the tools array in src/tools/index.ts");
   }
-  return match[1]
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean).length;
+  const identifiers = [...match[1].matchAll(/^\s*([A-Za-z_$][\w$]*)\s*,?\s*$/gm)].map(
+    (m) => m[1],
+  );
+  if (identifiers.length === 0) {
+    throw new Error("tools array in src/tools/index.ts had no identifiers");
+  }
+
+  const idToRel = new Map();
+  for (const m of src.matchAll(/import\s+\{\s*([A-Za-z_$][\w$]*)\s*\}\s+from\s+"(\.\/[^"]+)"/g)) {
+    idToRel.set(m[1], m[2]);
+  }
+
+  const names = [];
+  for (const id of identifiers) {
+    const rel = idToRel.get(id);
+    if (!rel) {
+      throw new Error(
+        `tools array identifier "${id}" has no matching import in src/tools/index.ts`,
+      );
+    }
+    const filePath = join(
+      repoRoot,
+      "src",
+      "tools",
+      rel.replace(/^\.\//, "").replace(/\.js$/, ".ts"),
+    );
+    const fileSrc = readFileSync(filePath, "utf8");
+    const nameMatch = fileSrc.match(/defineTool\(\s*\{[\s\S]*?\bname:\s*["']([^"']+)["']/);
+    if (!nameMatch) {
+      throw new Error(`could not find defineTool name in ${filePath} (${id})`);
+    }
+    names.push(nameMatch[1]);
+  }
+  return names;
 }
 
 /** Boot the packed server over stdio and return the tool names it reports. */
@@ -185,14 +219,30 @@ try {
     const reported = await toolNamesFromPackedServer(serverPath);
     const reportedNames = reported.map((t) => t.name);
 
-    const sourceCount = sourceToolCount();
-    if (reportedNames.length !== sourceCount) {
+    const sourceNames = sourceToolNames();
+    if (reportedNames.length !== sourceNames.length) {
       fail(
-        `src/tools/index.ts registers ${sourceCount} tools but the packed server exposes ` +
+        `src/tools/index.ts registers ${sourceNames.length} tools but the packed server exposes ` +
           `${reportedNames.length} — the build or pack dropped something.`,
       );
     } else {
-      pass(`packed tool count matches src/tools/index.ts (${sourceCount})`);
+      pass(`packed tool count matches src/tools/index.ts (${sourceNames.length})`);
+    }
+
+    const missingFromSource = sourceNames.filter((n) => !reportedNames.includes(n));
+    const extraVsSource = reportedNames.filter((n) => !sourceNames.includes(n));
+    if (missingFromSource.length > 0) {
+      fail(
+        `in src/tools/index.ts but not exposed by the packed server: ${missingFromSource.join(", ")}`,
+      );
+    }
+    if (extraVsSource.length > 0) {
+      fail(
+        `exposed by the packed server but not in src/tools/index.ts: ${extraVsSource.join(", ")}`,
+      );
+    }
+    if (missingFromSource.length === 0 && extraVsSource.length === 0) {
+      pass(`packed server exposes every tool named in src/tools/index.ts (${sourceNames.length})`);
     }
 
     const missing = expected.filter((n) => !reportedNames.includes(n));
