@@ -65,10 +65,13 @@ and business rules. The two are complementary, and running both is a reasonable 
 
 ## 5-minute quickstart
 
-The package is on npm as
+The package is published on npm as
 [`@simplesmoothsafe/dataverse-ops-mcp`](https://www.npmjs.com/package/@simplesmoothsafe/dataverse-ops-mcp),
-published with provenance, so `npx` works. [Running from source](#run-from-source) is equally
-supported and is what you want if you plan to change anything.
+which is what makes the `npx` commands below resolve. Releases also carry npm
+[provenance](https://docs.npmjs.com/generating-provenance-statements/), a separate guarantee that
+lets you verify which commit and workflow built the tarball.
+[Running from source](#run-from-source) is equally supported and is what you want if you plan to
+change anything.
 
 ### Prerequisites
 

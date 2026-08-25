@@ -13,9 +13,10 @@ npm install
 npm run build
 ```
 
-Point the MCP host at `dist/server.js` (see the README). `npx @simplesmoothsafe/dataverse-ops-mcp`
-also works now that the package is published, but run the live checks from a
-source build so you are exercising the commit you are about to tag.
+Point the MCP host at **this build's** `dist/server.js` (see the README) — not at
+`npx @simplesmoothsafe/dataverse-ops-mcp`. Both launch the same server, but `npx` runs the last
+*published* release, and the whole point of this checklist is to exercise the commit you are
+about to tag.
 
 1. `ping` → `{ "ok": true }` (no Dataverse call).
 2. `get_plugin_traces` with defaults → structured results, an empty-with-hint payload, or a specific privilege/feature envelope — never a raw exception.
