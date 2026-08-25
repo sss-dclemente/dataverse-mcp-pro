@@ -7,22 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-25
+
 ### Added
 
 - `npm run verify:package` (`scripts/verify-package.mjs`): verifies the artifact npm would
   actually publish. It packs the tarball, checks the file list and `bin` entry, unpacks it, boots
-  the packed server over stdio, and checks the tools it exposes — the count against
-  `src/tools/index.ts`, the names against the built registry (`dist/tools/index.js`).
-  `release.yml` runs it before `npm publish`, so a broken artifact cannot reach the registry on a
-  `v*` tag. The tool count is anchored to source rather than to the built registry — comparing the
-  packed server against `dist/tools/index.js` alone compares the build to itself and agrees with a
-  tool that was dropped during build. Needs no Dataverse org: the client is lazily constructed, so
-  `tools/list` answers with no environment set.
-
-## [0.3.1] - 2026-08-25
+  the packed server over stdio, and checks the tools it exposes against `src/tools/index.ts` —
+  identifier names from `export const tools = [ ... ]`, resolved to each module's `name`, compared
+  to packed `tools/list` (not only a count). CI (`ci.yml`) and `prepublishOnly` run
+  `node scripts/verify-package.mjs` after build and test so a broken pack fails the PR and a
+  laptop `npm publish`, not only a `v*` tag. `release.yml` still runs it before `npm publish`.
+  The check is anchored to source rather than to the built registry — comparing the packed server
+  against `dist/tools/index.js` alone compares the build to itself and agrees with a tool that was
+  dropped during build. Needs no Dataverse org: the client is lazily constructed, so `tools/list`
+  answers with no environment set.
 
 ### Changed
 
+- `package-lock.json` root and `packages.""` `version` / `license` synced to `package.json`
+  (`0.3.1`, MIT). Dependency versions unchanged.
 - README honesty pass: run-from-source is the real install path (`npx @simplesmoothsafe/dataverse-ops-mcp` does not resolve until the first `v*` git tag); dropped the complete-automation-graph claim; data flow is no-middleman Web API + Entra, with the caveat that a cloud MCP host still sends tool JSON to the model vendor; documented the real caps (`flowrun` elastic page 500, `analyze_flow_runs` truncated at 500, `detect_automation_loops` definition-based cloud-flow only, `what_runs_on_table` cloud-flow scan cap 500).
 - `docs/smoke-test.md` tightened to a short live-org checklist. CI remains fixture-based and is not live-org validation.
 - Removed the leftover "Free tier." suffix from six tool descriptions and the `**Tier:** Free`

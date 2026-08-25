@@ -17,3 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run build
       - run: npm test
+      # CI currently tests source; this verifies the packed artifact so a
+      # broken pack fails the PR, not only the v* tag. Match release.yml:
+      # call the script directly (`npm run verify:package` rebuilds).
+      - run: node scripts/verify-package.mjs
