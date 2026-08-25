@@ -8,14 +8,15 @@ packed artifact actually work over stdio".
 
 ```bash
 npm run build
-TARBALL=$(npm pack | tail -1)
+export TARBALL=$(npm pack | tail -1)
 echo "$TARBALL"
 ```
 
 `npm pack` produces `simplesmoothsafe-dataverse-ops-mcp-<version>.tgz` in the
 repo root (scoped name flattened, current version). Capturing it in `$TARBALL`
 keeps the rest of this document correct across version bumps — every step below
-uses the variable, so export it in each shell you run these steps from.
+uses the variable. It is exported so the later steps work in any shell spawned
+from this one; if you open a fresh terminal, re-run the `export` line there.
 
 Sanity-check the file list `npm pack` prints: only `dist/*`, `README.md`,
 `LICENSE`, `package.json`.
@@ -63,12 +64,32 @@ printf '%s\n' \
       let buf = "";
       process.stdin.on("data", (d) => (buf += d));
       process.stdin.on("end", () => {
-        const msg = buf
+        const messages = buf
           .split("\n")
           .filter(Boolean)
-          .map((l) => JSON.parse(l))
-          .find((m) => m.id === 2);
-        const names = msg.result.tools.map((t) => t.name);
+          .flatMap((line) => {
+            try {
+              return [JSON.parse(line)];
+            } catch {
+              return []; // ignore anything that is not a JSON-RPC line
+            }
+          });
+        const msg = messages.find((m) => m.id === 2);
+        if (!msg) {
+          console.error("FAIL: no tools/list (id 2) response — the server did not start or exited early.");
+          console.error("Re-run step 2 on its own to see the error it prints on stderr.");
+          process.exit(1);
+        }
+        if (msg.error) {
+          console.error(`FAIL: tools/list returned an error: ${JSON.stringify(msg.error)}`);
+          process.exit(1);
+        }
+        const tools = msg.result?.tools;
+        if (!Array.isArray(tools)) {
+          console.error(`FAIL: tools/list response had no tools array: ${JSON.stringify(msg).slice(0, 200)}`);
+          process.exit(1);
+        }
+        const names = tools.map((t) => t.name);
         console.log(`${names.length} tools:`, names.join(", "));
       });
     '
@@ -77,6 +98,16 @@ printf '%s\n' \
 Compare that count and list against the `tools` array in `src/tools/index.ts`.
 They must match exactly — a tool that fails to register is the failure this step
 exists to catch.
+
+This step needs no credentials: the Dataverse client is built lazily on first
+use, so `tools/list` answers with no `DATAVERSE_URL` set. Run it before step 2
+if you want to check the packed artifact on its own.
+
+The filter exits non-zero and says which stage failed rather than throwing a
+`TypeError`, so a server that never starts reports that instead of a stack
+trace. The server logs its own status to stderr (`src/server.ts`), leaving
+stdout as pure JSON-RPC; the parser skips non-JSON lines anyway so an unexpected
+stdout writer cannot mask the result.
 
 ## 4. Alternative: MCP Inspector
 

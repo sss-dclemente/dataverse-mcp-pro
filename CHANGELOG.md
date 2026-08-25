@@ -30,6 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   **elastic** table (Cosmos-backed, partitioned per user, 500-row page cap). `msdyn_componentlayer`
   really is virtual, so the two were being conflated. Documented the partitioning and page-cap
   consequences in `docs/tools/get_flow_runs.md`.
+- The `docs/smoke-test.md` tool-list check crashed with `TypeError: Cannot read properties of
+  undefined` whenever the server produced no `tools/list` response — i.e. exactly when the smoke
+  test was catching a real problem. It now skips non-JSON lines, reports which stage failed, and
+  exits non-zero. Step 1 exports `TARBALL` rather than only assigning it, matching what the
+  surrounding text tells the reader to do.
 - `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces, and told
   readers to expect "exactly seven tools" from `tools/list` when the registry holds 20 — so the
   release gate failed against a correct build. The document no longer hardcodes a version or a
