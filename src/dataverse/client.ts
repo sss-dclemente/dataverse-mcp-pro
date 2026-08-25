@@ -35,6 +35,12 @@ export class DataverseHttpError extends Error {
   }
 }
 
+function trimmedOrUndefined(value: string | undefined): string | undefined {
+  if (value === undefined) return undefined;
+  const trimmed = value.trim();
+  return trimmed === "" ? undefined : trimmed;
+}
+
 export function configFromEnv(
   env: Record<string, string | undefined> = process.env,
 ): DataverseConfig {
@@ -45,9 +51,12 @@ export function configFromEnv(
     );
   }
   const config: DataverseConfig = { url: rawUrl.trim().replace(/\/+$/, "") };
-  const clientId = env["CLIENT_ID"];
-  const clientSecret = env["CLIENT_SECRET"];
-  const tenantId = env["TENANT_ID"];
+  // Blank values are treated as absent: .env templates and CI often declare these
+  // vars empty, and a half-filled client-credentials set must fall back to
+  // DefaultAzureCredential rather than post empty strings to Entra ID.
+  const clientId = trimmedOrUndefined(env["CLIENT_ID"]);
+  const clientSecret = trimmedOrUndefined(env["CLIENT_SECRET"]);
+  const tenantId = trimmedOrUndefined(env["TENANT_ID"]);
   if (clientId !== undefined) config.clientId = clientId;
   if (clientSecret !== undefined) config.clientSecret = clientSecret;
   if (tenantId !== undefined) config.tenantId = tenantId;

@@ -105,7 +105,7 @@ describe("input schema", () => {
 
   it("is exposed as the tool get_flow_runs", () => {
     expect(getFlowRuns.name).toBe("get_flow_runs");
-    expect(getFlowRuns.description.toLowerCase()).toContain("free tier");
+    expect(getFlowRuns.description.toLowerCase()).toContain("cloud-flow runs");
   });
 });
 
@@ -129,6 +129,8 @@ describe("happy path with flowName resolution", () => {
     expect(workflowsOptions.filter).toBe(
       "category eq 5 and type eq 1 and name eq 'O''Brien Order Sync'",
     );
+    // Only 5 ids are ever used; the lookup must be bounded server-side.
+    expect(workflowsOptions.top).toBe(5);
 
     const [runsPath, runsOptions] = callAt(get, 1);
     expect(runsPath).toBe("flowruns");
@@ -257,6 +259,8 @@ describe("flow not found", () => {
     expect(retryOptions.filter).toBe(
       "category eq 5 and type eq 1 and contains(name,'Ghost Flow')",
     );
+    // The contains() fallback is the widest query the tool issues: bound it too.
+    expect(retryOptions.top).toBe(5);
 
     expect(result.error).toContain('No cloud flow found matching "Ghost Flow"');
     expect(result.hint).toContain("flowId");
@@ -265,19 +269,19 @@ describe("flow not found", () => {
 });
 
 describe("failure modes", () => {
-  it("maps a 404 to the virtual-table-not-available hint with docsUrl", async () => {
+  it("maps a 404 to the run-history-table-not-available hint with docsUrl", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(404, "Resource not found for the segment 'flowruns'."),
     );
     const result = (await queryFlowRuns(client, parseInput())) as ResultShape;
 
     expect(result.error).toContain("flowruns");
-    expect(result.hint).toContain("flowrun virtual table");
+    expect(result.hint).toContain("flowrun elastic table");
     expect(result.hint).toContain("solution-aware");
     expect(result.docsUrl).toBe(DOCS_URL);
   });
 
-  it("maps a 400 that reports the entity as not found to the same virtual-table hint", async () => {
+  it("maps a 400 that reports the entity as not found to the same run-history hint", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(
         400,
@@ -286,7 +290,7 @@ describe("failure modes", () => {
     );
     const result = (await queryFlowRuns(client, parseInput())) as ResultShape;
 
-    expect(result.hint).toContain("flowrun virtual table");
+    expect(result.hint).toContain("flowrun elastic table");
     expect(result.docsUrl).toBe(DOCS_URL);
   });
 

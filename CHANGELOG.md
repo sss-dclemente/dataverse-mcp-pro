@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `configFromEnv` now treats blank `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` as unset and trims
+  surrounding whitespace. Previously an empty-but-declared variable (common in `.env` templates
+  and CI) forced the client-credentials flow with empty values instead of falling back to
+  `DefaultAzureCredential`.
+- `analyze_plugin_performance` now derives an N+1 offender's `messageName` from the offending
+  correlation rather than a window-wide histogram, so a plug-in type registered on several
+  messages is no longer mislabelled.
+- `explain_import_failure` attributes failures on `<solutionManifest>`, which previously surfaced
+  as `componentType: "unknown"`.
+- `get_solution_layers` no longer describes the lower layers as managed: the layer table carries
+  no managed/unmanaged flag, so the finding now says "lower layer(s)".
+- `get_flow_runs` bounds both workflow name lookups with `$top`; the `contains()` fallback was
+  unbounded even though only five matches are ever used.
+- Pattern matchers reset `lastIndex` before `exec`, so a future `/g` rule cannot skip matches.
+- `analyze_flow_runs` requested a 5000-row page and only reported `truncated` at exactly 5000
+  rows. `flowrun` is an elastic table, for which Dataverse serves at most 500 rows per page, so
+  the flag could never fire and a partial window was reported as complete. The cap is now 500.
+- `flowrun` was described as a "virtual table" throughout the flow tools and their docs. It is an
+  **elastic** table (Cosmos-backed, partitioned per user, 500-row page cap). `msdyn_componentlayer`
+  really is virtual, so the two were being conflated. Documented the partitioning and page-cap
+  consequences in `docs/tools/get_flow_runs.md`.
+- `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces.
+
+### Changed
+
+- Removed the leftover "Free tier." suffix from six tool descriptions and the `**Tier:** Free`
+  line from five doc pages. The tiers were removed in 0.3.0, and labelling only some tools
+  implied the rest were paid. A registry test now fails if tier wording reappears.
+- README: added a "What you can ask it" walkthrough, grouped the tool table by capability area,
+  documented Grok setup and a run-from-source path, and noted that the npm package is unpublished
+  until the first `v*` tag.
+
 ## [0.3.0] - 2026-07-11
 
 ### Changed
@@ -17,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 Thirteen tools bringing the set to 20, spanning plug-in diagnostics, Power Automate flow diagnostics, and Dataverse governance/documentation:
 
-- `get_flow_runs`: filtered Power Automate cloud-flow run history (flow, status, time window) via the Dataverse `flowrun` virtual table.
+- `get_flow_runs`: filtered Power Automate cloud-flow run history (flow, status, time window) via the Dataverse `flowrun` elastic table.
 - `document_flow`: structured documentation for a cloud flow parsed from its definition — triggers, action tree with dependencies, connectors, and a ready-to-share markdown document.
 - `analyze_flow_runs`: per-flow reliability report with success rates, duration percentiles, error clusters, and flags for high failure rates, failure streaks and slow p95 durations.
 - `get_org_automation_settings`: org-level plug-in trace logging and auditing switches with actionable hints.

@@ -7,8 +7,6 @@ is off, `get_plugin_traces`, `explain_trace` and `analyze_plugin_performance`
 will return nothing no matter how broken the plug-in is, and if auditing is off
 there is no field-change history to consult.
 
-**Tier:** Free
-
 ## Inputs
 
 None — the tool takes an empty object.

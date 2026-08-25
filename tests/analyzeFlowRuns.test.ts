@@ -170,7 +170,7 @@ describe("query construction", () => {
     // 72 hours back from the pinned clock.
     expect(options.filter).toBe("starttime ge 2026-07-07T12:00:00.000Z");
     expect(options.orderby).toBe("starttime desc");
-    expect(options.top).toBe(5000);
+    expect(options.top).toBe(500);
   });
 
   it("appends an unquoted _workflow_value clause when flowId is given", async () => {
@@ -186,7 +186,7 @@ describe("query construction", () => {
       `starttime ge 2026-07-09T12:00:00.000Z and _workflow_value eq ${FLOW_A}`,
     );
     expect(options.orderby).toBe("starttime desc");
-    expect(options.top).toBe(5000);
+    expect(options.top).toBe(500);
   });
 });
 
@@ -492,7 +492,7 @@ describe("empty result", () => {
 });
 
 describe("failure modes", () => {
-  it("maps a 404 to an envelope hinting the flowrun virtual table may be unavailable", async () => {
+  it("maps a 404 to an envelope hinting the flowrun elastic table may be unavailable", async () => {
     const { client } = throwingClient(
       new DataverseHttpError(
         404,
@@ -530,9 +530,11 @@ describe("failure modes", () => {
 });
 
 describe("truncation", () => {
-  it("marks the result truncated when the 5000-row page cap is hit", async () => {
+  // flowrun is elastic: Dataverse serves at most 500 rows per page, so the cap
+  // the tool must detect is 500, not the 5000 that applies to standard tables.
+  it("marks the result truncated when the 500-row elastic page cap is hit", async () => {
     const flowId = "99999999-0000-4000-8000-000000000099";
-    const rows = Array.from({ length: 5000 }, (_, i) => ({
+    const rows = Array.from({ length: 500 }, (_, i) => ({
       name: `run-${i}`,
       status: "Succeeded",
       starttime: "2026-07-10T10:00:00Z",
@@ -549,7 +551,7 @@ describe("truncation", () => {
     const result = (await analyzeFlowRuns(client, parseInput())) as ResultShape;
 
     expect(result.truncated).toBe(true);
-    expect(result.totalRuns).toBe(5000);
+    expect(result.totalRuns).toBe(500);
     expect(result.flowsAnalyzed).toBe(1);
     expect(result.table?.[0]?.flowName).toBe("Bulk Flow");
     expect(result.flags).toEqual([]);

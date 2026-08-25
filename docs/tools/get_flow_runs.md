@@ -1,13 +1,11 @@
 # get_flow_runs
 
-Lists Power Automate cloud-flow runs from the Dataverse `flowruns` virtual table
+Lists Power Automate cloud-flow runs from the Dataverse `flowruns` elastic table
 — the run-history metadata Dataverse keeps for solution-aware cloud flows. Scope
 by flow (id or display name), run status and time window; failed runs carry a
 truncated error code/message. This complements Microsoft's FlowAgent authoring
 plugin with read-only diagnostics: it answers "which runs failed overnight and
 why?" without opening the Power Automate portal.
-
-**Tier:** Free
 
 ## Inputs
 
@@ -71,26 +69,31 @@ while a run is still in flight.
 
 **Flow run table not available (404, or 400 "entity not found")**
 
-Cloud-flow run history in Dataverse is backed by the `flowrun` virtual table,
+Cloud-flow run history in Dataverse is backed by the `flowrun` elastic table,
 which requires solution-aware flows and is not enabled in every
 environment/region:
 
 ```json
 {
   "error": "Resource not found for the segment 'flowruns'.",
-  "hint": "Cloud-flow run history in Dataverse (the flowrun virtual table) requires solution-aware flows and may not be enabled in every environment/region",
+  "hint": "Cloud-flow run history in Dataverse (the flowrun elastic table) requires solution-aware flows and may not be enabled in every environment/region",
   "docsUrl": "https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata"
 }
 ```
 
 **400 — unsupported filter**
 
-The virtual table supports only limited OData filtering:
+The elastic table supports only limited OData filtering. Elastic tables are
+Cosmos DB-backed and partitioned; run history is partitioned per user, so a
+query that is not scoped to one flow reads across every logical partition and is
+correspondingly slower. Dataverse also serves at most 500 rows per page for
+elastic tables (against 5000 for standard tables) — `top` maxes out at 100 here,
+so a single call stays well inside that limit.
 
 ```json
 {
   "error": "The query specified in the URI is not valid. ...",
-  "hint": "The flowrun virtual table supports limited OData filtering. Try narrowing the query by flowId and keep filters to starttime, status and the flow lookup.",
+  "hint": "The flowrun elastic table supports limited OData filtering. Try narrowing the query by flowId and keep filters to starttime, status and the flow lookup.",
   "docsUrl": "https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata"
 }
 ```

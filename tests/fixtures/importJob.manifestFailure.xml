@@ -1,0 +1,7 @@
+<importexportxml start="09:15:00" stop="09:15:12" progress="12.5">
+  <solutionManifests>
+    <solutionManifest id="ContosoSales" LocalizedName="Contoso Sales" processed="true">
+      <result result="failure" errorcode="0x80048264" errortext="The dependent component Solution &quot;Contoso Base&quot; does not exist. Missing component: Contoso Base. The missing component is provided by solution &quot;Contoso Base&quot; &amp; must be installed first." datetime="09:15:11" />
+    </solutionManifest>
+  </solutionManifests>
+</importexportxml>

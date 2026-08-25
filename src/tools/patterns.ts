@@ -32,6 +32,9 @@ const MAX_EVIDENCE_LENGTH = 200;
  */
 function lineMatcher(re: RegExp): (input: PatternInput) => string | undefined {
   return ({ text }) => {
+    // Rules are module-level RegExp instances reused across calls: a /g or /y
+    // flag would carry lastIndex over and skip matches.
+    re.lastIndex = 0;
     const match = re.exec(text);
     if (!match) return undefined;
     const lineStart = text.lastIndexOf("\n", match.index) + 1;

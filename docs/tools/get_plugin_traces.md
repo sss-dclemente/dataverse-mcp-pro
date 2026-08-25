@@ -7,8 +7,6 @@ answer "which plug-in just failed and why?". Exception details are reduced to a
 one-line summary plus a 500-character excerpt; the raw `messageblock` is never
 fetched or returned.
 
-**Tier:** Free
-
 ## Inputs
 
 | Name | Type | Default | Description |

@@ -13,9 +13,12 @@ const DOCS_URL =
 const EMPTY_RESULT_HINT =
   "No cloud-flow runs found in the window. Dataverse run history covers solution-aware flows.";
 
-// Dataverse serves at most 5000 rows per page; we deliberately stay within a
-// single page and report truncation instead of paging.
-const PAGE_CAP = 5000;
+// flowrun is an elastic table, and Dataverse serves at most 500 rows per page
+// for those (5000 is the standard-table limit). We deliberately stay within a
+// single page and report truncation instead of paging. Requesting 5000 here
+// would silently cap at 500, so `truncated` could never fire and a partial
+// window would be reported as complete.
+const PAGE_CAP = 500;
 
 // Keep the workflows name-resolution $filter or-chain short enough to stay
 // well under URL length limits.
@@ -349,7 +352,7 @@ export async function analyzeFlowRuns(
       return errorEnvelope(err.dataverseMessage ?? err.message, {
         hint:
           "The flowrun table was not found. Cloud-flow run history in Dataverse " +
-          "is a virtual table that only covers solution-aware flows and may not " +
+          "is an elastic table that only covers solution-aware flows and may not " +
           "be enabled in this environment.",
         docsUrl: DOCS_URL,
       });

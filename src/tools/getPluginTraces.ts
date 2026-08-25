@@ -171,7 +171,7 @@ export const getPluginTraces = defineTool({
   description:
     "Queries Dataverse plug-in trace logs (plugintracelogs) with filters for primary entity, " +
     "message name, plug-in type, correlation id and time window. Defaults to errors only from " +
-    "the last 24 hours; exception details are summarized/truncated. Free tier.",
+    "the last 24 hours; exception details are summarized/truncated.",
   inputSchema,
   handler: async (input) => queryPluginTraces(getDefaultClient(), input),
 });

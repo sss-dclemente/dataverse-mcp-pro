@@ -61,9 +61,11 @@ describe("input schema", () => {
     expect(Object.keys(getOrgAutomationSettings.inputSchema.shape)).toEqual([]);
   });
 
-  it("is exposed as the free tool get_org_automation_settings", () => {
+  it("is exposed as the tool get_org_automation_settings", () => {
     expect(getOrgAutomationSettings.name).toBe("get_org_automation_settings");
-    expect(getOrgAutomationSettings.description.toLowerCase()).toContain("free tier");
+    expect(getOrgAutomationSettings.description.toLowerCase()).toContain(
+      "plug-in trace log setting",
+    );
   });
 });
 

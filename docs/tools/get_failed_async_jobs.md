@@ -9,8 +9,6 @@ is retryable from the system jobs grid (currently workflows).
 Use it to answer "what background work has been failing lately and why?"
 without opening the Power Platform admin center.
 
-**Tier:** Free
-
 ## Inputs
 
 | Name        | Type    | Required | Default | Description                                                      |

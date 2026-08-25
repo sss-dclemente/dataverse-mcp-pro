@@ -15,8 +15,8 @@ import {
 const DOCS_URL =
   "https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata";
 
-const VIRTUAL_TABLE_HINT =
-  "Cloud-flow run history in Dataverse (the flowrun virtual table) requires " +
+const RUN_HISTORY_TABLE_HINT =
+  "Cloud-flow run history in Dataverse (the flowrun elastic table) requires " +
   "solution-aware flows and may not be enabled in every environment/region";
 
 const PRIVILEGE_HINT =
@@ -495,7 +495,7 @@ export async function explainFlowFailure(
     if (err instanceof DataverseHttpError) {
       const message = err.dataverseMessage ?? err.message;
       if (isEntityNotFound(err)) {
-        return errorEnvelope(message, { hint: VIRTUAL_TABLE_HINT, docsUrl: DOCS_URL });
+        return errorEnvelope(message, { hint: RUN_HISTORY_TABLE_HINT, docsUrl: DOCS_URL });
       }
       if (err.status === 403) {
         return errorEnvelope(message, { hint: PRIVILEGE_HINT, docsUrl: DOCS_URL });

@@ -3,7 +3,7 @@
 Root-cause analysis for a failed Power Automate cloud-flow run — the flow twin
 of `explain_trace`. Given a run (or just a flow), the tool:
 
-- resolves the run from Dataverse run history (the `flowrun` virtual table) —
+- resolves the run from Dataverse run history (the `flowrun` elastic table) —
   either the exact run you name, or the flow's **latest Failed run**;
 - fetches the flow's stored definition (`workflow.clientdata`) and extracts its
   **actions** (names + connector `operationId`s) and trigger type, tolerating
@@ -125,5 +125,5 @@ Dataverse plug-in: run `explain_trace` on the correlated plug-in trace.
 | `runName` not found | `{ "error": "Flow run not found: \"...\"", "hint": "Run names come from get_flow_runs; Dataverse run history only covers solution-aware cloud flows and is retained for a limited window." }` |
 | Flow has no Failed runs | `{ "error": "No failed runs found for this flow", "hint": "Use get_flow_runs to inspect recent runs in any state..." }` |
 | `flowName` matches nothing | `{ "error": "No cloud flow found matching \"...\".", "hint": "Use the exact display name or pass flowId instead." }` |
-| `flowruns` table missing (404/400) | Error envelope hinting that the flowrun virtual table requires solution-aware flows and may not be enabled in every environment/region, with `docsUrl` [https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata](https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata). |
+| `flowruns` table missing (404/400) | Error envelope hinting that the flowrun elastic table requires solution-aware flows and may not be enabled in every environment/region, with `docsUrl` [https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata](https://learn.microsoft.com/power-automate/dataverse/cloud-flow-run-metadata). |
 | HTTP 403 from Dataverse | Error envelope noting the missing read privilege on the Process (workflow) and flow run tables, and the same `docsUrl`. |
