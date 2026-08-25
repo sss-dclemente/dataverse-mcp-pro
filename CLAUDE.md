@@ -1,8 +1,9 @@
 # dataverse-ops-mcp
 
-TypeScript MCP server for Microsoft Dataverse diagnostics. Distributed as an npm
-package, runs over **stdio** inside the user's MCP host (Claude Desktop, Claude
-Code, etc.). All Dataverse data stays on the user's machine/tenant.
+TypeScript MCP server for Microsoft Dataverse diagnostics. Runs over **stdio**
+inside the user's MCP host (Claude Desktop, Claude Code, Grok, etc.) from source
+(`npm run build` → `dist/server.js`). The npm package is not published until the
+first `v*` tag; do not present `npx` as working.
 
 ## Runtime & toolchain
 
@@ -12,6 +13,7 @@ Code, etc.). All Dataverse data stays on the user's machine/tenant.
 - Runtime deps: MCP SDK + `zod` only, plus `@azure/identity` (lazy-imported, needed
   for the DefaultAzureCredential fallback). Do not add others without strong reason.
 - Tests: `vitest`. Mock Dataverse responses with fixtures under `tests/fixtures/`.
+  CI is this fixture suite plus `tsc` — it does not talk to a live org.
 
 ## Authentication
 
@@ -26,10 +28,11 @@ Tokens are cached in memory until near expiry. Requests retry on 429 honoring
 
 ## Privacy
 
-Data NEVER leaves the user's machine/tenant. No telemetry, ever — do not add
-analytics or any outbound call besides Dataverse and Entra ID. The project is
-MIT-licensed and every tool is free; there is no licensing gate — do not
-reintroduce one.
+There is no middleman: this process talks to the org Web API and Entra ID only.
+A cloud MCP host still sends tool JSON (including tool results) to the model
+vendor. No telemetry, ever — do not add analytics or any outbound call besides
+Dataverse and Entra ID. The project is MIT-licensed and every tool is free;
+there is no licensing gate — do not reintroduce one.
 
 ## Architecture
 
