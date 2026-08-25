@@ -65,10 +65,10 @@ and business rules. The two are complementary, and running both is a reasonable 
 
 ## 5-minute quickstart
 
-**Run from source.** That is the real path today.
-
-`npx @simplesmoothsafe/dataverse-ops-mcp` does **not** resolve until the first `v*` git tag
-exists (and the package is published). Do not use `npx`.
+The package is on npm as
+[`@simplesmoothsafe/dataverse-ops-mcp`](https://www.npmjs.com/package/@simplesmoothsafe/dataverse-ops-mcp),
+published with provenance, so `npx` works. [Running from source](#run-from-source) is equally
+supported and is what you want if you plan to change anything.
 
 ### Prerequisites
 
@@ -86,9 +86,12 @@ npm install
 npm run build
 ```
 
-Then point your MCP host at the built entry point. `npm run dev` runs the same server straight
-from TypeScript via tsx, which is handy while developing. See [docs/smoke-test.md](docs/smoke-test.md)
-for a short live-org checklist (CI does not talk to a live org).
+Then point your MCP host at the built entry point instead of `npx` — swap
+`"command": "npx", "args": ["-y", "@simplesmoothsafe/dataverse-ops-mcp"]` for
+`"command": "node", "args": ["/absolute/path/to/dataverse-mcp-pro/dist/server.js"]` in any of the
+configurations below. `npm run dev` runs the same server straight from TypeScript via tsx, which
+is handy while developing. See [docs/smoke-test.md](docs/smoke-test.md) for a short live-org
+checklist (CI does not talk to a live org).
 
 ### Claude Desktop
 
@@ -98,8 +101,8 @@ Add the server to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "dataverse-ops": {
-      "command": "node",
-      "args": ["/absolute/path/to/dataverse-mcp-pro/dist/server.js"],
+      "command": "npx",
+      "args": ["-y", "@simplesmoothsafe/dataverse-ops-mcp"],
       "env": {
         "DATAVERSE_URL": "https://yourorg.crm.dynamics.com",
         "CLIENT_ID": "...",
@@ -121,7 +124,7 @@ claude mcp add dataverse-ops \
   --env CLIENT_ID=... \
   --env CLIENT_SECRET=... \
   --env TENANT_ID=... \
-  -- node /absolute/path/to/dataverse-mcp-pro/dist/server.js
+  -- npx -y @simplesmoothsafe/dataverse-ops-mcp
 ```
 
 Or declare it in a `.mcp.json` at your project root:
@@ -130,8 +133,8 @@ Or declare it in a `.mcp.json` at your project root:
 {
   "mcpServers": {
     "dataverse-ops": {
-      "command": "node",
-      "args": ["/absolute/path/to/dataverse-mcp-pro/dist/server.js"],
+      "command": "npx",
+      "args": ["-y", "@simplesmoothsafe/dataverse-ops-mcp"],
       "env": {
         "DATAVERSE_URL": "https://yourorg.crm.dynamics.com",
         "CLIENT_ID": "...",
@@ -149,7 +152,7 @@ Grok's CLI takes stdio MCP servers with `grok mcp add` — everything after `--`
 command:
 
 ```bash
-grok mcp add dataverse-ops -- node /absolute/path/to/dataverse-mcp-pro/dist/server.js
+grok mcp add dataverse-ops -- npx -y @simplesmoothsafe/dataverse-ops-mcp
 ```
 
 Credentials go in `~/.grok/config.toml`, where `env` entries support `${VAR}` expansion so you
@@ -157,9 +160,10 @@ need not commit secrets:
 
 ```toml
 [mcp_servers.dataverse-ops]
-command = "node"
-args = ["/absolute/path/to/dataverse-mcp-pro/dist/server.js"]
+command = "npx"
+args = ["-y", "@simplesmoothsafe/dataverse-ops-mcp"]
 env = { DATAVERSE_URL = "https://yourorg.crm.dynamics.com", CLIENT_ID = "${DV_CLIENT_ID}", CLIENT_SECRET = "${DV_CLIENT_SECRET}", TENANT_ID = "${DV_TENANT_ID}" }
+# npx downloads the package on first launch; the 30s default can be tight.
 startup_timeout_sec = 60
 ```
 
