@@ -11,6 +11,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Install docs: the quickstart claimed the package being "published with provenance" is what makes
+  `npx` work. Publishing is what makes `npx` resolve; provenance is a separate attestation that
+  lets you verify which commit and workflow built the tarball. Both facts kept, no longer welded
+  by a false "so".
+- `docs/smoke-test.md` now says explicitly to point the host at *this build's* `dist/server.js`
+  rather than `npx`, and why: `npx` runs the last published release, while the checklist exists to
+  exercise the commit about to be tagged. Previously it mentioned both launch paths in a way that
+  could read as "use both".
+
+### Changed
+
 - Install docs now lead with `npx @simplesmoothsafe/dataverse-ops-mcp`, which resolves since
   0.3.1 was published from the `v0.3.1` tag. The README, `CLAUDE.md` and `docs/smoke-test.md` all
   still said the package was unpublished and told readers not to use `npx` — accurate when written,
