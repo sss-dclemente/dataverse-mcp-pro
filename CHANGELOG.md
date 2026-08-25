@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `npm run verify:package` (`scripts/verify-package.mjs`): verifies the artifact npm would
   actually publish. It packs the tarball, checks the file list and `bin` entry, unpacks it, boots
-  the packed server over stdio, and compares the tools it exposes against `src/tools/index.ts`.
+  the packed server over stdio, and checks the tools it exposes — the count against
+  `src/tools/index.ts`, the names against the built registry (`dist/tools/index.js`).
   `release.yml` runs it before `npm publish`, so a broken artifact cannot reach the registry on a
   `v*` tag. The tool count is anchored to source rather than to the built registry — comparing the
   packed server against `dist/tools/index.js` alone compares the build to itself and agrees with a

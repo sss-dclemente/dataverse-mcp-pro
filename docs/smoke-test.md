@@ -35,8 +35,14 @@ npm run verify:package
 ```
 
 It packs the tarball, checks the file list and `bin` entry, unpacks it, boots
-the packed server over stdio and compares the tools it exposes against
-`src/tools/index.ts`. No Dataverse org or credentials needed — the client is
-built lazily, so `tools/list` answers without any environment set. It exits
-non-zero and names the failing check, and `release.yml` runs it before
-`npm publish`, so a broken artifact cannot reach the registry.
+the packed server over stdio, and checks the tools it exposes: the **count**
+against `src/tools/index.ts`, the **names** against the built registry
+(`dist/tools/index.js`). The two differ on purpose — checking only against the
+built registry compares the build to itself, so a tool dropped during build
+agrees on both sides and passes. That is why a count failure and a name pass can
+appear together, and the count is the one to trust.
+
+No Dataverse org or credentials needed — the client is built lazily, so
+`tools/list` answers without any environment set. It exits non-zero and names
+the failing check, and `release.yml` runs it before `npm publish`, so a broken
+artifact cannot reach the registry.
