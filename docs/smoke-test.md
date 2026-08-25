@@ -14,7 +14,7 @@ npm run build
 ```
 
 Point the MCP host at **this build's** `dist/server.js` (see the README) — not at
-`npx @simplesmoothsafe/dataverse-ops-mcp`. Both launch the same server, but `npx` runs the last
+`npx -y @simplesmoothsafe/dataverse-ops-mcp`. Both launch the same server, but `npx` runs the last
 *published* release, and the whole point of this checklist is to exercise the commit you are
 about to tag.
 
