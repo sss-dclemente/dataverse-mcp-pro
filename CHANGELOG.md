@@ -30,7 +30,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   **elastic** table (Cosmos-backed, partitioned per user, 500-row page cap). `msdyn_componentlayer`
   really is virtual, so the two were being conflated. Documented the partitioning and page-cap
   consequences in `docs/tools/get_flow_runs.md`.
-- `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces.
+- `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces, and told
+  readers to expect "exactly seven tools" from `tools/list` when the registry holds 20 — so the
+  release gate failed against a correct build. The document no longer hardcodes a version or a
+  tool count: it captures the tarball name from `npm pack` into `$TARBALL`, and step 3 now prints
+  the returned tool list to compare against `src/tools/index.ts` directly.
 
 ### Changed
 
