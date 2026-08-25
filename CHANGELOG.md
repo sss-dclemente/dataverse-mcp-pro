@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2026-08-25
+
 ### Changed
 
 - Install docs now lead with `npx @simplesmoothsafe/dataverse-ops-mcp`, which resolves since
@@ -15,6 +17,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   wrong the moment the release workflow succeeded, and the first thing a visitor to a public repo
   reads. Run-from-source stays documented as an equal path and is what the live-org checklist uses,
   so the smoke test exercises the commit being tagged rather than the last published one.
+- `actions/checkout` and `actions/setup-node` bumped v4 → v5 in both `ci.yml` and `release.yml`.
+  Runners were already forcing the v4 actions onto Node 24 and annotating every run as deprecated;
+  v5 declares `runs.using: node24`, so this clears the warning rather than waiting for the forced
+  migration to break the release path. `node-version: 20` is unchanged — that is the Node the
+  project builds and tests against, not the action runtime.
+- `@modelcontextprotocol/sdk` updated 1.29.0 → 1.30.0. Lockfile-only; the existing `^1.12.0`
+  range already permitted it. None of the SDK's pinned dependencies moved, so the `npm audit`
+  findings that reach us through its HTTP transport (`hono`, `fast-uri`, `ip-address`) are
+  unchanged. Those paths stay unreachable regardless: the server connects over stdio only.
+- `allowScripts` in `package.json` approves the `esbuild` install script, silencing the npm
+  install-scripts warning on a fresh `npm ci`. esbuild arrives dev-only via `vitest` → `vite`.
 
 ## [0.3.1] - 2026-08-25
 
