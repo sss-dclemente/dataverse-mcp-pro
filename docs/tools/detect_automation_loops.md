@@ -1,8 +1,9 @@
 # detect_automation_loops
 
 Detects suspected trigger→write loops between Power Automate cloud flows on
-Dataverse tables — a classic source of runaway runs and infinite plugin↔flow
-ping-pong. The tool scans **activated** cloud flows (`workflow` rows with
+Dataverse tables — a classic source of runaway runs. Plugin↔flow ping-pong is
+out of scope (this tool is definition-based and **cloud-flow only**). The tool
+scans **activated** cloud flows (`workflow` rows with
 `category eq 5 and type eq 1 and statecode eq 1`), parses each flow's stored
 definition (`clientdata`), and builds a graph of "flow A writes the table flow
 B triggers on":
