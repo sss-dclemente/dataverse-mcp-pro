@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Install docs now lead with `npx @simplesmoothsafe/dataverse-ops-mcp`, which resolves since
+  0.3.1 was published from the `v0.3.1` tag. The README, `CLAUDE.md` and `docs/smoke-test.md` all
+  still said the package was unpublished and told readers not to use `npx` — accurate when written,
+  wrong the moment the release workflow succeeded, and the first thing a visitor to a public repo
+  reads. Run-from-source stays documented as an equal path and is what the live-org checklist uses,
+  so the smoke test exercises the commit being tagged rather than the last published one.
+
 ## [0.3.1] - 2026-08-25
 
 ### Added

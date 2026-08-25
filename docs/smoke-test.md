@@ -14,7 +14,8 @@ npm run build
 ```
 
 Point the MCP host at `dist/server.js` (see the README). `npx @simplesmoothsafe/dataverse-ops-mcp`
-does **not** resolve until the first `v*` git tag exists — do not use `npx`.
+also works now that the package is published, but run the live checks from a
+source build so you are exercising the commit you are about to tag.
 
 1. `ping` → `{ "ok": true }` (no Dataverse call).
 2. `get_plugin_traces` with defaults → structured results, an empty-with-hint payload, or a specific privilege/feature envelope — never a raw exception.

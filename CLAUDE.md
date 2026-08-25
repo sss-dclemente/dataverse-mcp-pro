@@ -2,8 +2,8 @@
 
 TypeScript MCP server for Microsoft Dataverse diagnostics. Runs over **stdio**
 inside the user's MCP host (Claude Desktop, Claude Code, Grok, etc.) from source
-(`npm run build` → `dist/server.js`). The npm package is not published until the
-first `v*` tag; do not present `npx` as working.
+(`npm run build` → `dist/server.js`) or from npm as
+`@simplesmoothsafe/dataverse-ops-mcp`, published with provenance on `v*` tags.
 
 ## Runtime & toolchain
 
