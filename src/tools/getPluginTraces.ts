@@ -169,7 +169,7 @@ export async function queryPluginTraces(
 export const getPluginTraces = defineTool({
   name: "get_plugin_traces",
   description:
-    "Queries Dataverse plug-in trace logs (plugintracelogs) with filters for primary entity, " +
+    "Incident lane — plug-in failed: pull the trace rows. Queries Dataverse plug-in trace logs (plugintracelogs) with filters for primary entity, " +
     "message name, plug-in type, correlation id and time window. Defaults to errors only from " +
     "the last 24 hours; exception details are summarized/truncated.",
   inputSchema,

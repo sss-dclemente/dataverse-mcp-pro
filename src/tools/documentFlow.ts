@@ -511,7 +511,7 @@ export async function documentFlow(
 export const documentFlowTool = defineTool({
   name: "document_flow",
   description:
-    "Generate structured documentation for a Power Automate cloud flow from its " +
+    "Go-live artefact for a handover. Generate structured documentation for a Power Automate cloud flow from its " +
     "Dataverse definition (workflow.clientdata): triggers (including recurrence " +
     "schedules), a flat pre-order outline of actions with nesting depth and " +
     "runAfter dependencies, the connectors it uses, and a ready-to-share markdown " +

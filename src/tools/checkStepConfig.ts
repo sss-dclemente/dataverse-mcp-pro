@@ -356,7 +356,7 @@ export async function analyzeStepConfig(
 export const checkStepConfig = defineTool({
   name: "check_step_config",
   description:
-    "Analyze Dataverse plug-in step registrations (SdkMessageProcessingStep) for " +
+    "Go-live lint for plug-in step registrations. Analyze Dataverse plug-in step registrations (SdkMessageProcessingStep) for " +
     "common misconfigurations: Update steps without filtering attributes, " +
     "synchronous steps on high-volume entities, missing pre-images, and rank " +
     "collisions. Scope by plug-in type name or solution unique name.",

@@ -373,7 +373,7 @@ export async function analyzeFlowRuns(
 export const analyzeFlowRunsTool = defineTool({
   name: "analyze_flow_runs",
   description:
-    "Aggregates Power Automate cloud-flow run history (Dataverse flowruns) over " +
+    "Assessment: which flows are unreliable. Aggregates Power Automate cloud-flow run history (Dataverse flowruns) over " +
     "a time window into a per-flow reliability/performance table (success rate, " +
     "p50/p95/avg/max duration, last run, top error groups) and flags problems: " +
     "high failure rates, consecutive-failure streaks, and slow p95 runtimes. " +

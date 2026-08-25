@@ -7,7 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `docs/consultants.md`: three playbooks — **Go-live**, **Incident**, **Assessment** — giving the
+  order to run tools in, the arguments that matter, what "done" looks like at each step, and the
+  cap on each result. Twenty tools with no routing is the problem; a consultant uses four to six,
+  chosen by job. Includes the misreading that derails live calls most often: an empty result with
+  a hint is usually a switch turned off, not a broken tool.
+- `README.md`: a "For consultants" section linking that page.
+- `CLAUDE.md`: a "Consultant jobs" section recording the routing, the `detect_automation_loops`
+  ban on demos and first passes, and the caps a claim must honour.
+
 ### Changed
+
+- Every tool `description` now opens by naming the job it belongs to (`Go-live step 2: …`,
+  `Incident lane — cloud flow failed: …`, `Assessment: …`). MCP hosts surface descriptions and
+  nothing else, so that lead is the only routing a host can see. Behaviour is unchanged.
+- `what_runs_on_table` no longer describes itself as mapping "every piece" of automation: it
+  scans cloud-flow definitions to a cap of 500 and sets `flowsScanTruncated`. The description now
+  states the cap and that it maps one table, not a whole-environment graph.
+- `get_solution_layers` no longer claims an unmanaged `Active` layer "blocks managed updates".
+  The layer table carries no managed/unmanaged flag for the layers underneath, so none is claimed
+  — matching the finding text already corrected in 0.3.1.
 
 - Install docs: the quickstart claimed the package being "published with provenance" is what makes
   `npx` work. Publishing is what makes `npx` resolve; provenance is a separate attestation that

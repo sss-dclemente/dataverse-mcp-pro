@@ -340,7 +340,7 @@ export async function analyzePluginPerformance(
 export const analyzePluginPerformanceTool = defineTool({
   name: "analyze_plugin_performance",
   description:
-    "Aggregates Dataverse plug-in trace logs (plugintracelogs) over a time window " +
+    "Assessment: what is slow — needs plug-in trace logging on. Aggregates Dataverse plug-in trace logs (plugintracelogs) over a time window " +
     "into a per-plugin/message performance table (p50/p95/avg/max duration, depth, " +
     "sync vs async split) and flags anti-patterns: slow synchronous steps, deep " +
     "cascades, and N+1 firing within one correlation.",

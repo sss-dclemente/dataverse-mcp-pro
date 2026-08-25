@@ -577,7 +577,7 @@ export async function documentTable(
 export const documentTableTool = defineTool({
   name: "document_table",
   description:
-    "Generate structured documentation for a Dataverse table from its " +
+    "Go-live artefact for a handover. Generate structured documentation for a Dataverse table from its " +
     "EntityDefinitions metadata: columns (type, required level, custom flag), " +
     "relationships (1:N, N:1, N:N), alternate keys, an optional summary of the " +
     "plug-in steps and cloud flows that automate the table, and a " +

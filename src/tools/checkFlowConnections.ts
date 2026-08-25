@@ -375,7 +375,7 @@ export async function checkFlowConnections(
 export const checkFlowConnectionsTool = defineTool({
   name: "check_flow_connections",
   description:
-    "Audits Power Automate connection-reference health in Dataverse: unbound " +
+    "Assessment: connection-reference health. Audits Power Automate connection-reference health in Dataverse: unbound " +
     "connection references used by active cloud flows (run-time failures), " +
     "references or flows owned by disabled users, owner mismatches between a " +
     "reference and the flows using it, and unused bound references.",

@@ -330,7 +330,7 @@ export async function flowGovernanceReport(
 export const flowGovernanceReportTool = defineTool({
   name: "flow_governance_report",
   description:
-    "Ownership and state inventory of solution-aware Power Automate cloud flows in " +
+    "Assessment: who owns the flows. Ownership and state inventory of solution-aware Power Automate cloud flows in " +
     "Dataverse: activated/draft/suspended counts, an owner table, and governance " +
     "findings — activated flows owned by disabled users, suspended flows, stale " +
     "drafts, and owner concentration (bus-factor) risks.",

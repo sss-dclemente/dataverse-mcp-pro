@@ -443,7 +443,7 @@ export async function explainTrace(
 export const explainTraceTool = defineTool({
   name: "explain_trace",
   description:
-    "Root-cause analysis for one Dataverse plug-in trace: correlates the trace with its " +
+    "Incident lane — plug-in failed: root-cause one trace. Root-cause analysis for one Dataverse plug-in trace: correlates the trace with its " +
     "step registration (stage, mode, filtering attributes, images), reconstructs the " +
     "pipeline of sibling traces sharing the correlation id, parses the exception into " +
     "type/message/frames, and detects known failure patterns. Pass traceId " +

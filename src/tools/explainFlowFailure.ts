@@ -508,7 +508,7 @@ export async function explainFlowFailure(
 export const explainFlowFailureTool = defineTool({
   name: "explain_flow_failure",
   description:
-    "Root-cause analysis for a failed Power Automate cloud-flow run: resolves the run " +
+    "Incident lane — cloud flow failed: root-cause the run. Root-cause analysis for a failed Power Automate cloud-flow run: resolves the run " +
     "from Dataverse run history (flowruns), correlates it with the flow's definition " +
     "(actions, connector operations, trigger), guesses the failing action from the " +
     "error message, and detects known failure patterns (expired connections, " +

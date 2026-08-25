@@ -194,7 +194,7 @@ export async function queryFailedAsyncJobs(
 export const getFailedAsyncJobs = defineTool({
   name: "get_failed_async_jobs",
   description:
-    "Summarizes failed and canceled Dataverse async jobs (system jobs) over a recent window: counts, groups by job name + error code with retryability, and the most recent individual failures.",
+    "Incident lane — jobs piling up: what already died. Summarizes failed and canceled Dataverse async jobs (system jobs) over a recent window: counts, groups by job name + error code with retryability, and the most recent individual failures.",
   inputSchema,
   handler: async (input) => queryFailedAsyncJobs(getDefaultClient(), input),
 });
