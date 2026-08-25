@@ -57,6 +57,42 @@ describe("configFromEnv", () => {
     expect("clientSecret" in config).toBe(false);
     expect("tenantId" in config).toBe(false);
   });
+
+  it("treats blank credential variables as unset so the credential fallback applies", () => {
+    const config = configFromEnv({
+      DATAVERSE_URL: "https://org.crm.dynamics.com",
+      CLIENT_ID: "",
+      CLIENT_SECRET: "   ",
+      TENANT_ID: "\t\n",
+    });
+    expect("clientId" in config).toBe(false);
+    expect("clientSecret" in config).toBe(false);
+    expect("tenantId" in config).toBe(false);
+  });
+
+  it("trims surrounding whitespace from credential variables", () => {
+    const config = configFromEnv({
+      DATAVERSE_URL: "https://org.crm.dynamics.com",
+      CLIENT_ID: "  cid  ",
+      CLIENT_SECRET: " csecret ",
+      TENANT_ID: " tid ",
+    });
+    expect(config.clientId).toBe("cid");
+    expect(config.clientSecret).toBe("csecret");
+    expect(config.tenantId).toBe("tid");
+  });
+
+  it("ignores a half-filled credential set rather than sending empty values", () => {
+    const config = configFromEnv({
+      DATAVERSE_URL: "https://org.crm.dynamics.com",
+      CLIENT_ID: "cid",
+      CLIENT_SECRET: "",
+      TENANT_ID: "tid",
+    });
+    expect(config.clientId).toBe("cid");
+    expect("clientSecret" in config).toBe(false);
+    expect(config.tenantId).toBe("tid");
+  });
 });
 
 describe("get", () => {

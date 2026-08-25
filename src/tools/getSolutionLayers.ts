@@ -96,11 +96,13 @@ function analyzeLayers(layers: Layer[]): Finding[] {
   if (layers.length > 1 && top !== undefined && top.isActiveLayer) {
     findings.push({
       severity: "medium",
+      // msdyn_componentlayer carries no managed/unmanaged flag for the lower
+      // layers, so the finding must not assert what they are.
       issue:
-        `Unmanaged 'Active' layer overrides ${layers.length - 1} managed layer(s)`,
+        `Unmanaged 'Active' layer overrides ${layers.length - 1} lower layer(s)`,
       recommendation:
         "Remove the unmanaged layer (Solution Layers > Remove active customizations) " +
-        "so managed solution updates reach this component",
+        "so solution updates reach this component",
     });
   }
   if (layers.length > 3) {

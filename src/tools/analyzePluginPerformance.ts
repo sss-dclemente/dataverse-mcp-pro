@@ -164,33 +164,46 @@ interface NPlusOneOffender {
 
 /** Worst same-typename firing count within a single correlation, per typename. */
 function findNPlusOneOffenders(rows: RawPerfTrace[]): NPlusOneOffender[] {
+  // messageName is derived from the offending correlation only. A plug-in type
+  // registered on several messages would otherwise be labelled with whichever
+  // message is most common across the whole window, not the one that actually
+  // fired repeatedly inside the offending request.
   const perCorrelation = new Map<
     string,
-    { typename: string; correlationId: string; count: number }
+    {
+      typename: string;
+      correlationId: string;
+      count: number;
+      messageCounts: Map<string, number>;
+    }
   >();
-  const messageCounts = new Map<string, Map<string, number>>();
 
   for (const row of rows) {
     const typename = row.typename ?? "unknown";
     const messageName = row.messagename ?? "unknown";
-    const perMessage = messageCounts.get(typename) ?? new Map<string, number>();
-    perMessage.set(messageName, (perMessage.get(messageName) ?? 0) + 1);
-    messageCounts.set(typename, perMessage);
-
     const correlationId = row.correlationid;
     if (correlationId === undefined || correlationId === null) continue;
     const key = `${correlationId}|${typename}`;
     const entry = perCorrelation.get(key);
     if (entry === undefined) {
-      perCorrelation.set(key, { typename, correlationId, count: 1 });
+      perCorrelation.set(key, {
+        typename,
+        correlationId,
+        count: 1,
+        messageCounts: new Map([[messageName, 1]]),
+      });
     } else {
       entry.count += 1;
+      entry.messageCounts.set(
+        messageName,
+        (entry.messageCounts.get(messageName) ?? 0) + 1,
+      );
     }
   }
 
   const worstPerType = new Map<
     string,
-    { correlationId: string; count: number }
+    { correlationId: string; count: number; messageName: string }
   >();
   for (const entry of perCorrelation.values()) {
     const current = worstPerType.get(entry.typename);
@@ -198,6 +211,7 @@ function findNPlusOneOffenders(rows: RawPerfTrace[]): NPlusOneOffender[] {
       worstPerType.set(entry.typename, {
         correlationId: entry.correlationId,
         count: entry.count,
+        messageName: dominantMessage(entry.messageCounts),
       });
     }
   }
@@ -205,23 +219,28 @@ function findNPlusOneOffenders(rows: RawPerfTrace[]): NPlusOneOffender[] {
   const offenders: NPlusOneOffender[] = [];
   for (const [typename, worst] of worstPerType) {
     if (worst.count < N_PLUS_ONE_MIN_COUNT) continue;
-    let topMessage = "unknown";
-    let topMessageCount = -1;
-    for (const [message, count] of messageCounts.get(typename) ?? []) {
-      if (count > topMessageCount) {
-        topMessage = message;
-        topMessageCount = count;
-      }
-    }
     offenders.push({
       pluginType: typename,
-      messageName: topMessage,
+      messageName: worst.messageName,
       count: worst.count,
       correlationId: worst.correlationId,
     });
   }
   offenders.sort((a, b) => b.count - a.count);
   return offenders;
+}
+
+/** Most frequent message within one correlation; ties resolve to first seen. */
+function dominantMessage(counts: Map<string, number>): string {
+  let top = "unknown";
+  let topCount = -1;
+  for (const [message, count] of counts) {
+    if (count > topCount) {
+      top = message;
+      topCount = count;
+    }
+  }
+  return top;
 }
 
 function buildFlags(table: TableRow[], rows: RawPerfTrace[]): PerfFlag[] {

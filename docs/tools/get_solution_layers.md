@@ -5,8 +5,9 @@ tool (sibling of `explain_import_failure`). Queries the `msdyn_componentlayer`
 virtual table and lists every layer from the winning (top) layer down, so you
 can see which solution's version of the component actually applies:
 
-- **medium** — an unmanaged **Active** layer sits on top of one or more managed
-  layers, so managed solution updates never reach the component.
+- **medium** — an unmanaged **Active** layer sits on top of one or more lower
+  layers, so solution updates never reach the component. (The layer table
+  exposes no managed/unmanaged flag, so the lower layers are not characterized.)
 - **low** — deep layering (more than 3 layers): the effective component depends
   on solution upgrade order, which is fragile.
 

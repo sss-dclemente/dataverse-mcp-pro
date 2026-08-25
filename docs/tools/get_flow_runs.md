@@ -7,8 +7,6 @@ truncated error code/message. This complements Microsoft's FlowAgent authoring
 plugin with read-only diagnostics: it answers "which runs failed overnight and
 why?" without opening the Power Automate portal.
 
-**Tier:** Free
-
 ## Inputs
 
 | Name | Type | Default | Description |

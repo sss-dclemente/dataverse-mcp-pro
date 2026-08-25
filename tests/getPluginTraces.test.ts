@@ -92,7 +92,7 @@ describe("input schema", () => {
 
   it("is exposed as the tool get_plugin_traces", () => {
     expect(getPluginTraces.name).toBe("get_plugin_traces");
-    expect(getPluginTraces.description.toLowerCase()).toContain("free tier");
+    expect(getPluginTraces.description.toLowerCase()).toContain("plugintracelogs");
   });
 });
 

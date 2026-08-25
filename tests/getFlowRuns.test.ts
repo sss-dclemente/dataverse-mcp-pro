@@ -105,7 +105,7 @@ describe("input schema", () => {
 
   it("is exposed as the tool get_flow_runs", () => {
     expect(getFlowRuns.name).toBe("get_flow_runs");
-    expect(getFlowRuns.description.toLowerCase()).toContain("free tier");
+    expect(getFlowRuns.description.toLowerCase()).toContain("cloud-flow runs");
   });
 });
 
@@ -129,6 +129,8 @@ describe("happy path with flowName resolution", () => {
     expect(workflowsOptions.filter).toBe(
       "category eq 5 and type eq 1 and name eq 'O''Brien Order Sync'",
     );
+    // Only 5 ids are ever used; the lookup must be bounded server-side.
+    expect(workflowsOptions.top).toBe(5);
 
     const [runsPath, runsOptions] = callAt(get, 1);
     expect(runsPath).toBe("flowruns");
@@ -257,6 +259,8 @@ describe("flow not found", () => {
     expect(retryOptions.filter).toBe(
       "category eq 5 and type eq 1 and contains(name,'Ghost Flow')",
     );
+    // The contains() fallback is the widest query the tool issues: bound it too.
+    expect(retryOptions.top).toBe(5);
 
     expect(result.error).toContain('No cloud flow found matching "Ghost Flow"');
     expect(result.hint).toContain("flowId");

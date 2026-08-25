@@ -146,7 +146,7 @@ describe("getSolutionLayers happy path", () => {
     const finding = result.findings[0] as Finding;
     expect(finding.severity).toBe("medium");
     expect(finding.issue).toBe(
-      "Unmanaged 'Active' layer overrides 2 managed layer(s)",
+      "Unmanaged 'Active' layer overrides 2 lower layer(s)",
     );
     expect(finding.recommendation).toContain("Remove the unmanaged layer");
     expect(result.hint).toBeUndefined();

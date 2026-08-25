@@ -152,7 +152,7 @@ export const getOrgAutomationSettings = defineTool({
   description:
     "Reads the org-level switches the other diagnostics tools depend on: plug-in trace log " +
     "setting (off/exception/all) and auditing configuration (enabled, retention, read/user-access " +
-    "audit). Use this first to verify the switches before you chase ghosts. Free tier.",
+    "audit). Use this first to verify the switches before you chase ghosts.",
   inputSchema,
   handler: async () => {
     try {

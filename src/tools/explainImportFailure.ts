@@ -76,6 +76,11 @@ const COMPONENT_TAGS = [
   "form",
   "sitemap",
   "ribbon",
+  // Manifest level: solution-wide failures (missing dependencies, publisher
+  // mismatches) hang off <solutionManifest> and would otherwise be "unknown".
+  // The \b in COMPONENT_TAG_RE keeps the plural containers (<solutionManifests>,
+  // <entities>, ...) from matching.
+  "solutionmanifest",
 ] as const;
 
 const COMPONENT_TAG_RE = new RegExp(

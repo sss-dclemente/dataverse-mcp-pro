@@ -11,8 +11,6 @@ Jobs whose `postponeuntil` is still in the future are legitimately parked
 (e.g. a workflow timeout/delay step) and are reported separately as
 **scheduled**, not stuck.
 
-**Tier:** Free
-
 ## Inputs
 
 | Name             | Type    | Required | Default | Description                                                                              |

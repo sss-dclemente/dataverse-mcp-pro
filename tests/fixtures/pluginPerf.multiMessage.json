@@ -1,0 +1,124 @@
+{
+  "value": [
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000000",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000002",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000003",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000004",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000005",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Update",
+      "primaryentity": "account",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 120,
+      "correlationid": "dddddddd-0000-4000-8000-000000000006",
+      "createdon": "2026-07-10T12:00:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 90,
+      "correlationid": "eeeeeeee-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:05:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 90,
+      "correlationid": "eeeeeeee-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:05:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 90,
+      "correlationid": "eeeeeeee-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:05:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 90,
+      "correlationid": "eeeeeeee-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:05:00Z"
+    },
+    {
+      "typename": "Contoso.Plugins.MultiMessagePlugin",
+      "messagename": "Create",
+      "primaryentity": "contact",
+      "depth": 1,
+      "mode": 0,
+      "performanceexecutionduration": 90,
+      "correlationid": "eeeeeeee-0000-4000-8000-000000000001",
+      "createdon": "2026-07-10T12:05:00Z"
+    }
+  ]
+}

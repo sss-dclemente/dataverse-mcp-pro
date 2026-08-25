@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `configFromEnv` now treats blank `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` as unset and trims
+  surrounding whitespace. Previously an empty-but-declared variable (common in `.env` templates
+  and CI) forced the client-credentials flow with empty values instead of falling back to
+  `DefaultAzureCredential`.
+- `analyze_plugin_performance` now derives an N+1 offender's `messageName` from the offending
+  correlation rather than a window-wide histogram, so a plug-in type registered on several
+  messages is no longer mislabelled.
+- `explain_import_failure` attributes failures on `<solutionManifest>`, which previously surfaced
+  as `componentType: "unknown"`.
+- `get_solution_layers` no longer describes the lower layers as managed: the layer table carries
+  no managed/unmanaged flag, so the finding now says "lower layer(s)".
+- `get_flow_runs` bounds both workflow name lookups with `$top`; the `contains()` fallback was
+  unbounded even though only five matches are ever used.
+- Pattern matchers reset `lastIndex` before `exec`, so a future `/g` rule cannot skip matches.
+- `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces.
+
+### Changed
+
+- Removed the leftover "Free tier." suffix from six tool descriptions and the `**Tier:** Free`
+  line from five doc pages. The tiers were removed in 0.3.0, and labelling only some tools
+  implied the rest were paid. A registry test now fails if tier wording reappears.
+- README: added a "What you can ask it" walkthrough, grouped the tool table by capability area,
+  documented Grok setup and a run-from-source path, and noted that the npm package is unpublished
+  until the first `v*` tag.
+
 ## [0.3.0] - 2026-07-11
 
 ### Changed

@@ -237,7 +237,7 @@ export async function queryStuckJobs(
 export const findStuckJobs = defineTool({
   name: "find_stuck_jobs",
   description:
-    "Surfaces Dataverse async jobs (system jobs) sitting in waiting or in-progress states beyond an age threshold: counts, groups by job name + operation type with status breakdowns, and the oldest individual stuck jobs. Postponed jobs (postponeuntil in the future) are reported separately as scheduled. Free tier.",
+    "Surfaces Dataverse async jobs (system jobs) sitting in waiting or in-progress states beyond an age threshold: counts, groups by job name + operation type with status breakdowns, and the oldest individual stuck jobs. Postponed jobs (postponeuntil in the future) are reported separately as scheduled.",
   inputSchema,
   handler: async (input) => queryStuckJobs(getDefaultClient(), input),
 });

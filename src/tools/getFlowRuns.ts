@@ -122,15 +122,20 @@ async function resolveFlowIdsByName(
   flowName: string,
 ): Promise<string[] | ErrorEnvelope> {
   const escaped = escapeODataString(flowName);
+  // Both queries are capped server-side: only MAX_NAME_MATCHES ids are ever
+  // used, and the contains() fallback can otherwise match a large slice of the
+  // workflows table.
   const exact = await client.get<{ value: RawWorkflow[] }>("workflows", {
     select: ["workflowid", "name"],
     filter: `${CLOUD_FLOW_DEFINITION_FILTER} and name eq '${escaped}'`,
+    top: MAX_NAME_MATCHES,
   });
   let matches = exact.value ?? [];
   if (matches.length === 0) {
     const fuzzy = await client.get<{ value: RawWorkflow[] }>("workflows", {
       select: ["workflowid", "name"],
       filter: `${CLOUD_FLOW_DEFINITION_FILTER} and contains(name,'${escaped}')`,
+      top: MAX_NAME_MATCHES,
     });
     matches = fuzzy.value ?? [];
   }
@@ -231,7 +236,7 @@ export const getFlowRuns = defineTool({
   description:
     "Lists Power Automate cloud-flow runs from the Dataverse flowrun virtual table, filtered " +
     "by flow (id or display name), run status and time window. Returns run id, status, timing " +
-    "and truncated error details for failed runs. Covers solution-aware cloud flows. Free tier.",
+    "and truncated error details for failed runs. Covers solution-aware cloud flows.",
   inputSchema,
   handler: async (input) => queryFlowRuns(getDefaultClient(), input),
 });

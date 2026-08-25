@@ -27,6 +27,9 @@ const cleanFixture = loadFixture<{ value: Array<Record<string, unknown>> }>(
   "pluginPerf.clean.json",
 );
 const emptyFixture = loadFixture<{ value: unknown[] }>("pluginPerf.empty.json");
+const multiMessageFixture = loadFixture<{ value: Array<Record<string, unknown>> }>(
+  "pluginPerf.multiMessage.json",
+);
 
 interface TableRow {
   pluginType: string;
@@ -338,5 +341,21 @@ describe("truncation", () => {
     expect(result.analyzedPlugins).toBe(1);
     // Null correlation ids are skipped by the n-plus-one detector.
     expect(result.flags).toEqual([]);
+  });
+});
+
+describe("n-plus-one message attribution", () => {
+  it("names the message that repeated inside the offending correlation, not the window's most common one", async () => {
+    // MultiMessagePlugin runs Update 7 times (each in its own correlation) and
+    // Create 5 times inside one correlation. The burst is the Create one.
+    const { client } = fakeClient(multiMessageFixture);
+    const result = (await analyzePluginPerformance(client, parseInput())) as ResultShape;
+
+    const nPlusOne = result.flags?.find((f) => f.flag === "n-plus-one") as PerfFlag;
+    expect(nPlusOne).toBeDefined();
+    expect(nPlusOne.pluginType).toBe("Contoso.Plugins.MultiMessagePlugin");
+    expect(nPlusOne.messageName).toBe("Create");
+    expect(nPlusOne.evidence).toContain("5 times in one correlation");
+    expect(nPlusOne.evidence).toContain("eeeeeeee-0000-4000-8000-000000000001");
   });
 });

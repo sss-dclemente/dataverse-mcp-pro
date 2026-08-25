@@ -314,3 +314,24 @@ describe("explainImportFailure failure modes", () => {
     expect(result.docsUrl).toBeUndefined();
   });
 });
+
+describe("manifest-level failures", () => {
+  it("attributes a failing <solutionManifest> instead of reporting it as unknown", async () => {
+    const { client, get } = makeFakeClient();
+    get.mockResolvedValueOnce(
+      loadJob("importJob.failed.json", "importJob.manifestFailure.xml"),
+    );
+
+    const result = (await explainImportFailure(client, {
+      importJobId: "aaaaaaaa-1111-2222-3333-444444444444",
+    })) as ExplainResult;
+
+    expect(result.failedCount).toBe(1);
+    const failure = result.failedComponents[0] as FailedComponent;
+    expect(failure.componentType).toBe("solutionmanifest");
+    // LocalizedName is preferred over the raw id for the display name.
+    expect(failure.schemaName).not.toBe("unknown");
+    expect(failure.errorCode).toBe("0x80048264");
+  });
+});
+
