@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-08-25
+
+### Changed
+
+- README honesty pass: run-from-source is the real install path (`npx @simplesmoothsafe/dataverse-ops-mcp` does not resolve until the first `v*` git tag); dropped the complete-automation-graph claim; data flow is no-middleman Web API + Entra, with the caveat that a cloud MCP host still sends tool JSON to the model vendor; documented the real caps (`flowrun` elastic page 500, `analyze_flow_runs` truncated at 500, `detect_automation_loops` definition-based cloud-flow only, `what_runs_on_table` cloud-flow scan cap 500).
+- `docs/smoke-test.md` tightened to a short live-org checklist. CI remains fixture-based and is not live-org validation.
+- Removed the leftover "Free tier." suffix from six tool descriptions and the `**Tier:** Free`
+  line from five doc pages. The tiers were removed in 0.3.0, and labelling only some tools
+  implied the rest were paid. A registry test now fails if tier wording reappears.
+
 ### Fixed
 
 - `configFromEnv` now treats blank `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` as unset and trims
@@ -32,18 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   consequences in `docs/tools/get_flow_runs.md`.
 - `docs/smoke-test.md` referenced a `0.1.0` tarball that `npm pack` no longer produces, and told
   readers to expect "exactly seven tools" from `tools/list` when the registry holds 20 — so the
-  release gate failed against a correct build. The document no longer hardcodes a version or a
-  tool count: it captures the tarball name from `npm pack` into `$TARBALL`, and step 3 now prints
-  the returned tool list to compare against `src/tools/index.ts` directly.
-
-### Changed
-
-- Removed the leftover "Free tier." suffix from six tool descriptions and the `**Tier:** Free`
-  line from five doc pages. The tiers were removed in 0.3.0, and labelling only some tools
-  implied the rest were paid. A registry test now fails if tier wording reappears.
-- README: added a "What you can ask it" walkthrough, grouped the tool table by capability area,
-  documented Grok setup and a run-from-source path, and noted that the npm package is unpublished
-  until the first `v*` tag.
+  release gate failed against a correct build.
 
 ## [0.3.0] - 2026-07-11
 

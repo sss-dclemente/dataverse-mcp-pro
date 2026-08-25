@@ -1,9 +1,10 @@
 # what_runs_on_table
 
-Maps **all** active automation registered on one Dataverse table in a single
+Maps active automation registered on one Dataverse table in a single
 cross-automation view — the pro-code and low-code sides that are otherwise
 scattered across the Plugin Registration Tool, Power Automate and the classic
-process list:
+process list. This is **not** a complete automation graph of the environment:
+cloud-flow definitions are scanned with a cap of 500.
 
 - **Plug-in steps** (`SdkMessageProcessingStep`) — with message, stage, mode,
   rank and filtering attributes, sorted by pipeline stage then rank.
