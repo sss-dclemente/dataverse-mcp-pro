@@ -70,8 +70,9 @@ switch turned off, not a broken tool.
 
 Two cautions it makes explicit. `what_runs_on_table` maps **one table**, not a
 whole environment, and caps its cloud-flow scan at 500. And
-`detect_automation_loops` is not a demo path — it parses every activated flow
-definition client-side and has timed out on a real org.
+`detect_automation_loops` is not a demo path — it parses activated flow
+definitions client-side up to its `maxFlows` cap (default 500) and has timed out
+on a real org.
 
 ## How this relates to Microsoft's Dataverse MCP server
 

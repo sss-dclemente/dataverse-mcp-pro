@@ -377,7 +377,7 @@ export async function detectAutomationLoops(
 export const detectAutomationLoopsTool = defineTool({
   name: "detect_automation_loops",
   description:
-    "Assessment, on written client request only — not a demo or triage path, it scans every activated cloud-flow definition and has timed out on a live org. Detects suspected trigger→write loops between Power Automate cloud flows on " +
+    "Assessment, on written client request only — not a demo or triage path: it parses activated cloud-flow definitions client-side up to maxFlows (default 500, max 1000; truncated when the cap is hit) and has timed out on a live org. Detects suspected trigger→write loops between Power Automate cloud flows on " +
     "Dataverse tables: flows that write the table they trigger on (self-loops) and " +
     "chains of 2–3 flows whose writes trigger each other (cycles). Heuristic, " +
     "definition-based analysis of activated cloud flows (workflow.clientdata); " +

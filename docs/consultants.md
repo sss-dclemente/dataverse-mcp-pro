@@ -241,9 +241,14 @@ See below. This is not a step you run because you got to step 4.
 **Do not run this on a demo, on a first pass, or during triage.**
 
 On `sss-prod` it **timed out after 840 seconds**. It parses the stored
-definition of every activated cloud flow client-side and builds a graph, so its
-cost scales with the number of flows in the environment, not with how many are
-relevant to your question.
+definition of each activated cloud flow client-side and builds a graph, so its
+cost scales with how many flows it scans rather than with how many are relevant
+to your question.
+
+It is bounded, but not cheaply: `maxFlows` accepts 10–1000 and **defaults to
+500**, and the result carries `truncated: true` when the cap is reached. Lowering
+`maxFlows` is what makes it finish; it is also what makes the answer partial, so
+read the flag before trusting the graph.
 
 Run it only when a client has asked for loop detection **in writing** and
 understands it may not return.

@@ -16,7 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a hint is usually a switch turned off, not a broken tool.
 - `README.md`: a "For consultants" section linking that page.
 - `CLAUDE.md`: a "Consultant jobs" section recording the routing, the `detect_automation_loops`
-  ban on demos and first passes, and the caps a claim must honour.
+  ban on demos and first passes, and the caps a claim must honour. Its cost is described
+  against its actual `maxFlows` cap (10–1000, default 500, `truncated` when hit) rather than
+  as scanning every activated flow.
 
 ### Changed
 

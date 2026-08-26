@@ -65,9 +65,9 @@ host shows descriptions and nothing else. Preserve that lead when editing a
 description, and do not let it drift from what the handler actually does.
 
 - **`detect_automation_loops` is banned from demos, first passes and triage.** It
-  parses every activated cloud-flow definition client-side, so its cost scales
-  with the environment rather than the question — it timed out at **840s** on a
-  live org. Run it only on a written client request. Improving its timeout, scan
+  parses activated cloud-flow definitions client-side up to `maxFlows` (10–1000,
+  default 500; `truncated` when hit), so its cost scales with how many flows it
+  scans rather than with the question — it timed out at **840s** on a live org. Run it only on a written client request. Improving its timeout, scan
   cap or progress reporting is a separate change, not a new algorithm.
 - **An empty result with a hint is a successful run**, not a broken tool. Trace
   tools return nothing when plug-in trace logging is off; flow tools cover
