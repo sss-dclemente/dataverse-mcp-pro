@@ -55,6 +55,25 @@ Everything is **read-only**: the Dataverse client exposes only reads (`GET`, and
 batches whose sub-requests are all `GET`), so there is no code path that creates, updates or
 deletes anything in your org.
 
+## For consultants
+
+Twenty tools is more than anyone routes through on a client call, and the MCP
+host does not route for you. In practice you live on four to six, chosen by the
+job: a **go-live** that broke overnight, an **incident** in production, or an
+**assessment** you were hired to write up.
+
+[**docs/consultants.md**](docs/consultants.md) has those three playbooks — the
+order to run them in, the arguments that matter, what "done" looks like at each
+step, and where each result stops being trustworthy. It also covers the thing
+that derails live calls most often: an empty result with a hint is usually a
+switch turned off, not a broken tool.
+
+Two cautions it makes explicit. `what_runs_on_table` maps **one table**, not a
+whole environment, and caps its cloud-flow scan at 500. And
+`detect_automation_loops` is not a demo path — it timed out after 840s on a real
+org that had only one activated cloud flow, so the hang is not a volume problem
+and the `maxFlows` cap does not fix it.
+
 ## How this relates to Microsoft's Dataverse MCP server
 
 Microsoft ships an [official Dataverse MCP server](https://learn.microsoft.com/power-apps/maker/data-platform/data-platform-mcp)

@@ -203,11 +203,12 @@ export async function getSolutionLayers(
 export const getSolutionLayersTool = defineTool({
   name: "get_solution_layers",
   description:
-    "Show the solution layering of one Dataverse component — who overwrote my " +
-    "form: lists every solution layer on the component from the winning (top) " +
-    "layer down, flags an unmanaged 'Active' layer that blocks managed updates " +
-    "and deep layer stacks. Requires the component type name (e.g. 'Entity', " +
-    "'SystemForm', 'WebResource') and the component's GUID.",
+    "Go-live: who overwrote my form. Lists every solution layer on one Dataverse " +
+    "component from the winning (top) layer down, and flags an unmanaged " +
+    "'Active' layer sitting on top or a deep layer stack. The layer table " +
+    "carries no managed/unmanaged flag for the layers underneath, so none is " +
+    "claimed. Requires the component type name (e.g. 'Entity', 'SystemForm', " +
+    "'WebResource') and the component's GUID.",
   inputSchema,
   handler: async (input) => {
     try {

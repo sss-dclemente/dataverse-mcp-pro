@@ -52,6 +52,36 @@ there is no licensing gate — do not reintroduce one.
 - Known failure modes (403 missing privilege, feature disabled in org, empty
   results) get a specific `hint` + `docsUrl`, not a generic error.
 
+## Consultant jobs
+
+The 20 tools exist; the routing does not. A consultant uses four to six of them,
+and which four depends on the job. `docs/consultants.md` holds the three
+playbooks — **Go-live**, **Incident**, **Assessment** — with order, arguments,
+what "done" looks like, and the cap on each result. Keep that page in step with
+tool behaviour: a playbook that lies is worse than no playbook.
+
+Each tool's `description` opens by naming the job it belongs to, because the MCP
+host shows descriptions and nothing else. Preserve that lead when editing a
+description, and do not let it drift from what the handler actually does.
+
+- **`detect_automation_loops` is banned from demos, first passes and triage.** It
+  selects `clientdata` for activated cloud-flow definitions up to `maxFlows`
+  (10–1000, default 500; `truncated` when hit) and parses them client-side. It
+  timed out at **840s** on a live org where only **one** flow matched its filter,
+  so the cost is not explained by flow count and the cap is not a fix for it. The
+  cause is unestablished; do not describe the hang as a volume problem. Run it only on a written client request. Improving its timeout, scan
+  cap or progress reporting is a separate change, not a new algorithm.
+- **An empty result with a hint is a successful run**, not a broken tool. Trace
+  tools return nothing when plug-in trace logging is off; flow tools cover
+  solution-aware flows only. `get_org_automation_settings` is what tells you
+  which case you are in, so it comes early in Go-live.
+- **Honour the caps in what you claim.** `what_runs_on_table` scans cloud-flow
+  definitions to 500 and sets `flowsScanTruncated`; `analyze_flow_runs` reads one
+  500-row elastic page and sets `truncated`. It maps one table, never a whole
+  environment — do not reintroduce a complete-automation-graph claim.
+- **`get_solution_layers` must not assert managed/unmanaged status for lower
+  layers.** The layer table carries no such flag.
+
 ## Style
 
 - Minimal, YAGNI. No speculative abstractions, no plugin systems, no config

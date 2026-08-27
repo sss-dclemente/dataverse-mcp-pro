@@ -306,7 +306,7 @@ export async function modernizationReport(
 export const modernizationReportTool = defineTool({
   name: "modernization_report",
   description:
-    "Inventories deprecated/legacy automation still active in the org: classic " +
+    "Assessment step 1: what legacy automation is still live. Inventories deprecated/legacy automation still active in the org: classic " +
     "workflows (background and real-time), dialogs (removed technology), business " +
     "rules and business process flows. Returns per-category counts, the most " +
     "recently modified active items, and prioritized migration findings.",

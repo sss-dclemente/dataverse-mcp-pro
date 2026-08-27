@@ -467,7 +467,7 @@ export async function explainImportFailure(
 export const explainImportFailureTool = defineTool({
   name: "explain_import_failure",
   description:
-    "Explain why a Dataverse solution import failed: reads the import job's " +
+    "Incident lane — solution import failed. Explain why a Dataverse solution import failed: reads the import job's " +
     "result XML, lists each failed component with a plain-language cause " +
     "(missing dependencies, version conflicts, unmanaged layers, duplicates, " +
     "SQL errors) and builds a dependencies-first resolution order. Scope by " +

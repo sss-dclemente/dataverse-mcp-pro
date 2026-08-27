@@ -237,7 +237,7 @@ export async function queryFlowRuns(
 export const getFlowRuns = defineTool({
   name: "get_flow_runs",
   description:
-    "Lists Power Automate cloud-flow runs from the Dataverse flowrun elastic table, filtered " +
+    "Incident lane — cloud flow failed: find the run. Lists Power Automate cloud-flow runs from the Dataverse flowrun elastic table, filtered " +
     "by flow (id or display name), run status and time window. Returns run id, status, timing " +
     "and truncated error details for failed runs. Covers solution-aware cloud flows.",
   inputSchema,

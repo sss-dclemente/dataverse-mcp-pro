@@ -426,11 +426,14 @@ export async function whatRunsOnTable(
 export const whatRunsOnTableTool = defineTool({
   name: "what_runs_on_table",
   description:
-    "Maps every piece of active automation registered on one Dataverse table in " +
-    "a single view: plug-in steps (with message, stage, mode and rank), " +
-    "solution-aware cloud flows that trigger on or act against the table, " +
-    "classic workflows and business rules. Use it for impact analysis before " +
-    "schema or logic changes. Pass the table's logical name, e.g. 'account'.",
+    "Go-live headline: what actually runs when this table is written. Maps the " +
+    "active automation registered on one Dataverse table in a single view: " +
+    "plug-in steps (with message, stage, mode and rank), solution-aware cloud " +
+    "flows that trigger on or act against the table, classic workflows and " +
+    "business rules. One table, not a whole-environment graph; cloud-flow " +
+    "definitions are scanned to a cap of 500 and flowsScanTruncated is set when " +
+    "the cap is hit. Use it for impact analysis before schema or logic changes. " +
+    "Pass the table's logical name, e.g. 'account'.",
   inputSchema,
   handler: async (input) => {
     try {

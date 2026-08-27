@@ -150,7 +150,7 @@ export async function queryOrgAutomationSettings(
 export const getOrgAutomationSettings = defineTool({
   name: "get_org_automation_settings",
   description:
-    "Reads the org-level switches the other diagnostics tools depend on: plug-in trace log " +
+    "Go-live step 2: check the switches before chasing ghosts. Reads the org-level switches the other diagnostics tools depend on: plug-in trace log " +
     "setting (off/exception/all) and auditing configuration (enabled, retention, read/user-access " +
     "audit). Use this first to verify the switches before you chase ghosts.",
   inputSchema,
