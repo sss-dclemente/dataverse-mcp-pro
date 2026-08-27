@@ -240,15 +240,27 @@ See below. This is not a step you run because you got to step 4.
 
 **Do not run this on a demo, on a first pass, or during triage.**
 
-On `sss-prod` it **timed out after 840 seconds**. It parses the stored
-definition of each activated cloud flow client-side and builds a graph, so its
-cost scales with how many flows it scans rather than with how many are relevant
-to your question.
+On `sss-prod` it **timed out after 840 seconds**, and the reason is not what you
+would guess.
 
-It is bounded, but not cheaply: `maxFlows` accepts 10–1000 and **defaults to
-500**, and the result carries `truncated: true` when the cap is reached. Lowering
-`maxFlows` is what makes it finish; it is also what makes the answer partial, so
-read the flag before trusting the graph.
+The tool issues one Dataverse query — activated cloud-flow definitions
+(`category eq 5 and type eq 1 and statecode eq 1`), selecting `clientdata`, the
+large column holding each flow's stored definition — then parses those
+definitions client-side and builds a graph.
+
+On `sss-prod` **exactly one flow matches that filter**: the org holds 102 cloud
+flows, of which 101 are drafts. So the tool had a single definition to parse and
+still did not return. **The cost is not explained by flow count**, and on that
+org lowering `maxFlows` would have changed nothing — the cap was never the
+binding constraint.
+
+What actually consumes the time has not been established. Treat the timeout as
+real and unexplained rather than as a volume problem you can tune around.
+
+`maxFlows` accepts 10–1000 and **defaults to 500**, and the result carries
+`truncated: true` when the cap is reached. On a flow-heavy org that cap still
+bounds the scan and still makes the answer partial, so read the flag — just do
+not expect lowering it to be a fix for the hang.
 
 Run it only when a client has asked for loop detection **in writing** and
 understands it may not return.

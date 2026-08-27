@@ -16,9 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   a hint is usually a switch turned off, not a broken tool.
 - `README.md`: a "For consultants" section linking that page.
 - `CLAUDE.md`: a "Consultant jobs" section recording the routing, the `detect_automation_loops`
-  ban on demos and first passes, and the caps a claim must honour. Its cost is described
-  against its actual `maxFlows` cap (10–1000, default 500, `truncated` when hit) rather than
-  as scanning every activated flow.
+  ban on demos and first passes, and the caps a claim must honour. The 840s timeout is now
+  recorded as unexplained rather than attributed to flow volume: a read-only cross-check of
+  the org it was observed on found **one** flow matching the tool's filter
+  (`category eq 5 and type eq 1 and statecode eq 1`) out of 102 cloud flows, 101 of them
+  drafts. One definition to parse, and it still did not return — so the cap is not the
+  binding constraint and lowering `maxFlows` is not a fix. Same correction in
+  `docs/consultants.md`, `README.md` and the tool description.
 
 ### Changed
 
