@@ -4,7 +4,7 @@
 
 Diagnosing production problems in Dataverse / Dynamics 365 usually means firing up XrmToolBox, exporting plugin trace logs, and spelunking through raw exception blocks and `importexportxml` documents by hand: plugin failures buried in thousands of trace rows, async job graveyards in the admin center, cryptic solution import errors, Power Automate flows that fail silently, and performance mysteries with no obvious culprit — each in its own tool. This MCP server puts those diagnostics directly inside your AI assistant. Instead of raw Dataverse payloads, every tool returns structured, LLM-optimized JSON — trimmed, grouped, and annotated — so the assistant can reason about *why* something failed, not just show you that it did.
 
-It runs over stdio inside Claude Desktop, Claude Code, Grok, or any MCP host. There is no middleman: this process talks to the org Web API (v9.2) and Entra ID only. A cloud MCP host still sends tool JSON (including tool results) to the model vendor. All 20 tools are free and the source is MIT-licensed; contributions and issues are welcome.
+It runs over stdio inside Claude Desktop, Claude Code, Grok, or any MCP host. There is no middleman: this process talks to the org Web API (v9.2) and Entra ID only. A cloud MCP host still sends tool JSON (including tool results) to the model vendor. All 21 tools are free and the source is MIT-licensed; contributions and issues are welcome.
 
 ## What you can ask it
 
@@ -208,7 +208,7 @@ When the `CLIENT_ID` / `CLIENT_SECRET` / `TENANT_ID` trio is absent, the server 
 
 ## Tools
 
-All 20 tools are free and read-only. Each links to its own doc page with the full input table,
+All 21 tools are free and read-only. Each links to its own doc page with the full input table,
 an example call, example output, and the errors it knows how to explain.
 
 ### Plug-in and job diagnostics
@@ -244,6 +244,7 @@ an example call, example output, and the errors it knows how to explain.
 | [`document_table`](docs/tools/document_table.md) | Table documentation from metadata: columns, relationships, keys and attached automation, plus ready-to-share markdown. |
 | [`get_solution_layers`](docs/tools/get_solution_layers.md) | Solution layering for one component — who overwrote it, and whether an unmanaged Active layer is sitting on top and blocking solution updates. |
 | [`modernization_report`](docs/tools/modernization_report.md) | Legacy automation inventory: active dialogs, classic workflows (sync/async), business rules footprint — with migration priorities. |
+| [`analyze_business_rules`](docs/tools/analyze_business_rules.md) | Every business rule on one table — scope (Form vs Entity), actions, columns touched — classified portable / form-only / partial, with the single plug-in step that would replace the portable part. Cap 200 rules. |
 
 ### Connectivity
 

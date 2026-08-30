@@ -202,6 +202,42 @@ business rules, and business process flows — with migration priorities.
 
 **Done:** a list of legacy automation with a reason to care about each.
 
+### 1b. `analyze_business_rules` — when step 1 flags business rules
+
+`modernization_report` counts business rules and tells you to consolidate them.
+This is the step that says *which ones can move.* One table per call — run it on
+the table step 1 pointed at.
+
+`{ "table": "<logical name>" }`
+
+Each rule comes back classified against the documented action table:
+
+- **portable** — Set Field Value / Set Default Value / Show Error Message only.
+  These run server-side and can move into a plug-in.
+- **form-only** — visibility, lock, business required, recommendation. A plug-in
+  **cannot** do these. Never quote a merge that includes them.
+- **partial** — both. Must be split, not moved.
+
+Two things to read before recommending anything:
+
+- **`scope`.** Entity-scoped rules already run server-side. "A plug-in enforces
+  it everywhere, business rules don't" is only true for form-scoped rules, and
+  saying it about an entity-scoped one is wrong in front of the client.
+- **`overlapping-fields`.** Rules contending for one column are the usual cause
+  of "these rules are unmanageable" — and merging them is far cheaper than an
+  assembly and an ALM pipeline.
+
+Where anything is portable, `pluginProposal` gives the step to register: one
+step on Create + Update, PreOperation, sync, with the filtering attributes. It
+proposes; it does not register.
+
+**Cap:** 200 rules per table, `truncated` when hit. Rules whose stored
+definition could not be recognised come back as `verdict: "unknown"` — classify
+those by hand rather than assuming they are movable.
+
+**Done:** a per-rule verdict, and either a step worth registering or a clear
+statement that this pile is UI behaviour and a plug-in is the wrong tool.
+
 ### 2. `flow_governance_report` → `check_flow_connections` → `analyze_flow_runs`
 
 - `flow_governance_report` — activated/draft/suspended counts, owner table, and
@@ -297,7 +333,8 @@ is a bug worth reporting.
 
 - **They are read-only.** The client exposes only reads. Nothing here creates,
   updates or deletes anything in the org.
-- **They do not map a whole environment.** `what_runs_on_table` is one table.
+- **They do not map a whole environment.** `what_runs_on_table` and
+  `analyze_business_rules` are one table each.
 - **They complement rather than replace** Microsoft's
   [Dataverse MCP server](https://learn.microsoft.com/power-apps/maker/data-platform/data-platform-mcp)
   (data operations — query, create, update) and FlowAgent (which writes flows).

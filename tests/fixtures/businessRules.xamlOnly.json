@@ -1,0 +1,15 @@
+{
+  "value": [
+    {
+      "workflowid": "eeee0000-0000-0000-0000-000000000001",
+      "name": "Server side validation",
+      "statecode": 1,
+      "processtriggerscope": 2,
+      "processtriggerformid": null,
+      "ismanaged": false,
+      "modifiedon": "2026-05-02T08:00:00Z",
+      "clientdata": null,
+      "xaml": "<Activity><ValidationError Message=\"Credit limit too high\" Attribute=\"creditlimit\" /></Activity>"
+    }
+  ]
+}

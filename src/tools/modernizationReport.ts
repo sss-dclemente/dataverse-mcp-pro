@@ -252,8 +252,9 @@ export async function modernizationReport(
       flag: "business-rules-inventory",
       issue: `${activeBusinessRules} active business rules indicate a heavy client-logic footprint.`,
       recommendation:
-        "Consider consolidating overlapping business rules per table, or moving " +
-        "complex logic into a single maintainable layer.",
+        "Run analyze_business_rules on the busiest tables: it classifies each " +
+        "rule portable/form-only/partial and reports the columns several rules " +
+        "contend for. Consolidating those is usually cheaper than a plug-in.",
       evidence: { activeBusinessRules },
     });
   }

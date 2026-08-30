@@ -54,7 +54,7 @@ there is no licensing gate — do not reintroduce one.
 
 ## Consultant jobs
 
-The 20 tools exist; the routing does not. A consultant uses four to six of them,
+The 21 tools exist; the routing does not. A consultant uses four to six of them,
 and which four depends on the job. `docs/consultants.md` holds the three
 playbooks — **Go-live**, **Incident**, **Assessment** — with order, arguments,
 what "done" looks like, and the cap on each result. Keep that page in step with

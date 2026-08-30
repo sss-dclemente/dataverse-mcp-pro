@@ -1,0 +1,15 @@
+{
+  "value": [
+    {
+      "workflowid": "dddd0000-0000-0000-0000-000000000001",
+      "name": "Opaque rule",
+      "statecode": 1,
+      "processtriggerscope": 2,
+      "processtriggerformid": null,
+      "ismanaged": false,
+      "modifiedon": "2026-05-02T08:00:00Z",
+      "clientdata": "<<<not-a-definition>>>",
+      "xaml": null
+    }
+  ]
+}
