@@ -1,0 +1,52 @@
+{
+  "value": [
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000001",
+      "name": "Credit limit default",
+      "description": "Sets a starting credit limit.",
+      "statecode": 1,
+      "processtriggerscope": 2,
+      "processtriggerformid": null,
+      "ismanaged": false,
+      "modifiedon": "2026-05-02T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetDefaultValue\",\"attribute\":\"creditlimit\"}]}",
+      "xaml": null
+    },
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000002",
+      "name": "Hide phone for on-hold accounts",
+      "description": null,
+      "statecode": 1,
+      "processtriggerscope": 1,
+      "processtriggerformid": "ffff0000-0000-0000-0000-0000000000f1",
+      "ismanaged": false,
+      "modifiedon": "2026-05-03T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetVisibility\",\"attribute\":\"telephone1\",\"condition\":\"creditonhold\"}]}",
+      "xaml": null
+    },
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000003",
+      "name": "Credit hold enforcement",
+      "description": null,
+      "statecode": 1,
+      "processtriggerscope": 1,
+      "processtriggerformid": "ffff0000-0000-0000-0000-0000000000f1",
+      "ismanaged": true,
+      "modifiedon": "2026-05-04T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetAttributeValue\",\"attribute\":\"creditlimit\"},{\"type\":\"SetRequiredLevel\",\"attribute\":\"industrycode\"}]}",
+      "xaml": null
+    },
+    {
+      "workflowid": "aaaa0000-0000-0000-0000-000000000004",
+      "name": "Old credit limit rule",
+      "description": null,
+      "statecode": 0,
+      "processtriggerscope": 2,
+      "processtriggerformid": null,
+      "ismanaged": false,
+      "modifiedon": "2025-01-04T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetAttributeValue\",\"attribute\":\"creditlimit\"}]}",
+      "xaml": null
+    }
+  ]
+}

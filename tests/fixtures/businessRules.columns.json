@@ -1,0 +1,11 @@
+{
+  "value": [
+    { "LogicalName": "accountid" },
+    { "LogicalName": "name" },
+    { "LogicalName": "creditlimit" },
+    { "LogicalName": "creditonhold" },
+    { "LogicalName": "industrycode" },
+    { "LogicalName": "telephone1" },
+    { "LogicalName": "description" }
+  ]
+}

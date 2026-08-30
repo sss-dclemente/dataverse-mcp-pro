@@ -1,0 +1,26 @@
+{
+  "value": [
+    {
+      "workflowid": "bbbb0000-0000-0000-0000-000000000001",
+      "name": "Hide description",
+      "statecode": 1,
+      "processtriggerscope": 1,
+      "processtriggerformid": "ffff0000-0000-0000-0000-0000000000f1",
+      "ismanaged": false,
+      "modifiedon": "2026-05-02T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetVisibility\",\"attribute\":\"description\"}]}",
+      "xaml": null
+    },
+    {
+      "workflowid": "bbbb0000-0000-0000-0000-000000000002",
+      "name": "Lock name",
+      "statecode": 1,
+      "processtriggerscope": 1,
+      "processtriggerformid": "ffff0000-0000-0000-0000-0000000000f1",
+      "ismanaged": false,
+      "modifiedon": "2026-05-05T08:00:00Z",
+      "clientdata": "{\"steps\":[{\"type\":\"SetDisabled\",\"attribute\":\"name\"}]}",
+      "xaml": null
+    }
+  ]
+}
