@@ -3,6 +3,10 @@
 CI is fixture-based (`vitest` against recorded payloads under `tests/fixtures/`).
 It does **not** talk to a Dataverse org. A green CI run is not live-org validation.
 
+The ordered release steps, in Portuguese, are in
+[`docs/release-checklist.md`](release-checklist.md). This page is the live-org
+part of that list.
+
 Run this against a real org **after merge**, before any `v*` tag. Use the
 run-from-source path:
 

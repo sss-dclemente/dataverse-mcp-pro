@@ -7,13 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-10-13
+
+Prepared, not published. Tagging `v0.4.0` is a separate human step; see
+`docs/release-checklist.md`. The `detect_automation_loops` hang is documented
+here and is not fixed in this version.
+
 ### Added
 
+- `analyze_business_rules`: every business rule on one table, activated and draft,
+  classified portable / form-only / partial against the action markers in `clientdata`
+  and `xaml`. Scope comes from `processtriggerscope` (Form vs Entity), not from
+  `scope` (ownership). Where any logic is portable it proposes one plug-in step and
+  does not register it. Cap 200 rules. Twenty-one tools.
 - `docs/consultants.md`: three playbooks — **Go-live**, **Incident**, **Assessment** — giving the
   order to run tools in, the arguments that matter, what "done" looks like at each step, and the
-  cap on each result. Twenty tools with no routing is the problem; a consultant uses four to six,
+  cap on each result. The set had no routing; a consultant uses four to six,
   chosen by job. Includes the misreading that derails live calls most often: an empty result with
   a hint is usually a switch turned off, not a broken tool.
+- `docs/roadmap.md` and `docs/release-checklist.md` (pt-PT). `.github/dependabot.yml`
+  opens one grouped npm pull request and one grouped GitHub Actions pull request each week.
 - `README.md`: a "For consultants" section linking that page.
 - `CLAUDE.md`: a "Consultant jobs" section recording the routing, the `detect_automation_loops`
   ban on demos and first passes, and the caps a claim must honour. The 840s timeout is now

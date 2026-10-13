@@ -1,6 +1,6 @@
 # Consultant playbooks
 
-Twenty tools is too many to hold in your head on a client call. In practice a
+Twenty-one tools is too many to hold in your head on a client call. In practice a
 consultant lives on four to six of them, and which four depends on the job you
 were hired to do. This page is the routing the MCP host does not give you.
 
