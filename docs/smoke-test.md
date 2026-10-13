@@ -26,7 +26,7 @@ about to tag.
 2. `get_plugin_traces` with defaults → structured results, an empty-with-hint payload, or a specific privilege/feature envelope — never a raw exception.
 3. `get_flow_runs` with defaults → same shape. `flowrun` is an elastic table (Dataverse page cap 500); this tool's `top` max is 100.
 4. `what_runs_on_table` on a table you know (e.g. `account`) → plug-in / cloud-flow / classic-workflow / business-rule sections. Cloud-flow scan cap 500 (`flowsScanTruncated` when hit).
-5. Optional: `analyze_flow_runs` — if the window has 500 runs, expect `truncated: true`. `detect_automation_loops` is definition-based **cloud-flow only**; plugin↔flow ping-pong is out of scope.
+5. Optional: `analyze_flow_runs` — if the window has 500 runs, expect `truncated: true`. `detect_automation_loops` is definition-based **cloud-flow only** and is not a smoke step (it stays off demos until this org has shown it return). If a written request does run it, the call should settle within about a minute: `timedOut` or an error envelope, not a multi-minute hang. Plugin↔flow ping-pong is out of scope.
 
 Do not tag and do not `npm publish` from the honesty PR. Live smoke is a human step after merge.
 

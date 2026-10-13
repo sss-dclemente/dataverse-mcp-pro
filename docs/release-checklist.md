@@ -14,18 +14,18 @@ Se a etiqueta sair noutro dia que não 2026-10-13, atualiza a data em
 - `analyze_business_rules`, a 21.ª ferramenta.
 - Playbooks de consultor em `docs/consultants.md` (Go-live, Incident, Assessment).
 - Descrições das ferramentas a abrir pelo trabalho a que pertencem.
-- Correcções de honestidade já no ramo: tecto de `what_runs_on_table`,
+- Correções de honestidade já no ramo: teto de `what_runs_on_table`,
   `get_solution_layers` sem afirmar managed/unmanaged nas camadas de baixo,
   quickstart, e `docs/smoke-test.md` a apontar para o `dist/server.js` deste
   build.
 - `docs/roadmap.md`, esta lista, e `.github/dependabot.yml` (semanal, um grupo
   npm e um grupo GitHub Actions).
+- A correção do hang de `detect_automation_loops`: a lista já não seleciona
+  `clientdata`, cada chamada tem prazo, e o varrimento tem orçamento e limite
+  de tamanho. O changelog da 0.4.0 regista-a em Fixed.
 
 ## O que não entra
 
-- A correção do hang de `detect_automation_loops`. A 0.4.0 regista o timeout de
-  840 s e não o resolve. Esse trabalho está num pull request separado. Não o
-  metas nesta etiqueta à mão.
 - Qualquer alteração a dvops-docs. É outro repositório.
 - `npm publish` a partir de um portátil, e qualquer etiqueta `v*` criada daqui.
 

@@ -15,6 +15,30 @@ export interface QueryOptions {
   top?: number;
   orderby?: string;
   expand?: string;
+  /** Abort the Web API call (including 429/503 retry waits) after this many milliseconds. */
+  timeoutMs?: number;
+  /** Reject before buffering a success body larger than this. Error bodies are unchanged. */
+  maxBytes?: number;
+}
+
+export class DataverseTimeoutError extends Error {
+  readonly timeoutMs: number;
+
+  constructor(timeoutMs: number) {
+    super(`Dataverse request timed out after ${timeoutMs}ms`);
+    this.name = "DataverseTimeoutError";
+    this.timeoutMs = timeoutMs;
+  }
+}
+
+export class DataversePayloadTooLargeError extends Error {
+  readonly maxBytes: number;
+
+  constructor(maxBytes: number) {
+    super(`Dataverse response exceeded ${maxBytes} bytes`);
+    this.name = "DataversePayloadTooLargeError";
+    this.maxBytes = maxBytes;
+  }
 }
 
 export class DataverseHttpError extends Error {
@@ -68,8 +92,28 @@ const MAX_429_RETRIES = 3;
 const DEFAULT_RETRY_AFTER_S = 2;
 const MAX_RETRY_AFTER_S = 30;
 
-function sleep(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
+function sleep(ms: number, signal?: AbortSignal): Promise<void> {
+  return new Promise((resolve, reject) => {
+    if (signal?.aborted === true) {
+      reject(signal.reason);
+      return;
+    }
+    const timer = setTimeout(() => {
+      signal?.removeEventListener("abort", onAbort);
+      resolve();
+    }, ms);
+    function onAbort(): void {
+      clearTimeout(timer);
+      reject(signal?.reason);
+    }
+    signal?.addEventListener("abort", onAbort, { once: true });
+  });
+}
+
+function isAbortOrTimeout(err: unknown): boolean {
+  if (typeof err !== "object" || err === null || !("name" in err)) return false;
+  const name = (err as { name: unknown }).name;
+  return name === "AbortError" || name === "TimeoutError";
 }
 
 function retryAfterMs(res: Response): number {
@@ -141,23 +185,68 @@ function createTokenProvider(
   };
 }
 
-async function fetchWithRetry(send: () => Promise<Response>): Promise<Response> {
+async function fetchWithRetry(
+  send: () => Promise<Response>,
+  signal?: AbortSignal,
+): Promise<Response> {
   let retries429 = 0;
   let retried503 = false;
   for (;;) {
+    if (signal?.aborted === true) throw signal.reason;
     const res = await send();
     if (res.status === 429 && retries429 < MAX_429_RETRIES) {
       retries429 += 1;
-      await sleep(retryAfterMs(res));
+      await sleep(retryAfterMs(res), signal);
       continue;
     }
     if (res.status === 503 && !retried503) {
       retried503 = true;
-      await sleep(retryAfterMs(res));
+      await sleep(retryAfterMs(res), signal);
       continue;
     }
     return res;
   }
+}
+
+/** Buffer a success body only up to maxBytes. A slow or huge clientdata blob must not be read whole. */
+async function readCappedText(
+  res: Response,
+  maxBytes: number,
+  signal?: AbortSignal,
+): Promise<string> {
+  const reader = res.body?.getReader();
+  if (reader === undefined) {
+    const text = await res.text();
+    if (new TextEncoder().encode(text).byteLength > maxBytes) {
+      throw new DataversePayloadTooLargeError(maxBytes);
+    }
+    return text;
+  }
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+  try {
+    for (;;) {
+      if (signal?.aborted === true) throw signal.reason;
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value === undefined || value.byteLength === 0) continue;
+      total += value.byteLength;
+      if (total > maxBytes) {
+        await reader.cancel();
+        throw new DataversePayloadTooLargeError(maxBytes);
+      }
+      chunks.push(value);
+    }
+  } finally {
+    reader.releaseLock();
+  }
+  const buf = new Uint8Array(total);
+  let offset = 0;
+  for (const chunk of chunks) {
+    buf.set(chunk, offset);
+    offset += chunk.byteLength;
+  }
+  return new TextDecoder().decode(buf);
 }
 
 async function toHttpError(res: Response): Promise<DataverseHttpError> {
@@ -237,11 +326,34 @@ export function createDataverseClient(
 
   async function get<T>(entitySetOrPath: string, options?: QueryOptions): Promise<T> {
     const url = buildUrl(entitySetOrPath, options);
-    const headers = await authHeaders();
-    const res = await fetchWithRetry(() => fetchImpl(url, { method: "GET", headers }));
-    if (!res.ok) throw await toHttpError(res);
-    if (res.status === 204) return undefined as T;
-    return (await res.json()) as T;
+    const timeoutMs = options?.timeoutMs;
+    const maxBytes = options?.maxBytes;
+    const signal = timeoutMs !== undefined ? AbortSignal.timeout(timeoutMs) : undefined;
+    try {
+      const headers = await authHeaders();
+      if (signal?.aborted === true) throw signal.reason;
+      const res = await fetchWithRetry(() => {
+        const init: RequestInit = { method: "GET", headers };
+        if (signal !== undefined) init.signal = signal;
+        return fetchImpl(url, init);
+      }, signal);
+      if (!res.ok) throw await toHttpError(res);
+      if (res.status === 204) return undefined as T;
+      if (maxBytes !== undefined) {
+        const text = await readCappedText(res, maxBytes, signal);
+        if (text.trim() === "") return undefined as T;
+        return JSON.parse(text) as T;
+      }
+      return (await res.json()) as T;
+    } catch (err) {
+      if (
+        timeoutMs !== undefined &&
+        (signal?.aborted === true || isAbortOrTimeout(err))
+      ) {
+        throw new DataverseTimeoutError(timeoutMs);
+      }
+      throw err;
+    }
   }
 
   async function batchGet(

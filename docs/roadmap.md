@@ -15,11 +15,10 @@ nessa leitura fica dito em concreto.
 - 21 ferramentas. `analyze_business_rules` e os playbooks de consultor entram
   na 0.4.0.
 - Playbooks de consultor (Go-live / Incident / Assessment) em `docs/consultants.md`.
-- Problema conhecido: `detect_automation_loops` excedeu o tempo (840 s) numa org
-  com um único cloud flow activado. A 0.4.0 regista isso e não o corrige. A
-  correção (prazo por pedido, orçamento do varrimento, limite de tamanho, sem
-  seguir `@odata.nextLink`) está num pull request à parte. A causa no servidor
-  Dataverse continua por reproduzir: o CI só usa fixtures.
+- `detect_automation_loops` excedeu o tempo (840 s) numa org com um único cloud
+  flow activado. A 0.4.0 inclui a correção: prazo por pedido, orçamento do
+  varrimento, limite de tamanho, sem seguir `@odata.nextLink`. A causa no
+  servidor Dataverse continua por reproduzir: o CI só usa fixtures.
 - Documentação e landing em **dvops-docs** (Astro + Starlight). Último commit
   em 2026-07-11 (`Add draft launch posts`). Ver [o que o site ainda diz sobre
   preços](#dvops-docs-e-a-secção-de-preços).
@@ -47,9 +46,8 @@ O site está atrás do servidor: 20 páginas de ferramentas, sem
 
 ## Objetivos
 
-1. Q4 2026: publicar a 0.4.0 com o que está no CHANGELOG dessa versão. A
-   correção do hang de `detect_automation_loops` segue à parte e não bloqueia
-   a etiqueta, nem entra nela enquanto esse pull request não estiver mergeado.
+1. Q4 2026: publicar a 0.4.0 com o que está no CHANGELOG dessa versão, incluindo
+   a correção do hang de `detect_automation_loops`.
 2. 2027: ser a ferramenta de diagnóstico que um consultor Dataverse abre
    primeiro, e o sítio por onde esses contactos chegam aos serviços da SSS.
 
@@ -57,9 +55,9 @@ O site está atrás do servidor: 20 páginas de ferramentas, sem
 
 - **E1 — Release 0.4.0.** `analyze_business_rules`, playbooks, descrições por
   trabalho. Lista em `docs/release-checklist.md`. Sem publicar a partir do PR.
-- **E2 — `detect_automation_loops`.** Prazo, tecto de tamanho e a forma da
-  query (lista sem `clientdata`, definição por id). Sem algoritmo novo. O
-  varrimento deixa de esperar até o host desistir; falta vê-lo a voltar numa
+- **E2 — `detect_automation_loops`.** Na 0.4.0: prazo, limite de tamanho e a
+  forma da query (lista sem `clientdata`, definição por id). Sem algoritmo novo.
+  O varrimento deixa de esperar até o host desistir; falta vê-lo a voltar numa
   org real.
 - **E3 — dvops-docs.** Tirar do README a secção de preços e os placeholders
   Paddle, que já não existem na landing. Sincronizar as 21 ferramentas e o
