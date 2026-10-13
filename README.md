@@ -57,7 +57,7 @@ deletes anything in your org.
 
 ## For consultants
 
-Twenty tools is more than anyone routes through on a client call, and the MCP
+Twenty-one tools is more than anyone routes through on a client call, and the MCP
 host does not route for you. In practice you live on four to six, chosen by the
 job: a **go-live** that broke overnight, an **incident** in production, or an
 **assessment** you were hired to write up.
