@@ -64,13 +64,18 @@ Each tool's `description` opens by naming the job it belongs to, because the MCP
 host shows descriptions and nothing else. Preserve that lead when editing a
 description, and do not let it drift from what the handler actually does.
 
-- **`detect_automation_loops` is banned from demos, first passes and triage.** It
-  selects `clientdata` for activated cloud-flow definitions up to `maxFlows`
-  (10–1000, default 500; `truncated` when hit) and parses them client-side. It
-  timed out at **840s** on a live org where only **one** flow matched its filter,
-  so the cost is not explained by flow count and the cap is not a fix for it. The
-  cause is unestablished; do not describe the hang as a volume problem. Run it only on a written client request. Improving its timeout, scan
-  cap or progress reporting is a separate change, not a new algorithm.
+- **`detect_automation_loops` is banned from demos, first passes and triage**
+  until a live org has shown the guarded scan returns. It lists activated cloud
+  flows up to `maxFlows` (10–1000, default 500; `truncated` when the cap is hit
+  or a further `@odata.nextLink` is left unread) **without** `clientdata`, then
+  reads each definition by id. It does not page. Each Web API call aborts after
+  20s and the scan stops after 60s (`timedOut`); definitions over 4,000,000
+  characters or 25,000 walked actions set `skippedOversized`. The **840s** hang
+  was one list query that selected `clientdata` and had no deadline, on an org
+  where only **one** flow matched the filter — not a flow-count problem, and
+  not something `maxFlows` fixes. The walk is depth-capped and cycle search is
+  length-capped; neither is that one-flow hang. Do not replace the guards with
+  a new detection algorithm. Run it only on a written client request.
 - **An empty result with a hint is a successful run**, not a broken tool. Trace
   tools return nothing when plug-in trace logging is off; flow tools cover
   solution-aware flows only. `get_org_automation_settings` is what tells you

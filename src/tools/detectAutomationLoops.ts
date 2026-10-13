@@ -3,6 +3,8 @@ import { defineTool } from "./types.js";
 import { errorEnvelope, toErrorEnvelope } from "../errors.js";
 import {
   DataverseHttpError,
+  DataversePayloadTooLargeError,
+  DataverseTimeoutError,
   getDefaultClient,
   type DataverseClient,
 } from "../dataverse/client.js";
@@ -27,7 +29,51 @@ const MAX_CYCLE_LENGTH = 3;
 // Defensive cap when walking nested action containers of a malformed definition.
 const MAX_WALK_DEPTH = 10;
 
+// The 840s hang was one list GET that selected clientdata and never returned
+// (one matching flow on that org; this client had no deadline). @odata.nextLink
+// is not followed. The definition walk is depth-capped and cycle search is
+// length-capped, so neither explains a one-flow hang. These bounds stop the
+// wait and a pathological definition; they are not a new detection algorithm.
+export const LOOP_REQUEST_TIMEOUT_MS = 20_000;
+export const LOOP_SCAN_BUDGET_MS = 60_000;
+export const LOOP_MAX_CLIENTDATA_CHARS = 4_000_000;
+// The HTTP body wraps clientdata in JSON and escapes quotes, so the transport
+// cap is larger than the definition-string cap applied after parse.
+export const LOOP_MAX_RESPONSE_BYTES = LOOP_MAX_CLIENTDATA_CHARS * 2;
+export const LOOP_MAX_WALK_NODES = 25_000;
+
+const WORKFLOW_GUID =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+export interface LoopScanLimits {
+  now?: () => number;
+  budgetMs?: number;
+  requestTimeoutMs?: number;
+  maxClientDataChars?: number;
+  maxWalkNodes?: number;
+}
+
 const NO_LOOPS_HINT = "No suspected loops detected among scanned flows";
+const TIMEOUT_HINT =
+  "The scan stopped because a Dataverse call or the scan budget hit its deadline. " +
+  "suspectedLoops covers only definitions read before the stop. Lowering maxFlows " +
+  "does not fix a request that does not return: the 840s hang happened with one " +
+  "matching flow.";
+
+function sizeHint(count: number): string {
+  return (
+    `${count} flow definition(s) exceeded the size guard and were not analysed. ` +
+    "suspectedLoops does not include them."
+  );
+}
+
+const LIST_TIMEOUT_HINT =
+  "The workflow list did not return within the request deadline. The list query " +
+  "selects workflowid and name only; clientdata is read afterwards, one flow at " +
+  "a time, and each call is aborted at the deadline instead of waiting for the " +
+  "host to kill the tool. A previous build selected clientdata on this list and " +
+  "hung for 840s on an org where one flow matched the filter, so a lower " +
+  "maxFlows is not the fix.";
 const NO_LOOPS_NOTE =
   "This check is definition-based and covers cloud flows only. Plug-in-side " +
   "loops surface as depth flags in analyze_plugin_performance — run it for the " +
@@ -138,12 +184,34 @@ function childGroups(node: JsonRecord): JsonRecord[] {
   return groups;
 }
 
+interface WalkBudget {
+  visited: number;
+  maxNodes: number;
+  exceeded: boolean;
+  expired: () => boolean;
+  timedOut: boolean;
+}
+
 /** Recursively collect the tables written by Dataverse write actions. */
-function collectWrites(record: JsonRecord, depth: number, out: Set<string>): void {
-  if (depth > MAX_WALK_DEPTH) return;
+function collectWrites(
+  record: JsonRecord,
+  depth: number,
+  out: Set<string>,
+  budget: WalkBudget,
+): void {
+  if (budget.exceeded || budget.timedOut || depth > MAX_WALK_DEPTH) return;
   for (const value of Object.values(record)) {
+    if (budget.expired()) {
+      budget.timedOut = true;
+      return;
+    }
     const node = asRecord(value);
     if (node === null) continue;
+    budget.visited += 1;
+    if (budget.visited > budget.maxNodes) {
+      budget.exceeded = true;
+      return;
+    }
     const inputs = asRecord(node["inputs"]);
     const host = asRecord(inputs?.["host"]);
     const operationId = asString(host?.["operationId"]);
@@ -153,17 +221,28 @@ function collectWrites(record: JsonRecord, depth: number, out: Set<string>): voi
       if (entity !== null) out.add(entity);
     }
     for (const group of childGroups(node)) {
-      collectWrites(group, depth + 1, out);
+      collectWrites(group, depth + 1, out, budget);
+      if (budget.exceeded || budget.timedOut) return;
     }
   }
 }
 
+interface ParseLimits {
+  maxClientDataChars: number;
+  maxWalkNodes: number;
+  expired: () => boolean;
+}
+
 /** Defensive parse of workflow.clientdata; "unparseable" only for broken JSON. */
-function parseFlow(raw: RawWorkflow): FlowNode | "unparseable" {
+function parseFlow(
+  raw: RawWorkflow,
+  limits: ParseLimits,
+): FlowNode | "unparseable" | "oversized" | "budget" {
   const clientdata = raw.clientdata;
   if (typeof clientdata !== "string" || clientdata.trim() === "") {
     return "unparseable";
   }
+  if (clientdata.length > limits.maxClientDataChars) return "oversized";
   let parsed: unknown;
   try {
     parsed = JSON.parse(clientdata);
@@ -190,7 +269,18 @@ function parseFlow(raw: RawWorkflow): FlowNode | "unparseable" {
 
   const writes = new Set<string>();
   const actions = asRecord(definition?.["actions"]);
-  if (actions !== null) collectWrites(actions, 0, writes);
+  const walk: WalkBudget = {
+    visited: 0,
+    maxNodes: limits.maxWalkNodes,
+    exceeded: false,
+    expired: limits.expired,
+    timedOut: false,
+  };
+  if (actions !== null) collectWrites(actions, 0, writes, walk);
+  // A partial walk would report a loop the rest of the definition might not
+  // support, or miss the write that closes one. Drop the flow instead.
+  if (walk.timedOut) return "budget";
+  if (walk.exceeded) return "oversized";
 
   return {
     id: raw.workflowid ?? "",
@@ -259,7 +349,10 @@ function canonicalRotate(ids: string[]): string[] {
 }
 
 /** Directed cycles of length 2..MAX_CYCLE_LENGTH, each reported once. */
-function findCycles(nodes: FlowNode[]): FlowNode[][] {
+function findCycles(
+  nodes: FlowNode[],
+  expired: () => boolean,
+): { cycles: FlowNode[][]; stopped: boolean } {
   const byId = new Map<string, FlowNode>();
   const adjacency = new Map<string, string[]>();
   for (const node of nodes) byId.set(node.id, node);
@@ -276,8 +369,15 @@ function findCycles(nodes: FlowNode[]): FlowNode[][] {
 
   const seen = new Set<string>();
   const cycles: FlowNode[][] = [];
+  let stopped = false;
   const dfs = (startId: string, currentId: string, path: string[]): void => {
+    if (stopped) return;
+    if (expired()) {
+      stopped = true;
+      return;
+    }
     for (const nextId of adjacency.get(currentId) ?? []) {
+      if (stopped) return;
       if (nextId === startId) {
         if (path.length < 2) continue; // self-loops are reported separately
         const rotated = canonicalRotate(path);
@@ -296,12 +396,15 @@ function findCycles(nodes: FlowNode[]): FlowNode[][] {
       dfs(startId, nextId, [...path, nextId]);
     }
   };
-  for (const node of nodes) dfs(node.id, node.id, [node.id]);
-  return cycles;
+  for (const node of nodes) {
+    if (stopped) break;
+    dfs(node.id, node.id, [node.id]);
+  }
+  return { cycles, stopped };
 }
 
-function cycleLoops(nodes: FlowNode[]): SuspectedLoop[] {
-  return findCycles(nodes).map((cycle) => {
+function cycleLoops(cycles: FlowNode[][]): SuspectedLoop[] {
+  return cycles.map((cycle) => {
     const segments = cycle.map((flow, i) => {
       const next = cycle[(i + 1) % cycle.length];
       return (
@@ -320,46 +423,140 @@ function cycleLoops(nodes: FlowNode[]): SuspectedLoop[] {
   });
 }
 
+interface WorkflowListResponse {
+  value?: Array<Pick<RawWorkflow, "workflowid" | "name">>;
+  "@odata.nextLink"?: string;
+}
+
+function requestTimeoutMs(remainingMs: number, requestTimeoutMsLimit: number): number {
+  return Math.max(1, Math.min(requestTimeoutMsLimit, remainingMs));
+}
+
 export async function detectAutomationLoops(
   client: Pick<DataverseClient, "get">,
   input: DetectAutomationLoopsInput,
+  limits: LoopScanLimits = {},
 ): Promise<unknown> {
+  const now = limits.now ?? Date.now;
+  const budgetMs = limits.budgetMs ?? LOOP_SCAN_BUDGET_MS;
+  const requestTimeout = limits.requestTimeoutMs ?? LOOP_REQUEST_TIMEOUT_MS;
+  const maxClientDataChars = limits.maxClientDataChars ?? LOOP_MAX_CLIENTDATA_CHARS;
+  const maxWalkNodes = limits.maxWalkNodes ?? LOOP_MAX_WALK_NODES;
+  const deadline = now() + budgetMs;
+  const expired = (): boolean => now() > deadline;
+  const parseLimits: ParseLimits = { maxClientDataChars, maxWalkNodes, expired };
+
   try {
-    const response = await client.get<{ value: RawWorkflow[] }>("workflows", {
-      select: ["workflowid", "name", "clientdata"],
+    const listTimeout = requestTimeoutMs(deadline - now(), requestTimeout);
+    const response = await client.get<WorkflowListResponse>("workflows", {
+      select: ["workflowid", "name"],
       filter: ACTIVE_CLOUD_FLOW_FILTER,
       top: input.maxFlows,
+      timeoutMs: listTimeout,
     });
     const rows = response.value ?? [];
+    const extraPage =
+      typeof response["@odata.nextLink"] === "string" && response["@odata.nextLink"] !== "";
 
     let parseFailures = 0;
+    let skippedOversized = 0;
+    let processed = 0;
+    let stoppedEarly = false;
     const nodes: FlowNode[] = [];
+
     for (const raw of rows) {
-      const parsed = parseFlow(raw);
+      if (expired()) {
+        stoppedEarly = true;
+        break;
+      }
+      const id = raw.workflowid ?? "";
+      if (!WORKFLOW_GUID.test(id)) {
+        parseFailures += 1;
+        processed += 1;
+        continue;
+      }
+      const perCallTimeout = requestTimeoutMs(deadline - now(), requestTimeout);
+      let detail: { clientdata?: string | null } | undefined;
+      try {
+        detail = await client.get<{ clientdata?: string | null }>(`workflows(${id})`, {
+          select: ["clientdata"],
+          timeoutMs: perCallTimeout,
+          maxBytes: maxClientDataChars * 2,
+        });
+      } catch (err) {
+        if (err instanceof DataversePayloadTooLargeError) {
+          skippedOversized += 1;
+          processed += 1;
+          continue;
+        }
+        if (err instanceof DataverseTimeoutError) {
+          stoppedEarly = true;
+          break;
+        }
+        throw err;
+      }
+
+      const definition: RawWorkflow = { workflowid: id };
+      if (raw.name !== undefined) definition.name = raw.name;
+      if (detail?.clientdata !== undefined) definition.clientdata = detail.clientdata;
+      const parsed = parseFlow(definition, parseLimits);
+      if (parsed === "budget") {
+        stoppedEarly = true;
+        break;
+      }
+      processed += 1;
       if (parsed === "unparseable") {
         parseFailures += 1;
+        continue;
+      }
+      if (parsed === "oversized") {
+        skippedOversized += 1;
         continue;
       }
       nodes.push(parsed);
     }
 
     const withTrigger = nodes.filter((node) => node.triggerTable !== undefined);
-    const loops = [...selfLoops(withTrigger), ...cycleLoops(withTrigger)];
+    const self = selfLoops(withTrigger);
+    let cycles: FlowNode[][] = [];
+    if (expired()) {
+      stoppedEarly = true;
+    } else {
+      const found = findCycles(withTrigger, expired);
+      cycles = found.cycles;
+      if (found.stopped) stoppedEarly = true;
+    }
+    const loops = [...self, ...cycleLoops(cycles)];
     const severityOrder: Record<SuspectedLoop["severity"], number> = {
       high: 0,
       medium: 1,
     };
     loops.sort((a, b) => severityOrder[a.severity] - severityOrder[b.severity]);
 
+    const hints: string[] = [];
+    if (stoppedEarly) hints.push(TIMEOUT_HINT);
+    if (skippedOversized > 0) hints.push(sizeHint(skippedOversized));
+    const cleanEmpty = hints.length === 0 && loops.length === 0;
+    if (cleanEmpty) hints.push(NO_LOOPS_HINT);
+
     return {
-      flowsScanned: rows.length,
+      flowsScanned: processed,
       flowsWithDataverseTrigger: withTrigger.length,
       suspectedLoops: loops,
-      ...(rows.length >= input.maxFlows ? { truncated: true } : {}),
+      ...(rows.length >= input.maxFlows || extraPage ? { truncated: true } : {}),
+      ...(stoppedEarly ? { timedOut: true, flowsListed: rows.length } : {}),
+      ...(skippedOversized > 0 ? { skippedOversized } : {}),
       ...(parseFailures > 0 ? { parseFailures } : {}),
-      ...(loops.length === 0 ? { hint: NO_LOOPS_HINT, note: NO_LOOPS_NOTE } : {}),
+      ...(hints.length > 0 ? { hint: hints.join(" ") } : {}),
+      ...(cleanEmpty ? { note: NO_LOOPS_NOTE } : {}),
     };
   } catch (err) {
+    if (err instanceof DataverseTimeoutError) {
+      return errorEnvelope(err.message, {
+        hint: LIST_TIMEOUT_HINT,
+        docsUrl: DOCS_URL,
+      });
+    }
     if (err instanceof DataverseHttpError && err.status === 403) {
       return errorEnvelope(err.dataverseMessage ?? err.message, {
         hint:
@@ -377,7 +574,7 @@ export async function detectAutomationLoops(
 export const detectAutomationLoopsTool = defineTool({
   name: "detect_automation_loops",
   description:
-    "Assessment, on written client request only — not a demo or triage path: it selects clientdata for activated cloud-flow definitions up to maxFlows (default 500, max 1000; truncated when the cap is hit) and parses them client-side. It timed out after 840s on a live org where only one flow matched its filter, so the cost is not explained by flow count. Detects suspected trigger→write loops between Power Automate cloud flows on " +
+    "Assessment, on written client request only — not a demo or triage path. Lists activated cloud flows up to maxFlows (default 500, max 1000; truncated when the cap is hit or a further page is left unread) without clientdata, then reads each definition by id. Each Web API call has a deadline and the scan has a time budget; definitions over the size guard set skippedOversized, and a stop sets timedOut. @odata.nextLink is not followed. A previous build selected clientdata on the list query and had no deadline: it timed out after 840s on a live org where only one flow matched the filter, so that hang was not a flow-count problem and lowering maxFlows does not fix a request that does not return. Detects suspected trigger→write loops between Power Automate cloud flows on " +
     "Dataverse tables: flows that write the table they trigger on (self-loops) and " +
     "chains of 2–3 flows whose writes trigger each other (cycles). Heuristic, " +
     "definition-based analysis of activated cloud flows (workflow.clientdata); " +
