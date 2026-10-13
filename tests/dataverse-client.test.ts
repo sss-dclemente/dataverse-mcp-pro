@@ -3,6 +3,8 @@ import {
   configFromEnv,
   createDataverseClient,
   DataverseHttpError,
+  DataversePayloadTooLargeError,
+  DataverseTimeoutError,
   type DataverseConfig,
 } from "../src/dataverse/client.js";
 
@@ -184,6 +186,57 @@ describe("get", () => {
     );
     expect(httpErr.message).toContain("403");
     expect(httpErr.message).toContain("prvReadPluginTraceLog");
+  });
+
+  it("aborts a hanging GET when timeoutMs elapses and does not put the deadline in the URL", async () => {
+    const fetchMock = vi.fn((_url: string, init?: RequestInit) => {
+      return new Promise((_resolve, reject) => {
+        const signal = init?.signal;
+        if (signal === undefined) return;
+        const onAbort = (): void => {
+          const reason = signal.reason;
+          reject(reason instanceof Error ? reason : new Error("aborted"));
+        };
+        if (signal.aborted) onAbort();
+        else signal.addEventListener("abort", onAbort, { once: true });
+      });
+    });
+    const client = createDataverseClient(CONFIG, asFetch(fetchMock), tokenProvider);
+
+    const started = Date.now();
+    await expect(client.get("workflows", { timeoutMs: 50 })).rejects.toBeInstanceOf(
+      DataverseTimeoutError,
+    );
+    expect(Date.now() - started).toBeLessThan(2_000);
+
+    const [calledUrl, init] = firstCall(fetchMock);
+    expect(calledUrl).toBe("https://org.crm.dynamics.com/api/data/v9.2/workflows");
+    expect(init.signal).toBeInstanceOf(AbortSignal);
+  });
+
+  it("does not sleep out a long Retry-After once the deadline has passed", async () => {
+    const fetchMock = vi.fn(
+      async () => new Response("", { status: 429, headers: { "Retry-After": "30" } }),
+    );
+    const client = createDataverseClient(CONFIG, asFetch(fetchMock), tokenProvider);
+
+    const started = Date.now();
+    await expect(client.get("accounts", { timeoutMs: 80 })).rejects.toBeInstanceOf(
+      DataverseTimeoutError,
+    );
+    expect(Date.now() - started).toBeLessThan(2_000);
+    expect(fetchMock.mock.calls.length).toBeLessThan(4);
+  });
+
+  it("rejects a success body larger than maxBytes", async () => {
+    const fetchMock = vi.fn(async () =>
+      jsonResponse({ clientdata: "x".repeat(100) }),
+    );
+    const client = createDataverseClient(CONFIG, asFetch(fetchMock), tokenProvider);
+
+    await expect(
+      client.get("workflows(aaaaaaaa-0000-0000-0000-000000000001)", { maxBytes: 32 }),
+    ).rejects.toBeInstanceOf(DataversePayloadTooLargeError);
   });
 });
 

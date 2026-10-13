@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `detect_automation_loops` no longer waits without a deadline on one list query
+  that selects `clientdata`. That query is what did not return for 840s on an org
+  where a single activated cloud flow matched the filter, so the hang was not a
+  flow-count problem and `maxFlows` was not the constraint. The list now selects
+  `workflowid` and `name` only; each definition is read by primary key. Each Web
+  API call aborts after 20s (retry waits included) and the scan stops after 60s
+  (`timedOut`). A response body over 8,000,000 bytes, a definition over 4,000,000
+  characters, or an action walk over 25,000 nodes is skipped (`skippedOversized`)
+  instead of being parsed part-way. `@odata.nextLink` is still not followed; a
+  leftover next link sets `truncated`. The self-loop and 2–3 flow cycle rules are
+  unchanged. A list-query timeout is an error envelope; a later timeout is a
+  partial result. CI still does not call a live org.
+
 ### Added
 
 - `docs/consultants.md`: three playbooks — **Go-live**, **Incident**, **Assessment** — giving the

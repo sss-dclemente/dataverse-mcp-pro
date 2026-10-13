@@ -70,9 +70,13 @@ switch turned off, not a broken tool.
 
 Two cautions it makes explicit. `what_runs_on_table` maps **one table**, not a
 whole environment, and caps its cloud-flow scan at 500. And
-`detect_automation_loops` is not a demo path — it timed out after 840s on a real
-org that had only one activated cloud flow, so the hang is not a volume problem
-and the `maxFlows` cap does not fix it.
+`detect_automation_loops` is not a demo path. An earlier build timed out after
+840s on a real org that had only one activated cloud flow: the list query
+selected `clientdata` and the client had no deadline, so the hang is not a
+volume problem and lowering `maxFlows` does not fix a call that does not
+return. The tool now reads definitions one at a time under a 20s request
+deadline and a 60s scan budget (`timedOut` / `skippedOversized` when a guard
+fires). Wait until you have seen that return on the org in front of you.
 
 ## How this relates to Microsoft's Dataverse MCP server
 
@@ -262,7 +266,7 @@ These caps are in the code today:
 | --- | --- | --- |
 | `flowrun` elastic page 500 | Dataverse `flowrun` table | Elastic tables serve at most 500 rows per page. `get_flow_runs` stays inside this (`top` max 100). |
 | `analyze_flow_runs` truncated at 500 | `analyze_flow_runs` | Single page of newest runs; when the cap is hit the payload includes `truncated: true`. |
-| `detect_automation_loops` | cloud-flow definitions only | Definition-based analysis of activated cloud flows. Plugin↔flow ping-pong is out of scope — use `analyze_plugin_performance` depth flags and `what_runs_on_table` for the plug-in side. Default scan 500 (`maxFlows` 10–1000; `truncated` when hit). |
+| `detect_automation_loops` | cloud-flow definitions only | Definition-based analysis of activated cloud flows. Plugin↔flow ping-pong is out of scope — use `analyze_plugin_performance` depth flags and `what_runs_on_table` for the plug-in side. Default scan 500 (`maxFlows` 10–1000; `truncated` when the cap is hit or a further page is left unread). Each Web API call aborts after 20s; the scan stops after 60s (`timedOut`). Definitions over 4,000,000 characters or 25,000 walked actions are skipped (`skippedOversized`). |
 | `what_runs_on_table` cloud-flow scan cap 500 | `what_runs_on_table` | Activated cloud-flow definitions are scanned client-side; `flowsScanTruncated: true` when the cap is hit. |
 
 ## Security & privacy

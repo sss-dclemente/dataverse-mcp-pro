@@ -274,40 +274,43 @@ See below. This is not a step you run because you got to step 4.
 
 <a id="detect_automation_loops"></a>
 
-**Do not run this on a demo, on a first pass, or during triage.**
+**Do not run this on a demo, on a first pass, or during triage** until you have
+seen it return on this client's org. CI does not talk to Dataverse.
 
-On `sss-prod` it **timed out after 840 seconds**, and the reason is not what you
-would guess.
+On `sss-prod` an earlier build **timed out after 840 seconds**. The reason is
+not flow volume. The filter (`category eq 5 and type eq 1 and statecode eq 1`)
+matched **one** flow: the org holds 102 cloud flows, 101 of them drafts. That
+build sent one list query selecting `clientdata` and waited with no deadline
+until the host gave up. Lowering `maxFlows` would have changed nothing there.
 
-The tool issues one Dataverse query — activated cloud-flow definitions
-(`category eq 5 and type eq 1 and statecode eq 1`), selecting `clientdata`, the
-large column holding each flow's stored definition — then parses those
-definitions client-side and builds a graph.
+Checked in the code, and ruled out as the cause of that one-flow hang:
 
-On `sss-prod` **exactly one flow matches that filter**: the org holds 102 cloud
-flows, of which 101 are drafts. So the tool had a single definition to parse and
-still did not return. **The cost is not explained by flow count**, and on that
-org lowering `maxFlows` would have changed nothing — the cap was never the
-binding constraint.
+- the client never followed `@odata.nextLink` (it still does not; a leftover
+  next link sets `truncated` and stops);
+- the definition walk was already depth-capped, so one definition cannot
+  recurse without bound;
+- cycle search only looks for cycles of length 2 or 3, so a single flow has
+  no graph to traverse.
 
-What actually consumes the time has not been established. Treat the timeout as
-real and unexplained rather than as a volume problem you can tune around.
+What was unbounded was the wait. The tool now lists ids and names only, reads
+each definition by primary key, aborts each Web API call after 20 seconds, and
+stops the scan after 60 seconds. A definition over the size guard is skipped,
+not half-parsed. `timedOut` means the deadline won; `skippedOversized` means
+the size guard did. Either way `suspectedLoops` is partial — do not read an
+empty list next to those flags as "no loops". The detection rules are the same.
+This page cannot promise the new query returns on `sss-prod`; that still takes
+a live call.
 
-`maxFlows` accepts 10–1000 and **defaults to 500**, and the result carries
-`truncated: true` when the cap is reached. On a flow-heavy org that cap still
-bounds the scan and still makes the answer partial, so read the flag — just do
-not expect lowering it to be a fix for the hang.
+`maxFlows` accepts 10–1000 and **defaults to 500**. `truncated: true` means the
+row cap was hit or a further page was left unread. On a flow-heavy org that
+flag still means a partial answer. It was never the fix for the 840s hang.
 
-Run it only when a client has asked for loop detection **in writing** and
-understands it may not return.
+Run it only when a client has asked for loop detection **in writing**.
 
 **Scope, and say it:** definition-based and **cloud-flow only**. Self-loops and
 2–3 flow cycles. Plug-in ↔ flow ping-pong is **out of scope** — for the
 pro-code side use `analyze_plugin_performance` depth flags and
 `what_runs_on_table`.
-
-Improving the timeout, scan cap, or progress reporting is worthwhile and is a
-**separate change** — not a new detection algorithm, and not part of this page.
 
 ---
 
